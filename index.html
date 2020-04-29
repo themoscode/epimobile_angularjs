@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="de">
+    <head>
+    	<!--<base href="/">-->
+        <meta charset="utf-8">
+        <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no, width=device-width">
+        <title>epiMobile</title>
+
+        <link rel="stylesheet" href="Assets/css/bootstrap.min.css">
+        
+		<!-- latest bootstrap-switch release -->
+        <link rel="stylesheet" href="Assets/modules/bootstrap-switch/bootstrap-switch.css">
+
+        <!-- your app css -->
+        <link href="Assets/css/style.css" rel="stylesheet">
+        
+        <link href="Assets/modules/autocomplete/angucomplete-alt.css" rel="stylesheet">
+        
+        <!-- DASHBOARD -->
+        <link href="Assets/modules/dashboard/metisMenu.css" rel="stylesheet">
+        <link href="Assets/modules/dashboard/sb-admin-2.css" rel="stylesheet">
+        
+        <!-- DASHBOARD -->
+       
+        <link rel="icon" href="Assets/img/icons/epimobilelogo.png">
+        
+    </head>
+    
+    
+    <body ng-app="app" ng-controller="rootController" >
+    	
+	    	<div>
+				<div class="text-center" ng-view ></div>
+	        </div>
+            <br>
+            <br>
+            <br>
+
+        <!-- LIBRARIES --> 
+		<script src="Assets/libs/jquery/jquery.min.js"></script>
+        <script src="Assets/libs/angular/angular.v1.5.3.js"></script>
+        
+        <!-- <script src="Assets/libs/angular/angular.v1.2.0.js"></script>-->
+        
+    	<script src="Assets/libs/bootstrap/bootstrap.min.js"></script>
+    	<script src="Assets/libs/bootstrap/ui-bootstrap-tpls-1.3.3.js"></script>
+
+	   
+
+        <!-- MAIN -->
+        <script src="Main/app.module.js"></script>
+        <script src="Main/app.controller.js"></script>
+        <script src="Main/app.routes.js"></script>
+        <script src="Main/app.run.js"></script>
+        <script src="Main/app.services.js"></script>
+        <script src="Main/app.directives.js"></script>
+        <script src="Main/app.factories.js"></script>
+        <!-- MAIN -->
+       
+       
+       
+        
+        <!-- MODULES --> 
+           
+  		<script src="Assets/modules/bootstrap-switch/bootstrap-switch.js"></script>
+  		<script src="Assets/modules/bootstrap-switch/module.js"></script>
+        <script src="Assets/modules/bootstrap-switch/bsSwitch.js"></script>
+
+        <!--<script src="Assets/modules/fontawesome/fontawesome.js"></script>-->
+        <script src="Assets/modules/autocomplete/angucomplete-alt.js"></script> 
+    	<script src="Assets/modules/angular-confirm-1.2.5/angular-confirm.js"></script>
+        <script src="Assets/modules/angular-base64/angular-base64.min.js" ></script>
+        <script src="Assets/modules/moment/moment-with-locales.js"></script>
+        <script src="Assets/modules/moment/moment-timezone-with-data.js"></script>
+    	<!--<script src="Assets/modules/treeView/treeViewController.js"></script>-->
+       
+        <script src="Assets/modules/dashboard/metisMenu.js"></script>
+        <script src="Assets/modules/dashboard/sb-admin-2.js"></script>
+        
+        <!-- ANGULAR LOCALES -->
+		<script src="Assets/modules/locales/angular-locale_de.js"></script>
+		<script src="Assets/modules/inputMasks/masks.js"></script>
+		<!-- ANGULAR LOCALES -->
+		
+		<!-- Device Detector-->
+		<script src="Assets/modules/re-tree/re-tree.js" ></script>
+		<script src="Assets/modules/device-detector/ng-device-detector.js" ></script>
+		<!-- Device Detector-->
+		
+		<script src="Assets/modules/angular-base64-upload/angular-base64-upload.js"></script>
+		<script src="Assets/modules/angular-touch/angular-touch.min.js"></script>
+		<script src="Assets/modules/angular-animate/angular-animate.js"></script>
+		<script src="Assets/modules/angular-sanitize/angular-sanitize.js"></script>
+		<!--<script src="Assets/modules/angular-cookies/angular-cookies.js"></script>-->
+		<script src="Assets/modules/angular-route/angular-route.js"></script>
+		
+        <script src="Assets/modules/pagination/dirPagination.js"></script>
+        
+       
+         <!-- HOME -->
+         <script src="Components/home/homeController.js"></script>
+
+         <!-- MEETINGS  -->
+         <script src="Components/meetings/meetingsList/meetingsListController.js"></script>
+         <script src="Components/meetings/meetingDetails/meetingDetailsController.js"></script>
+         <script src="Components/meetings/meetingInsertController.js"></script>
+
+         <!-- TASKS -->    
+        <script src="Components/tasks/tasksList/tasksListController.js"></script> 
+        <script src="Components/tasks/taskDetails/taskDetailsController.js"></script>
+        <script src="Components/tasks/taskInsertController.js"></script>
+
+        <!-- CONTACTS -->
+        <script src="Components/contacts/contactsList/contactsListController.js"></script> 
+        <script src="Components/contacts/contactInsertController.js"></script>
+		<script src="Components/contacts/contactDetails/contactDetailsController.js"></script> 
+        <script src="Components/contacts/contactDetails/Widgets/modalSalutation/modalSalutationCtrl.js"></script> 
+        <script src="Components/contacts/contactDetails/Widgets/modalContactPerson/modalContactPersonCtrl.js"></script>
+        <script src="Components/contacts/contactDetails/Widgets/modalNewContactPerson/modalNewContactPersonCtrl.js"></script>
+        <script src="Components/contacts/contactDetails/Widgets/modalHistory/modalContactHistoryCtrl.js"></script>
+        <script src="Components/contacts/contactDetails/Widgets/modalNewHistory/modalNewContactHistoryCtrl.js"></script>
+        <script src="Components/contacts/contactDetails/Widgets/modalContactDetails/modalContactDetailsCtrl.js"></script>
+        
+        <!-- PRODUCTS -->
+        <script src="Components/products/productsList/productsListController.js"></script>
+        <script src="Components/products/productsList/Widgets/modalAvailability/modalAvailabilityCtrl.js"></script> 
+        <script src="Components/products/productDetails/productDetailsController.js"></script> 
+        <script src="Components/products/productInsertController.js"></script>
+       
+        <!-- ORDERS -->
+    	<script src="Components/orders/ordersList/ordersListController.js"></script> 
+        <script src="Components/orders/orderDetails/orderDetailsController.js"></script> 
+        <script src="Components/orders/orderDetails/Widgets/modalNewMaterial/modalNewMaterialCtrl.js"></script> 
+        <script src="Components/orders/orderDetails/Widgets/modalPersonnel/modalPersonnelCtrl.js"></script>
+        <script src="Components/orders/orderDetails/Widgets/modalSearchProduct/modalSearchProductCtrl.js"></script>
+        <script src="Components/orders/orderDetails/Widgets/confirmDelKapitel/confirmDelKapitelCtrl.js"></script>
+        <script src="Components/orders/orderDetails/Widgets/modalEditOrderItem/modalEditOrderItemCtrl.js"></script>
+        <script src="Components/orders/orderDetails/Widgets/modalEditOrderItem/modalEditKapitelOrderItemCtrl.js"></script>
+        <script src="Components/orders/orderInsertController.js"></script>
+       
+       <!-- INVOICE  -->
+       <script src="Components/invoices/invoicesList/invoicesListController.js"></script>
+       <script src="Components/invoices/invoiceDetails/invoiceDetailsController.js"></script>
+       <script src="Components/invoices/invoiceInsertController.js"></script>
+       
+        <!-- CHAT -->    
+       <script src="Components/chat/chatController.js"></script>
+
+         <!-- TIMETRACKING -->    
+       <script src="Components/timeTracking/timeTrackingController.js"></script>
+        
+        <!-- LOGIN -->
+        <script src="Components/login/loginController.js"></script>
+        <script src="Components/login/Widgets/lagerMandantSelect/lagerMandantSelectController.js"></script>
+
+         <!-- SHARED -->   
+       <script src="Components/Shared/modalMsgAutoClose/modalMsgAutoCloseCtrl.js"></script> 
+       <script src="Components/Shared/modalPreferences/modalPrefCtrl.js"></script>
+       <script src="Components/Shared/modalEpiInfo/modalEpiInfoCtrl.js"></script>
+       <script src="Components/Shared/modalParticipant/modalParticipantCtrl.js"></script>
+       <script src="Components/Shared/modalSelectDate/modalSelectDateCtrl.js"></script>
+       <script src="Components/Shared/modalSelectDates/modalSelectDatesCtrl.js"></script>
+       <script src="Components/Shared/modalSelectDates/modalSelectDatesCtrl2.js"></script><!-- converts date and time from/to 4d -->
+       <script src="Components/Shared/modalSearchContact/modalSearchContactCtrl.js"></script>   
+       <script src="Components/Shared/modalSearchContact/modalSearchContactCtrl2.js"></script>  
+       <script src="Components/Shared/modalSearchContact/modalSearchContactCtrl3.js"></script>
+       <script src="Components/Shared/modalMaterial/modalMaterialCtrl.js"></script>
+       
+          
+    </body>
+</html>
+

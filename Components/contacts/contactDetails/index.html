@@ -1,0 +1,441 @@
+
+<div class="contactPage">
+	<!-- HEADER -->
+	<header>
+		<div class="container-fluid my-panel-header">
+			<div class="row my-btn-group1" ng-include="'Components/Shared/panelHeader/index.html'"></div>
+			<div class="row my-btn-group2" >
+				
+				<div class="col-xs-2 siteTitleTool text-right"><span class="glyphicon glyphicon-pencil" ng-class="{'tool-disabled': !services.common.clientRights.contacts.can_update, 'tool-on': !services.common.clientRights.contacts.read_only ,'tool-off': services.common.clientRights.contacts.read_only  }" ng-click="changeViewMode('contacts')"></span> </div>
+				<div class="col-xs-8 text-center siteTitle" >
+					<span class="pointer siteTitle2 bold" ng-click="searchNavigate(searchFilters)">Adressen</span>
+				</div>
+				<div class="col-xs-2 siteTitleTool text-left"><span class="glyphicon glyphicon-plus" ng-click="services.tools.navigateTo('/contactInsert')" ng-class="{'tool-disabled': !services.common.clientRights.contacts.can_insert, 'tool-on': services.common.clientRights.contacts.can_insert }"></span> </div>
+			</div>
+		</div>
+	</header>
+	<main>
+		<!-- HEADER END -->
+		<div class="container" >    
+			<div class="row bodyRow" style="margin-top:22px">
+		
+				<div class="col-xs-12" ng-include="'Components/Shared/autocomplete/index.html'"></div>
+		
+			</div>
+			<div style="height:21px"></div>
+			<br>
+			
+				
+				<div class="btn-group my-btn-group my-btn-group-top">
+							
+						<button type="button" ng-disabled="services.common.clientRights.contacts.read_only" ng-class="{'btn my-group-btn my-group-btn-on': !getContact.is_single_person, 'btn my-group-btn my-group-btn-off': getContact.is_single_person}" ng-click="setSinglePersonStatus(false)">FIRMA</button>
+						
+						<button type="button" ng-disabled="services.common.clientRights.contacts.read_only" ng-class="{'btn my-group-btn my-group-btn-on': getContact.is_single_person, 'btn my-group-btn my-group-btn-off': !getContact.is_single_person}"  ng-click="setSinglePersonStatus(true)">PERSON</button>
+				</div>
+				<div style="height:1px"></div>
+				<div class="btn-group my-btn-group my-btn-group-bottom">
+						
+							<button type="button" ng-disabled="services.common.clientRights.contacts.read_only" ng-class="{'btn my-group-btn my-group-btn-on auto-width': getContact.is_interested, 'btn my-group-btn my-group-btn-off auto-width': !getContact.is_interested}" ng-click="setInterestedStatus()">I</button>
+							<button type="button" ng-disabled="services.common.clientRights.contacts.read_only" ng-class="{'btn my-group-btn my-group-btn-on auto-width': getContact.is_client, 'btn my-group-btn my-group-btn-off auto-width': !getContact.is_client}" ng-click="setClientStatus()">K</button>	
+							<button type="button" ng-disabled="services.common.clientRights.contacts.read_only" ng-class="{'btn my-group-btn my-group-btn-on auto-width': getContact.is_supplier, 'btn my-group-btn my-group-btn-off auto-width': !getContact.is_supplier}" ng-click="setSupplierStatus()">L</button>
+							<button type="button" ng-disabled="services.common.clientRights.contacts.read_only" ng-class="{'btn my-group-btn my-group-btn-on auto-width': getContact.is_location, 'btn my-group-btn my-group-btn-off auto-width': !getContact.is_location}" ng-click="setLocationStatus()">LOC</button>
+							<button type="button" style="color:lightgrey" ng-disabled="true" ng-class="{'btn my-group-btn my-group-btn-on auto-width': getContact.is_colleague, 'btn my-group-btn my-group-btn-off auto-width': !getContact.is_colleague}" ng-click="setColleagueStatus()">MA</button>
+							<button type="button" ng-disabled="services.common.clientRights.contacts.read_only" ng-class="{'btn my-group-btn my-group-btn-on auto-width': getContact.is_vip, 'btn my-group-btn my-group-btn-off auto-width': !getContact.is_vip}" ng-click="setVIPStatus()">VIP</button>
+				</div>
+
+				<div ng-show="services.common.clientRights.contacts.read_only"> <!-- READ ONLY MODE-->
+					<div style="height:21px"></div>
+						
+					<div ng-show="getContact.is_interested || getContact.is_client">Kundennummer: {{getContact.customer_no}}</div>
+					<div ng-show="getContact.is_supplier">Lieferantnummer : {{getContact.supplier_no}}</div>
+					<div ng-show="getContact.is_single_person">{{getContact.salutation}}</div>
+					<br>
+					
+					
+					<img src="{{getContact.__image}}" class="img-responsive img-center"  style="max-width:250px">
+					<br>
+					
+					<div><span ng-show="getContact.grade!=''">{{getContact.grade}}&nbsp;</span>{{getContact.name}}</div>
+					<div>
+						<span class="link" ng-click="services.common.getGoogleMap(getContact.address.street,getContact.address.postal_code,getContact.address.city)" >
+							{{getContact.address.street}}<br>
+							{{getContact.address.postal_code+" "+getContact.address.city}}
+						</span>
+					</div>
+					<br>
+					
+					<div ng-include="'Components/Shared/communicationData/index.html'"></div>
+					
+					<br>
+					<div class="my-panel-acc">
+						<uib-accordion close-others="false">
+								
+								<div uib-accordion-group is-open="acc_group1.open" ng-show="getContact.contact_person.length">
+									
+										<uib-accordion-heading >
+											
+											<div class="row"  >
+												
+												<div class="col-xs-4 text-left"></div>
+												<div class="col-xs-4 text-center "><span class="glyphicon glyphicon-user" style="font-size: 23px;top: -2px;"></span></div>
+												<div class="col-xs-4 text-right" >[{{getContact.contact_person.length}}]&nbsp;&nbsp;<span ng-class="{'glyphicon glyphicon-chevron-down': acc_group1.open, 'glyphicon glyphicon-chevron-right': !acc_group1.open}"></span></div>
+											
+											</div>
+											
+											
+										</uib-accordion-heading>
+										
+
+										<div class="my-list" >
+											
+											<div class="list-group-item row" ng-repeat="contactPerson in getContact.contact_person" ng-click="openContactPersonModal($index)">
+												
+												<div class="col-xs-12 text-center link" >
+													
+													<span>{{contactPerson.first_name}} {{contactPerson.last_name}}</span><br>
+													<span>{{contactPerson.position}}</span>
+													
+
+												</div>
+												
+											</div>
+											
+										</div>	
+
+								</div>
+								<div uib-accordion-group is-open="acc_group2.open" ng-show="getContact.contact_chrono.length">
+										
+											<uib-accordion-heading>
+												
+												<div class="row"  >
+													
+													<div class="col-xs-4 text-left"></div>
+													<div class="col-xs-4 text-center panelHeader">Historie</div>
+													<div class="col-xs-4 text-right" >[{{getContact.contact_chrono.length}}]&nbsp;&nbsp;<span ng-class="{'glyphicon glyphicon-chevron-down': acc_group2.open, 'glyphicon glyphicon-chevron-right': !acc_group2.open}"></span></div>
+												
+												</div>
+												
+											</uib-accordion-heading>
+											<div class="text-left my-list" >
+													
+												
+												<div class="list-group-item row text-center link" ng-click="openHistoryModal(row.primary_key)" ng-repeat="row in getContact.contact_chrono" >
+													
+													<div class="pointer" >{{services.tools.dateFrom4d(row.date)}}</div>
+													<div class="pointer">{{row.keyword}}</div>
+													
+
+												</div>
+												
+												
+											</div>
+										
+										
+									</div>
+									<div uib-accordion-group is-open="acc_group3.open" ng-show="getContact.order.length">
+											
+												<uib-accordion-heading>
+													
+													<div class="row"  >
+														
+														<div class="col-xs-4 text-left"></div>
+														<div class="col-xs-4 text-center panelHeader">Vorgänge</div>
+														<div class="col-xs-4 text-right" >[{{getContact.order.length}}]&nbsp;&nbsp;<span ng-class="{'glyphicon glyphicon-chevron-down': acc_group3.open, 'glyphicon glyphicon-chevron-right': !acc_group3.open}"></span></div>
+													
+													</div>
+													
+												</uib-accordion-heading>
+												<div class="text-left my-list" >
+														
+													
+													<div class="list-group-item row" style="cursor:pointer" ng-repeat="row in getContact.order" ng-click="services.tools.navigateTo('order/'+row.primary_key)">
+														
+														<div class="col-xs-4 text-left">{{row.order_no_fmt}}</div>
+														<div class="col-xs-4 text-center">{{row.event}}</div>
+														<div class="col-xs-4 text-right"><span ng-show="row.is_sale">[VK]</span><span ng-hide="row.is_sale">[M]</span></div>
+													</div>
+													
+												</div>
+											
+											
+										</div>
+										
+											<div uib-accordion-group is-open="acc_group5.open">
+													
+														<uib-accordion-heading>
+															
+															<div class="row"  >
+																
+																<div class="col-xs-4 text-left"></div>
+																<div class="col-xs-4 text-center panelHeader">Notizen</div>
+																<div class="col-xs-4 text-right" ><span ng-class="{'glyphicon glyphicon-chevron-down': acc_group5.open, 'glyphicon glyphicon-chevron-right': !acc_group5.open}"></span></div>
+																
+															
+															</div>
+															
+														</uib-accordion-heading>
+														<div class="text-left my-list" >
+																
+															<div class="list-group-item row" >
+																
+
+																<div class="col-xs-6" >
+																	Positive<br>	
+																		
+																	<div class="notes">{{getContact.notes_positive}}</div>
+																</div>
+																<div class="col-xs-6" >
+																	Negative<br>	
+																	
+																	<div class="notes">{{getContact.notes_negative}}</div>
+																</div>	
+																
+															</div>
+															
+															
+															
+														</div>
+													
+													
+												</div>
+											
+						</uib-accordion>
+					</div>
+				</div>
+				
+				<!-- ****************************************************************************************************** -->
+
+				<div ng-show="!services.common.clientRights.contacts.read_only" class="EDIT_MODE"> <!-- EDIT MODE-->
+					
+					<div style="height:21px"></div>
+					
+					
+					<form  >
+						<div class="form-group" ng-show="getContact.is_interested || getContact.is_client">
+							<label>Kundennummer:</label>
+							<input type="text" class="form-control text-center" ng-model="getContact.customer_no" >
+						</div>
+						<div class="form-group" ng-show="getContact.is_supplier">
+							<label>Lieferantnummer:</label>
+							<input type="text" class="form-control text-center" ng-model="getContact.supplier_no">
+						</div>
+						<div class="form-group" ng-show="getContact.is_single_person">
+							<label>Anrede:</label>
+							<input type="text" class="form-control text-center" ng-model="getContact.salutation">
+						</div>
+				     </form>
+					 <br>
+					
+					<img src="{{getContact.__image}}" class="img-responsive img-center"  style="max-width:250px">
+					<br>
+					
+
+					 <div  class="text-left communication-block" ng-show="getContact.grade!='' && getContact.is_single_person" >
+							
+							<div style="display: inline-block;width:90px">Titel:</div>
+							<div style="display: inline-block;"><input type="text" class="form-control" ng-model="getContact.grade" ></div>
+					
+					 </div>
+					 <div  class="text-left communication-block"  >
+							
+							<div style="display: inline-block;width:90px">Name:</div>
+							<div style="display: inline-block;"><input type="text" class="form-control" ng-model="getContact.name" ></div>
+					
+					 </div>
+					 <div  class="text-left communication-block"  >
+							
+							<div style="display: inline-block;width:90px">Straße:</div>
+							<div style="display: inline-block;"><input type="text" class="form-control" ng-model="getContact.address.street" ></div>
+					
+					 </div>
+					 <div  class="text-left communication-block"  >
+							
+							<div style="display: inline-block;width:90px">PLZ:</div>
+							<div style="display: inline-block;"><input type="text" class="form-control" ng-model="getContact.address.postal_code" ></div>
+					
+					 </div>
+					 <div  class="text-left communication-block"  >
+							
+							<div style="display: inline-block;width:90px">Ort:</div>
+							<div style="display: inline-block;"><input type="text" class="form-control" ng-model="getContact.address.city" ></div>
+					
+					 </div>
+					 
+					<div ng-include="'Components/Shared/communicationData/index.html'"></div>
+					<br>
+					<div ng-include="'Components/Shared/communicationTypes/index.html'"  ></div>
+					
+					
+					<br>
+					<div class="my-panel-acc">
+						<uib-accordion close-others="false">
+								
+								<div uib-accordion-group is-open="acc_group1.open" >
+									
+										<uib-accordion-heading >
+											
+											<div class="row"  >
+												
+												<div class="col-xs-4 text-left"><span class="glyphicon glyphicon-plus"  ng-click="addContactPerson($event)"></span></div>
+												<div class="col-xs-4 text-center "><span class="glyphicon glyphicon-user" style="font-size: 23px;top: -2px;"></span></div>
+												<div class="col-xs-4 text-right" >[{{getContact.contact_person.length}}]&nbsp;&nbsp;<span ng-class="{'glyphicon glyphicon-chevron-down': acc_group1.open, 'glyphicon glyphicon-chevron-right': !acc_group1.open}"></span></div>
+											
+											</div>
+											
+										</uib-accordion-heading>
+										
+
+										<div class="my-list" >
+											
+											<div class="list-group-item row" ng-repeat="row in getContact.contact_person" >
+												
+												<div class="col-xs-12 text-center" >
+													
+													<span>{{row.first_name}} {{row.last_name}}</span><br>
+													<span>{{row.position}}</span>
+
+													<div class="text-center" style="padding-top: 10px;" ng-show="!services.common.clientRights.contacts.can_delete">
+														<span class="glyphicon glyphicon-pencil pointer" ng-click="openContactPersonModal($index)"></span>
+													</div>
+													<div class="text-center" style="padding-top: 10px;" ng-show="services.common.clientRights.contacts.can_delete">
+														<span class="glyphicon glyphicon-pencil pointer" ng-click="openContactPersonModal($index)"></span>
+														 &nbsp;&nbsp;&nbsp;&nbsp;
+														<span class="glyphicon glyphicon-trash pointer" ng-click="deleteContactPersonData(row)"></span>
+													</div>
+												</div>
+												
+											</div>
+											
+										</div>	
+
+								</div>
+								<div uib-accordion-group is-open="acc_group2.open" >
+										
+											<uib-accordion-heading>
+												
+												<div class="row"  >
+													
+													<div class="col-xs-4 text-left"><span class="glyphicon glyphicon-plus" ng-click="addHistory($event)"></div>
+													<div class="col-xs-4 text-center panelHeader">Historie</div>
+													<div class="col-xs-4 text-right" >[{{getContact.contact_chrono.length}}]&nbsp;&nbsp;<span ng-class="{'glyphicon glyphicon-chevron-down': acc_group2.open, 'glyphicon glyphicon-chevron-right': !acc_group2.open}"></span></div>
+												
+												</div>
+												
+											</uib-accordion-heading>
+											<div class="text-left my-list" >
+													
+												
+												<div class="list-group-item row text-center" ng-repeat="row in getContact.contact_chrono" >
+													
+													<div>{{services.tools.dateFrom4d(row.date)}}</div>
+													<div >{{row.keyword}}</div>
+													
+													<div class="text-center" style="padding-top: 10px;" ng-show="!services.common.clientRights.contacts.can_delete">
+														<span class="glyphicon glyphicon-pencil pointer" ng-click="openHistoryModal(row.primary_key)"></span>
+													</div>
+													<div class="text-center" style="padding-top: 10px;" ng-show="services.common.clientRights.contacts.can_delete">
+														<span class="glyphicon glyphicon-pencil pointer" ng-click="openHistoryModal(row.primary_key)"></span>
+														 &nbsp;&nbsp;&nbsp;&nbsp;
+														<span class="glyphicon glyphicon-trash pointer" ng-click="deleteHistory(row)"></span>
+													</div>
+
+												</div>
+												
+												
+											</div>
+										
+										
+									</div>
+									<div uib-accordion-group is-open="acc_group3.open" >
+											
+												<uib-accordion-heading>
+													
+													<div class="row"  >
+														
+														<div class="col-xs-4 text-left"><span class="glyphicon glyphicon-plus" ng-click="addOrder($event)"></span></div>
+														<div class="col-xs-4 text-center panelHeader">Vorgänge</div>
+														<div class="col-xs-4 text-right" >[{{getContact.order.length}}]&nbsp;&nbsp;<span ng-class="{'glyphicon glyphicon-chevron-down': acc_group3.open, 'glyphicon glyphicon-chevron-right': !acc_group3.open}"></span></div>
+													
+													</div>
+													
+												</uib-accordion-heading>
+												<div class="text-left my-list" style="padding:0px">
+														
+													
+													<div class="list-group-item" ng-repeat="row in getContact.order" >
+														<div class="row">
+															<div class="col-xs-4 text-left" style="padding-left:25px">{{row.order_no_fmt}}</div>
+															<div class="col-xs-4 text-center">{{row.event}}</div>
+															<div class="col-xs-4 text-right"><span ng-show="row.is_sale">[VK]</span><span ng-hide="row.is_sale">[M]</span></div>
+														</div>
+														<div class="text-center" style="padding-top: 10px;" ng-show="!services.common.clientRights.orders.can_delete">
+															<span class="glyphicon glyphicon-pencil pointer" ng-click="services.tools.navigateTo('order/'+row.primary_key)"></span>
+														</div>
+														<div class="text-center" style="padding-top: 10px;" ng-show="services.common.clientRights.orders.can_delete">
+															<span class="glyphicon glyphicon-pencil pointer" ng-click="services.tools.navigateTo('order/'+row.primary_key)"></span>
+															 &nbsp;&nbsp;&nbsp;&nbsp;
+															<span class="glyphicon glyphicon-trash pointer" ng-click="deleteOrder(row)"></span>
+														</div>
+														
+													</div>
+													
+												</div>
+											
+											
+										</div>
+										
+											<div uib-accordion-group is-open="acc_group5.open">
+													
+														<uib-accordion-heading>
+															
+															<div class="row"  >
+																
+																<div class="col-xs-4 text-left"></div>
+																<div class="col-xs-4 text-center panelHeader">Notizen</div>
+																<div class="col-xs-4 text-right" ><span ng-class="{'glyphicon glyphicon-chevron-down': acc_group5.open, 'glyphicon glyphicon-chevron-right': !acc_group5.open}"></span></div>
+																
+															
+															</div>
+															
+														</uib-accordion-heading>
+														<div class="text-left my-list" >
+																
+															<div class="list-group-item row" >
+																
+
+																<div class="col-xs-6" >
+																	Positive<br>
+																	<textarea ng-model="getContact.notes_positive" style="width:100%;resize: none;" class="notes"></textarea>
+																</div>
+																<div class="col-xs-6" >
+																	Negative<br>
+																	<textarea ng-model="getContact.notes_negative" style="width:100%;resize: none;" class="notes"></textarea>
+																</div>	
+																
+															</div>
+															
+															
+															
+														</div>
+													
+													
+												</div>
+											
+						</uib-accordion>
+					</div>
+
+					<br>
+					<div style="display: table;margin: 0 auto;">
+						<div style="display: inline-block;"><button ng-click="services.common.openMsgAutoclose('Datensatz wurde gespeichert!')" class="my-act-btn edit-btn" >Speichern</button></div>
+						<div style="display: inline-block;width: 30px;"></div>
+						<div style="display: inline-block;"><button ng-click="services.common.openMsgAutoclose('Datensatz wurde zurückgestellt')" class="my-act-btn edit-btn" >Zurückstellen</button></div>
+					</div>
+
+				</div>
+				
+			
+			
+		
+		</div>
+	</main>	
+</div>

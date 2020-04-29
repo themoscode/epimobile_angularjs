@@ -1,0 +1,172 @@
+<div class="ordersListPage" >
+        <!-- HEADER -->
+        <header>
+            <div class="container-fluid my-panel-header">
+                <div class="row my-btn-group1" ng-include="'Components/Shared/panelHeader/index.html'"></div>
+                
+                <div class="row my-btn-group2" >
+                    
+                    <div class="col-xs-2"></div>
+                    <div class="col-xs-8 text-center siteTitle" >
+                        Auftrag
+                    </div>
+                    <div class="col-xs-2 siteTitleTool disabled text-left"><span class="glyphicon glyphicon-plus"></span> </div>
+                
+                </div>
+            </div>
+        </header>
+        
+            <!-- HEADER END -->
+        <main>
+            
+            <div class="container" >    
+                <div class="row bodyRow" style="margin-top:22px">
+            
+                    <div class="col-xs-12" ng-include="'Components/Shared/autocomplete/index.html'"></div>
+            
+                </div>
+                
+                <div style="height:21px"></div>
+                <div>
+                    <div  ng-class="{'btn-group my-btn-group my-btn-group-top': services.tools.deviceDetector.browser=='firefox', 'btn-group my-btn-group my-btn-group-top notFirefox': services.tools.deviceDetector.browser!='firefox'}">
+                            
+                        <button type="button" class="btn my-group-btn order_css" ng-click="openModalSelectDates()">{{datesSelector.label}}</button>
+                                        
+                    </div>
+                
+                    <div style="height:1px" ng-show="searchFilters.datesSelected"></div>
+                    <div class="btn-group my-btn-group my-btn-group-bottom no-radius" ng-show="searchFilters.datesSelected">
+                        
+                        <button type="button" ng-class="{'btn my-group-btn my-group-btn-on': searchFilters.isDispo, 'btn my-group-btn my-group-btn-off': !searchFilters.isDispo}" ng-click="searchFilters.toggleDispoStatus()">DISPO</button>
+                        <button type="button" ng-class="{'btn my-group-btn my-group-btn-on': searchFilters.isEvent, 'btn my-group-btn my-group-btn-off': !searchFilters.isEvent}" ng-click="searchFilters.toggleEventStatus()">EVENT</button>
+       
+                    </div>
+                    <div style="height:1px"></div>
+                    <div class="btn-group my-btn-group my-btn-group-bottom">
+                            
+                        <button type="button" ng-class="{'btn my-group-btn my-group-btn-on': searchFilters.isRent, 'btn my-group-btn my-group-btn-off': !searchFilters.isRent}" ng-click="searchFilters.toggleRentStatus()">MIETE</button>
+                        <button type="button" ng-class="{'btn my-group-btn my-group-btn-on': searchFilters.isSell, 'btn my-group-btn my-group-btn-off': !searchFilters.isSell}" ng-click="searchFilters.toggleSellStatus()">VERKAUF</button>
+                            
+                    </div>
+                </div>
+                <br><br>
+                <div class="text-center" ng-if="services.common.loading.orders">
+                    <img src="Assets/img/icons/loading.gif" class="dataLoading">
+                </div>
+    
+                <div class="search_results_label" ng-show="searchDone && !services.common.loading.orders">
+                        <div ng-show="getOrders.length" class="found" >
+                            {{getOrders.length}} 
+                            <span ng-show="getOrders.length>1">Einträge</span> 
+                            <span ng-show="getOrders.length==1">Eintrag</span> 
+                            gefunden
+                        </div>
+                        <div ng-show="!getOrders.length" class="notFound" >Keine Einträge gefunden</div>
+                </div>
+    
+                <div ng-show="getOrders.length">
+                    <dir-pagination-controls template-url="Assets/modules/pagination/index.html"></dir-pagination-controls>
+                    <!--
+                    <div class="text-left my-list " >
+                        
+                        <div class="list-group-item row my-list-header" >
+                            
+                            <div class="col-xs-2 text-left"><a>Status</a></div>
+                            <div class="col-xs-2 text-center"><a ng-click="sortBy('order_no')">Nr</a>&nbsp;<span ng-show="sortName == 'order_no' && getOrders.length >1" ng-class="{'glyphicon glyphicon-triangle-top': sortAsc.order_no, 'glyphicon glyphicon-triangle-bottom': !sortAsc.order_no}"></span></div>
+                            <div class="col-xs-8 text-right">
+                                <div><a ng-click="sortBy('contact.name')">Kunde</a>&nbsp;<span ng-show="sortName == 'contact.name'  && getOrders.length >1" ng-class="{'glyphicon glyphicon-triangle-top': sortAsc['contact.name'], 'glyphicon glyphicon-triangle-bottom': !sortAsc['contact.name']}"></span></div>
+                                <div><a ng-click="sortBy('event')">Event</a>&nbsp;<span ng-show="sortName == 'event'  && getOrders.length >1" ng-class="{'glyphicon glyphicon-triangle-top': sortAsc.event, 'glyphicon glyphicon-triangle-bottom': !sortAsc.event}"></span></div>
+                                <div><a ng-click="sortBy('event')">Summe</a>&nbsp;<span ng-show="sortName == 'event'  && getOrders.length >1" ng-class="{'glyphicon glyphicon-triangle-top': sortAsc.event, 'glyphicon glyphicon-triangle-bottom': !sortAsc.event}"></span></div>
+                            </div>
+                        </div>
+                        
+                        <div class="list-group-item row" ng-click="services.tools.navigateTo('order/'+row.primary_key)" dir-paginate="row in getOrders | itemsPerPage: pageSize" current-page="currentPage">
+                            
+                            <div class="col-xs-2 text-left">
+                                <div class="dot" ng-class="{'dot_green': row.is_confirmed, 'dot_red': !row.is_confirmed}" tooltip-placement="top" uib-tooltip="{{services.states.order.is_confirmed[row.is_confirmed]}}"></div>
+                            </div>
+                            <div class="col-xs-2 text-center">{{row.order_no_fmt}}</div>
+                            <div class="col-xs-8 text-right">
+                                <div>{{row.contact.name}}</div>
+                                <div>{{row.event}}</div>
+                                <div>1.045,61 €</div>
+                            </div>
+                        
+                        </div>
+                        
+                        
+                    </div>
+                
+                <div class="btn-group" uib-dropdown is-open="false">
+                        <button id="single-button" type="button" class="btn btn-primary" uib-dropdown-toggle ng-disabled="disabled">
+                          Sortierung <span class="caret"></span>
+                        </button>
+                        <ul class="dropdown-menu" uib-dropdown-menu role="menu" aria-labelledby="single-button">
+                          <li role="menuitem" ng-click="sortBy('order_no')" class="pointer"><span ng-show="sortName == 'order_no' && getOrders.length >1" ng-class="{'glyphicon glyphicon-triangle-top': sortAsc.order_no, 'glyphicon glyphicon-triangle-bottom': !sortAsc.order_no}"></span>&nbsp;Auftragsnummer</li>
+                          <li role="menuitem" ng-click="sortBy('contact.name')" class="pointer"><span ng-show="sortName == 'contact.name' && getOrders.length >1" ng-class="{'glyphicon glyphicon-triangle-top': sortAsc['contact.name'], 'glyphicon glyphicon-triangle-bottom': !sortAsc['contact.name']}"></span>&nbsp;Kunde</li>
+                          <li role="menuitem" ng-click="sortBy('event')" class="pointer"><span ng-show="sortName == 'event' && getOrders.length >1" ng-class="{'glyphicon glyphicon-triangle-top': sortAsc.event, 'glyphicon glyphicon-triangle-bottom': !sortAsc.event}"></span>&nbsp;Event</li>
+                          <li role="menuitem" ng-click="sortBy('sum_net')" class="pointer"><span ng-show="sortName == 'sum_net' && getOrders.length >1" ng-class="{'glyphicon glyphicon-triangle-top': sortAsc.sum_net, 'glyphicon glyphicon-triangle-bottom': !sortAsc.sum_net}"></span>&nbsp;Summe</li>
+                        </ul>
+                </div><br><br>
+                
+                -->
+                
+                
+                 <div class="input-group sorting" >
+                        <div class="input-group-btn">
+                            <button class="btn btn-default" type="button" ng-click="sortBy(sortName)"><i ng-class="{'glyphicon glyphicon-triangle-top': sortAsc[sortName], 'glyphicon glyphicon-triangle-bottom': !sortAsc[sortName]}"></i></button>
+                        </div>
+                        <select class="form-control pointer"  ng-model="sortName" ng-change="sortBy(sortName)">
+                                <option value="order_no">Auftragsnummer</option>
+                                <option value="contact.name">Kunde</option>
+                                <option value="event">Event</option>
+                                <option value="sum_net">Summe</option>
+                        </select>
+                 </div>
+                 
+                <br><br>  
+                <div class="text-left my-list">
+                    <div  class="text-center  block"  dir-paginate="row in getOrders | itemsPerPage: pageSize" current-page="currentPage" style="border-bottom:1px solid #dddddd">
+                        
+                        <div  class="text-center block" >
+                        
+                            <div class="contact" window-width>
+                               
+                                {{row.contact.name}}
+                            </div>
+                            <br>
+                            <div class="text-center dot-group">
+                                    <div class="dot" ng-class="{'dot_green': row.is_confirmed, 'dot_orange': !row.is_confirmed}">&nbsp;</div>
+                                    <div class="order_no">{{row.order_no_fmt}}</div>
+                                    <div class="dot {{row.state_booked}}">F</div>
+                                    <div class="dot {{row.state_packagingnote}}">PS</div>
+                                    <div class="dot {{row.state_packaging}}" ng-if="row.state_packaging">P</div>
+                                    <div class="dot dot_transparent" ng-if="!row.state_packaging">P</div>
+                                    <div class="dot {{row.state_checkout}}">O</div>
+                                    <div class="dot {{row.state_checkin}}">I</div>
+                                    <div class="dot {{row.state_billing}}">A</div>
+                            </div>
+                            <br>
+                            <div class="event">{{row.event}}</div>
+                            <div>{{row.sum_net | currency }}</div>
+                   
+                      </div>
+                      <div class="text-center" style="padding-top: 10px;" ng-show="!services.common.clientRights.orders.can_delete">
+                        <span class="glyphicon glyphicon-pencil pointer" ng-click="services.searchNavigate.orders(searchFilters,row.primary_key)"></span>
+                      </div>
+                      <div class="text-center" style="padding-top: 10px;" ng-show="services.common.clientRights.orders.can_delete">
+                            <span class="glyphicon glyphicon-pencil pointer" ng-click="services.searchNavigate.orders(searchFilters,row.primary_key)"></span>
+                            &nbsp;&nbsp;&nbsp;&nbsp;
+                            <span class="glyphicon glyphicon-trash pointer" ng-click="deleteOrder(row)"></span>
+                       </div>  
+                   </div> 
+                   
+                </div>
+
+
+                </div>
+            
+          
+            </div>
+        </main>
+    </div>    

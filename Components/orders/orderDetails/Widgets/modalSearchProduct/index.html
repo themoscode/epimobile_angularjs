@@ -1,0 +1,63 @@
+<div class="modal-header text-center">
+    <h3 class="modal-title">Artikel suche</h3>
+</div>
+
+
+<div class="modal-body">
+        
+    <div class="row">
+        <div class="col-xs-12 text-center">
+            
+            <div class="text-left my-list" >
+                
+                <form name="form" ng-submit="getProductsData(searchText)">   
+                    <input type="search" class="form-control glyphicon glyphicon-search searchBox text-center"  placeholder="Artikel Suche..." ng-model="searchText"  /> 
+                </form>
+                <br>   
+                <div class="text-center" ng-if="services.common.loading.products">
+                    <img src="Assets/img/icons/loading.gif" class="dataLoading" >
+                </div> 
+                <div ng-show="getProducts.length">
+                    <dir-pagination-controls template-url="Assets/modules/pagination/index.html"></dir-pagination-controls>
+                    
+                    <div ng-class="{'list-group-item on': selectedProduct.primary_key == row.primary_key, 'list-group-item': selectedProduct.primary_key != row.primary_key}" dir-paginate="row in getProducts | itemsPerPage: pageSize" current-page="currentPage">
+                        
+                        <div class="text-center" ng-click="selectProduct(row)">{{row.name}}</div>
+
+                    </div>
+                    <br>
+                    <form ng-show="showProductProps" style="width: 200px;margin: auto;">
+                        <div class="form-group">
+                          <label for="amount_total">Anzahl:</label>
+                          <input type="number" id="amount_total" class="form-control"  placeholder="Anzahl" ng-model="selectedProduct.amount_total">
+                        </div>
+                        <div class="form-group">
+                          <label for="sum_total_net">Preis:</label>
+                          <input type="number" id="sum_total_net" class="form-control"  placeholder="Preis" ng-model="selectedProduct.sum_total_net">
+                        </div>
+                    </form>
+                        
+                </div>
+                
+            </div>
+               
+        </div>
+        
+    </div>
+                 
+</div>
+<div class="modal-footer">
+    <div class="row">
+            
+            <div class="col-xs-6 text-left">
+                <button class="my-act-btn" ng-click="cancel()" >Abbrechen</button>
+            </div>
+            <div class="col-xs-6 text-right">
+            <button class="my-act-btn" ng-click="ok()" >OK</button>
+        </div>
+    </div>
+    
+</div>
+
+
+

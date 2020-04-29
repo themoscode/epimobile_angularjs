@@ -1,0 +1,28 @@
+{
+    "primary_key": 4,
+    "date_start": "2013-12-15T23:00:00.000Z",
+    "date_end": "2013-12-19T23:00:00.000Z",
+    "time_start": 32400000,
+    "time_end": 59400000,
+    "text": "Shipment Flash Barandov #130358-01 einchecken",
+    "is_processing": false,
+    "processing_user": "",
+    "is_completed": true,
+    "completed_date": "2014-01-14T23:00:00.000Z",
+    "completed_time": 40076000,
+    "completed_user": "Antje Lommatzsch",
+    "secondary_key": 0,
+    "secondary_type": 0,
+    "is_all_users": false,
+    "contact_name": "Black Box Music Veranstaltungstechnik GmbH",
+    "contact_pk": 0,
+    "contact": "",
+    "participant": [{
+        "primary_key": 4,
+        "user_id": 13,
+        "user_name": "Admin"
+    }],
+    "_participant_length": 1,
+    "is_start_date": true,
+    "is_end_date": true
+}

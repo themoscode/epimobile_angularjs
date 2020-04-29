@@ -1,0 +1,22 @@
+
+
+<div class="modal-header">
+    <h3 class="modal-title">epirent mobile<span ng-if="dataToModal.errorMsg" style="color:red">&nbsp;[ERROR]</span></h3>
+</div>
+
+<div class="modal-body">
+    
+    <p ng-bind-html="text"></p>
+
+</div>
+
+<div class="modal-footer" ng-hide="dataToModal.autoClose">
+    <div class="row">
+         
+         <div class="col-xs-12 text-center">
+             <button class="my-act-btn" ng-click="ok()" >OK</button>
+         </div>
+    </div>
+    
+</div>
+   

@@ -1,0 +1,43 @@
+<div class="modal-header text-center">
+    <h3 class="modal-title">Neu Ansprechpartner</h3>
+</div>
+
+<form class="form-horizontal EDIT_MODE" role="form">
+    
+    <div class="modal-body ">
+        <div class="row">
+            <div class="col-xs-4"><b>Name</b></div>
+            <div class="col-xs-8">
+                <input type="text" ng-model="cp_obj.first_name" class="form-control"> 
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-xs-4"><b>Nachname</b></div>
+            <div class="col-xs-8">
+                <input type="text" ng-model="cp_obj.last_name" class="form-control"> 
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-xs-4"><b>Position</b></div>
+            <div class="col-xs-8">
+                <input type="text" ng-model="cp_obj.position" class="form-control"> 
+            </div>
+        </div>
+        
+    </div>
+         
+    <div class="modal-footer">
+        <div class="row">
+             
+             <div class="col-xs-6 text-left">
+                 <button class="my-act-btn" ng-click="cancel()" >Abbrechen</button>
+             </div>
+             <div class="col-xs-6 text-right">
+                <button class="my-act-btn" ng-click="ok()" >OK</button>
+            </div>
+        </div>
+        
+    </div>
+</form>
+
+

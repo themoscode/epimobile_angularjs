@@ -1,0 +1,82 @@
+<!-- HEADER -->
+<header>
+    <div class="container-fluid my-panel-header">
+        <div class="row my-btn-group1" ng-include="'Components/Shared/panelHeader/index.html'"></div>
+        <div class="row my-btn-group2" >
+           
+            <div class="col-xs-2 text-right"></div>
+            <div class="col-xs-8 text-center siteTitle" >
+                    Adressen
+            </div>
+            <div class="col-xs-2 siteTitleTool text-left"><span class="glyphicon glyphicon-plus" ng-click="services.tools.navigateTo('/contactInsert')" ng-class="{'tool-disabled': !services.common.clientRights.contacts.can_insert, 'tool-on': services.common.clientRights.contacts.can_insert }"></span> </div>
+        
+        </div>
+    </div>
+</header>
+<!-- HEADER END -->
+<main>
+    <div class="container" >    
+        <div class="row bodyRow" style="margin-top:22px">
+
+            <div class="col-xs-12" ng-include="'Components/Shared/autocomplete/index.html'"></div>
+
+        </div>
+        
+        <div class="text-center" ng-if="services.common.loading.contacts">
+            <br>
+            <img src="Assets/img/icons/loading.gif" class="dataLoading">
+            <br>
+        </div>
+        <br>
+        
+
+        <div class="search_results_label" ng-show="searchDone && !services.common.loading.contacts">
+            <div ng-show="getContacts.length" class="found" >
+                {{getContacts.length}} 
+                <span ng-show="getContacts.length>1">Einträge</span> 
+                <span ng-show="getContacts.length==1">Eintrag</span> 
+                gefunden
+            </div>
+            <div ng-show="!getContacts.length" class="notFound" >Keine Einträge gefunden</div>
+        </div>
+           
+        
+        <div ng-show="getContacts.length">
+            <dir-pagination-controls template-url="Assets/modules/pagination/index.html"></dir-pagination-controls>
+            <div class="input-group sorting" >
+                    <div class="input-group-btn">
+                        <button class="btn btn-default" type="button" ng-click="sortBy(sortName)"><i ng-class="{'glyphicon glyphicon-triangle-top': sortAsc[sortName], 'glyphicon glyphicon-triangle-bottom': !sortAsc[sortName]}"></i></button>
+                    </div>
+                    <select class="form-control pointer"  ng-model="sortName" ng-change="sortBy(sortName)">
+                            
+                            <option value="name">Name</option>
+                            <option value="customer_no">Kundennummer</option>
+                            <option value="supplier_no">Lieferantnummer</option>
+                            
+                    </select>
+             </div>
+            <br><br> 
+            <div class="text-left my-list" >
+                 
+                 <div dir-paginate="row in getContacts | itemsPerPage: pageSize" current-page="currentPage"  class="block" style="border-bottom:1px solid #dddddd;padding-top:8px">
+                    <div class="text-center" style="font-family: myriad-set-pro-bold;">{{row.name}}</div>
+                    <div class="text-center"><span ng-if="row.is_client">[K]&nbsp;{{row.customer_no}}</span><span ng-if="row.is_supplier">&nbsp;&nbsp;[L]&nbsp;{{row.supplier_no}}</span></div>
+                    <div class="text-center" style="padding-top: 10px;" ng-show="!services.common.clientRights.contacts.can_delete">
+                        <span class="glyphicon glyphicon-pencil pointer" ng-click="services.tools.navigateTo('contact/'+row.primary_key)"></span>
+                    </div>
+                    <div class="text-center" style="padding-top: 10px;" ng-show="services.common.clientRights.contacts.can_delete">
+                        <span class="glyphicon glyphicon-pencil pointer" ng-click="services.tools.navigateTo('contact/'+row.primary_key)"></span>
+                         &nbsp;&nbsp;&nbsp;&nbsp;
+                        <span class="glyphicon glyphicon-trash pointer" ng-click="deleteContact(row)"></span>
+                    </div>
+                 </div>
+                
+                
+            </div>
+        </div>
+       
+
+       
+
+    </div>
+</main>

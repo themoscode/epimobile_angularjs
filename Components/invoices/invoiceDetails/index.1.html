@@ -1,0 +1,428 @@
+<div class="invoicePage">
+    <!-- HEADER -->
+    <header>
+        <div class="container-fluid my-panel-header">
+            <div class="row my-btn-group1" ng-include="'Components/Shared/panelHeader/index.html'"></div>
+            <div class="row my-btn-group2" >
+                <div class="col-xs-2 siteTitleTool disabled text-right"><span class="glyphicon glyphicon-pencil"></span> </div>
+                <div class="col-xs-8 text-center siteTitle" >
+                        <span class="pointer siteTitle2" ng-click="services.searchNavigate.invoices(searchFilters)">Rechnungen</span>
+                </div>
+                <div class="col-xs-2 siteTitleTool disabled text-left"><span class="glyphicon glyphicon-plus"></span> </div>
+            </div>
+        </div>
+    </header>
+        <!-- HEADER END -->
+    <main>
+        <div class="container" >    
+            <div class="row bodyRow" style="margin-top:22px">
+        
+                <div class="col-xs-12" ng-include="'Components/Shared/autocomplete/index.html'"></div>
+        
+            </div>
+            <div style="height:21px"></div>
+            <div class="btn-group my-btn-group">
+                
+                    <button type="button" ng-disabled="readOnly" ng-class="{'btn my-group-btn my-group-btn-on ': !getInvoice.is_sale, 'btn my-group-btn my-group-btn-off': getInvoice.is_sale}"  ng-click="setProductMode(true)">MIETE</button>
+                    <button type="button" ng-disabled="readOnly" ng-class="{'btn my-group-btn my-group-btn-on ': getInvoice.is_sale, 'btn my-group-btn my-group-btn-off': !getInvoice.is_sale}"  ng-click="setProductMode(false)" >VERKAUF</button>	
+                
+            </div>
+            <br><br>
+            <div>
+                    <div>Nr: {{getInvoice.invoice_no}}</div>
+                    <div>Datum: {{services.tools.dateFrom4d(getInvoice.invoice_date)}}</div>
+                    <br>
+                    <div>
+						<span class="link" ng-click="services.tools.navigateTo('contact/'+getInvoice.contact.primary_key)">{{getInvoice.contact.name}}</span>
+					</div>
+                    <div>
+						<span class="link" ng-click="services.common.getGoogleMap(getContact.address.street,getContact.address.postal_code,getContact.address.city)" >
+							{{getContact.address.street}}<br>
+							{{getContact.address.postal_code+" "+getContact.address.city}}
+						</span>
+					</div>
+                    <br>
+                    <div ng-include="'Components/Shared/communicationData/index.html'"></div>
+
+                    <br>
+                    <div class="bold" >{{getInvoice.event}}</div>
+                    <br>
+                    <!--
+                    <div class="text-center {{getInvoice.is_booked}}">{{services.states.invoice.is_booked[getInvoice.is_booked]}}</div>
+                    <div class="text-center {{getInvoice.is_cleared}}">{{services.states.invoice.is_cleared[getInvoice.is_cleared]}}</div>
+                    -->
+                    <div style="display: table;margin: 0 auto;">
+                        <div style="display: inline-block;" class="dot-group" >
+                            <div style="display: inline-block;margin-right:5px" class="dot {{getInvoice.is_booked}}" tooltip-placement="top" uib-tooltip="{{services.states.invoice.is_booked[getInvoice.is_booked]}}">GB</div>
+                            <div style="display: inline-block;margin-right:5px" class="dot {{getInvoice.is_cleared}}" tooltip-placement="top" uib-tooltip="{{services.states.invoice.is_cleared[getInvoice.is_cleared]}}">VB</div>
+                        </div>
+                    </div>    
+            </div>
+            
+            <div style="height:20px"></div>
+            
+        
+        
+            <div class="my-panel-acc">
+                <uib-accordion close-others="false">
+                        
+                        <div uib-accordion-group is-open="acc_group1.open">
+                            
+                                <uib-accordion-heading>
+                                    
+                                    <div class="row"  >
+                                        
+                                        <div class="col-xs-4 text-left"></div>
+                                        <div class="col-xs-4 text-center panelHeader">Zeitraum</div>
+                                        <div class="col-xs-4 text-right" ><span ng-class="{'glyphicon glyphicon-chevron-down': acc_group1.open, 'glyphicon glyphicon-chevron-right': !acc_group1.open}"></span></div>
+                                    
+                                    </div>
+                                    
+                                </uib-accordion-heading>
+                                
+        
+                                <div class="text-left my-list" >
+                                     
+                                    <!--<div class="list-group-item row color-00129a" ng-repeat="row in getInvoice.order_schedule | orderBy : 'position'"  ng-show="row.is_start_date" ng-click="openModalSelectDates(row);">-->
+                                    <div class="list-group-item row " ng-repeat="row in getInvoice.order_schedule | orderBy : 'position'"  ng-show="row.is_start_date" >
+											
+                                        <div class="col-xs-4 text-left">{{row.name}}</div>
+                                        <div class="col-xs-4 text-center">{{services.tools.dateFrom4d(row.date_start)}} {{services.tools.hoursMins(row.time_start).hours}}:{{services.tools.hoursMins(row.time_start).mins}}</div>
+                                        <div class="col-xs-4 text-right">{{services.tools.dateFrom4d(row.date_end)}} {{services.tools.hoursMins(row.time_end).hours}}:{{services.tools.hoursMins(row.time_end).mins}}</div>
+                                    
+                                    </div>
+                                                
+                                    </div>
+                                <br>
+                                <div ng-class="{'text-center dot-group': services.tools.deviceDetector.browser=='firefox', 'text-center dot-group notFirefox': services.tools.deviceDetector.browser!='firefox'}">
+									<!--	
+										<div class="dot {{getInvoice.is_booked}}" tooltip-placement="top" uib-tooltip="{{services.states.invoice.is_booked[getInvoice.is_booked]}}"></div>
+                                        <div class="dot {{getInvoice.is_cleared}}" tooltip-placement="top" uib-tooltip="{{services.states.invoice.is_cleared[getInvoice.is_cleared]}}"></div>
+                                    -->
+                                        
+								</div>
+                                <br>
+                                <br>
+                        </div>
+                        <div uib-accordion-group is-open="acc_group2.open">
+                                
+                                    <uib-accordion-heading>
+                                        
+                                        <div class="row"  >
+                                            
+                                            <div class="col-xs-4 text-left"></div>
+                                            <div class="col-xs-4 text-center panelHeader">Gesamtliste</div>
+                                            <div class="col-xs-4 text-right" ><span ng-class="{'glyphicon glyphicon-chevron-down': acc_group2.open, 'glyphicon glyphicon-chevron-right': !acc_group2.open}"></span></div>
+                                        
+                                        </div>
+                                        
+                                    </uib-accordion-heading>
+                                    <div class="my-list totalList" >
+                                            <!-- <div class="list-group-item row" ng-click="openMaterialModal(row.product_pk)" ng-repeat="row in getInvoice.order_items | orderBy : '_pos_no_intern' "> -->
+                                            <div ng-repeat="row in getInvoice.order_items | orderBy : '_pos_no_intern' " >
+                                                <div ng-if="row._type != 5" >
+                                                    
+                                                    <!--	
+                                                    <div>{{row.position_no_str}}&nbsp;{{row.product_no}}&nbsp;{{row.inventory_no}}&nbsp;{{row.title}}</div>
+                                                    <div>{{row.amount_total}}&nbsp;{{row.amount_extern}}&nbsp;{{row.amount_spare}}&nbsp;{{row.unit_product}}&nbsp;{{row.warehouse_str}}&nbsp;</div>
+                                                    <div>{{row.rental_price}}&nbsp;{{row.factor}}&nbsp;{{row.discount_percent}}&nbsp;{{row.sum_total_net}}</div>
+                                                    -->
+                                                    <div class="row bold" ng-class="{'rowColor1': $index%2==0, 'rowColor2': $index%2!=0}" ng-if="row._type < 20">
+                                                        <div ng-if="row._type!=5 && row._type!=6 && row._type!=12">
+                                                            <div class="col-xs-1 text-left np" style="padding-left:5px;">
+                                                                <span>{{row.position_no_str}}</span>
+                                                            </div>
+                                                            <div class="col-xs-1 text-center np" >
+                                                                <span ng-if="row.product_no!=0">{{row.product_no}}</span>
+                                                            </div>
+                                                            <div class="col-xs-2 text-center np" >
+                                                                <span>{{row.inventory_no}}</span>
+                                                            </div>
+                                                            <div class="col-xs-8 text-left np" >{{row.title}}</div>
+                                                        </div>
+                                                        <div ng-if="row._type==5 || row._type==6 || row._type==12">
+                                                            <div class="col-xs-1 text-left np" style="padding-left:5px;">
+                                                                <span>&nbsp;</span>
+                                                            </div>
+                                                            <div class="col-xs-1 text-center np" >
+                                                                <span>&nbsp;</span>
+                                                            </div>
+                                                            <div class="col-xs-2 text-center np" >
+                                                                <span>&nbsp;</span>
+                                                            </div>
+                                                            <div class="col-xs-8 text-left np" >{{row.title}}</div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="row bold" ng-class="{'rowColor1': $index%2==0, 'rowColor2': $index%2!=0}" ng-if="row._type >= 20">
+                                                        <div class="col-xs-1 text-left np" style="padding-left:5px;">&nbsp;</div>
+                                                        <div class="col-xs-1 text-center np" >&nbsp;</div>
+                                                        <div class="col-xs-2 text-center np" >&nbsp;</div>
+                                                        <div class="col-xs-8 text-left np" >{{row.title}}</div>
+                                                    </div>
+                                                    <div class="row" ng-class="{'rowColor1': $index%2==0, 'rowColor2': $index%2!=0}" ng-if="row._type < 20">
+                                                        <div ng-if="row._type!=5 && row._type!=6 && row._type!=12">
+                                                                <div class="col-xs-1 text-center np" ><span style="color:gray">[</span><span ng-if="row.amount_total!=0">{{row.amount_total}}</span><span ng-if="row.amount_total==0">&nbsp;&nbsp;</span><span style="color:gray">]</span></div>
+                                                                <div class="col-xs-1 text-center np" ><span style="color:gray">[</span><span ng-if="row.amount_external!=0" style="color:red">{{row.amount_external}}</span><span ng-if="row.amount_external==0">&nbsp;&nbsp;</span><span style="color:gray">]</span></div>
+                                                                <div class="col-xs-1 text-center np" ><span style="color:gray">[</span><span ng-if="row.amount_spare!=0">{{row.amount_spare}}</span><span ng-if="row.amount_spare==0">&nbsp;&nbsp;</span><span style="color:gray">]</span></div>
+                                                                <div class="col-xs-1 text-left np" >{{row.unit_product}}</div>
+                                                                <div class="col-xs-2 text-center np" >{{row.warehouse_str}}</div>
+                                                                <div class="col-xs-2 text-right np" >{{row.rental_price | currency:"" }}</div>
+                                                                <div class="col-xs-1 text-right np" ><span ng-if="row.factor>0">{{row.factor}}</span><span ng-if="row.factor==0">&nbsp;</span></div>
+                                                                <div class="col-xs-1 text-right np" ><span ng-if="row.discount_percent>0">{{row.discount_percent}}%</span><span ng-if="row.discount_percent==0">&nbsp;</span></div>
+                                                                <div class="col-xs-2 text-right np" style="padding-right:5px;">{{row.sum_total_net | currency:"" }}</div>
+                                                        </div>
+                                                        <div ng-if="row._type==5 || row._type==6 || row._type==12">
+                                                                <div class="col-xs-1 text-center np" ><span>&nbsp</span></div>
+                                                                <div class="col-xs-1 text-center np" ><span>&nbsp</span></div>
+                                                                <div class="col-xs-1 text-center np" ><span>&nbsp</span></div>
+                                                                <div class="col-xs-1 text-left np" ><span>&nbsp</span></div>
+                                                                <div class="col-xs-2 text-center np" ><span>&nbsp</span></div>
+                                                                <div class="col-xs-2 text-right np" ><span>&nbsp</span></div>
+                                                                <div class="col-xs-1 text-right np" ><span>&nbsp</span></div>
+                                                                <div class="col-xs-1 text-right np" ><span>&nbsp</span></div>
+                                                                <div class="col-xs-2 text-right np" style="padding-right:5px;">{{row.sum_total_net | currency:"" }}</div>
+                                                        </div>
+                                                        
+                                                    </div><!-- -->
+                                                </div>	
+    
+    
+                                                <div ng-if="row._type == 5" style="padding:0px" ng-show="true">
+                                                        <div class="row my-panel-acc_kap" style="padding:0px">
+                                                                <uib-accordion close-others="false" style="padding:0px">
+                                                                        <div uib-accordion-group is-open="acc_kap_group[$index]" style="padding:0px">
+                                                                                <uib-accordion-heading style="padding:0px">
+                                                                                            <!--
+                                                                                            <div class="row"  >
+                                                                                                <div class="col-xs-2 text-left"><span ng-hide="readOnly" class="glyphicon glyphicon-plus"></span></div>
+                                                                                                <div class="col-xs-8 text-center panelHeader">{{row.title}}</div>
+                                                                                                <div class="col-xs-2 text-right" >[{{row.__chapter_items.length}}]&nbsp;&nbsp;<span ng-class="{'glyphicon glyphicon-chevron-down': acc_kap_group[$index], 'glyphicon glyphicon-chevron-right': !acc_kap_group[$index]}"></span></div>
+                                                                                            </div>
+                                                                                            
+                                                                                            
+                                                                                            <div class="panelHeaderContainer" window-width>
+                                                                                                <div class="left" ng-if="!readOnly"><span class="glyphicon glyphicon-plus"></span></div>
+                                                                                                <div class="panelHeader">
+                                                                                                    <div ng-if="width<=414">
+                                                                                                        <span ng-if="row.title.length>7" tooltip-placement="top" uib-tooltip="{{row.title}}">{{row.title | limitTo:7}}...</span>
+                                                                                                        <span ng-if="row.title.length<=7">{{row.title}}</span>
+                                                                                                    </div>
+                                                                                                    <div ng-if="width>414">
+                                                                                                        {{row.title}}
+                                                                                                    </div>
+                                                                                                </div>
+                                                                                                <div class="right">[{{row.__chapter_items.length}}]&nbsp;&nbsp;<span ng-class="{'glyphicon glyphicon-chevron-down': acc_kap_group[$index], 'glyphicon glyphicon-chevron-right': !acc_kap_group[$index]}"></span></div>
+                                                                                            </div>
+                                                                                            -->
+                                                                                            <div class="row">
+                                                                                                <div class="col-xs-1 text-left np bold" style="padding-left:5px;">
+                                                                                                    <span>{{row.position_no_str}}</span>
+                                                                                                </div>
+                                                                                                <div class="col-xs-3 text-center np" >
+                                                                                                    <span></span>
+                                                                                                </div>
+                                                                                                
+                                                                                                <div class="col-xs-6 text-left np bold" window-width>
+                                                                                                    <span ng-if="width<=414">
+                                                                                                        <span ng-if="row.title.length>7" tooltip-placement="top" uib-tooltip="{{row.title}}">{{row.title | limitTo:7}}...</span>
+                                                                                                        <span ng-if="row.title.length<=7">{{row.title}}</span>
+                                                                                                    </span>
+                                                                                                    <span ng-if="width>414">
+                                                                                                            {{row.title}}
+                                                                                                    </span>
+                                                                                                    &nbsp;&nbsp;[{{row.__chapter_items.length}}]&nbsp;&nbsp;<span ng-class="{'glyphicon glyphicon-chevron-down': acc_kap_group[$index], 'glyphicon glyphicon-chevron-right': !acc_kap_group[$index]}"></span>
+                                                                                                </div>
+                                                                                                <div class="col-xs-2 text-right np" style="padding-right:5px;">{{row.sum_total_net | currency:"" }}</div>
+                                                                                            </div>
+    
+                                                                                </uib-accordion-heading>
+                                                                                <div class="my-list" >
+                                                                                        <div ng-repeat="row2 in row.__chapter_items | orderBy : '_pos_no_intern' " >
+                                                                                                <!--
+                                                                                                <div>{{row2.position_no_str}}&nbsp;{{row2.product_no}}&nbsp;{{row2.inventory_no}}&nbsp;{{row2.title}}</div>
+                                                                                                <div>{{row2.amount_total}}&nbsp;{{row2.amount_extern}}&nbsp;{{row2.amount_spare}}&nbsp;{{row2.unit_product}}&nbsp;{{row2.warehouse_str}}&nbsp;</div>
+                                                                                                <div>{{row2.rental_price}}&nbsp;{{row2.factor}}&nbsp;{{row2.discount_percent}}&nbsp;{{row2.sum_total_net}}</div>
+                                                                                                -->
+                                                                                                    <div class="row bold" ng-class="{'rowColor3': $index%2==0, 'rowColor4': $index%2!=0}" ng-if="row2._type < 20">
+                                                                                                        <div ng-if="row2._type!=5 && row2._type!=6 && row2._type!=12">
+                                                                                                            <div class="col-xs-1 text-left np" style="padding-left:5px;">
+                                                                                                                <span>{{row2.position_no_str}}</span>
+                                                                                                            </div>
+                                                                                                            <div class="col-xs-1 text-center np" >
+                                                                                                                <span ng-if="row2.product_no!=0">{{row2.product_no}}</span>
+                                                                                                            </div>
+                                                                                                            <div class="col-xs-2 text-center np" >
+                                                                                                                <span>{{row2.inventory_no}}</span>
+                                                                                                            </div>
+                                                                                                            <div class="col-xs-8 text-left np" >{{row2.title}}</div>
+                                                                                                        </div>
+                                                                                                        <div ng-if="row2._type==5 || row2._type==6 || row2._type==12">
+                                                                                                            <div class="col-xs-1 text-left np" style="padding-left:5px;">
+                                                                                                                <span>&nbsp;</span>
+                                                                                                            </div>
+                                                                                                            <div class="col-xs-1 text-center np" >
+                                                                                                                <span>&nbsp;</span>
+                                                                                                            </div>
+                                                                                                            <div class="col-xs-2 text-center np" >
+                                                                                                                <span>&nbsp;</span>
+                                                                                                            </div>
+                                                                                                            <div class="col-xs-8 text-left np" >{{row2.title}}</div>
+                                                                                                        </div>
+                                                                                                    </div>
+                                                                                                    <div class="row bold" ng-class="{'rowColor3': $index%2==0, 'rowColor4': $index%2!=0}" ng-if="row2._type >= 20">
+                                                                                                        <div class="col-xs-1 text-left np" style="padding-left:5px;">&nbsp;</div>
+                                                                                                        <div class="col-xs-1 text-center np" >&nbsp;</div>
+                                                                                                        <div class="col-xs-2 text-center np" >&nbsp;</div>
+                                                                                                        <div class="col-xs-8 text-left np" >{{row2.title}}</div>
+                                                                                                    </div>
+                                                                                                    <div class="row" ng-class="{'rowColor3': $index%2==0, 'rowColor4': $index%2!=0}" ng-if="row2._type < 20">
+                                                                                                        <div ng-if="row2._type!=5 && row2._type!=6 && row2._type!=12">
+                                                                                                                <div class="col-xs-1 text-center np" ><span style="color:gray">[</span><span ng-if="row2.amount_total!=0">{{row2.amount_total}}</span><span ng-if="row2.amount_total==0">&nbsp;&nbsp;</span><span style="color:gray">]</span></div>
+                                                                                                                <div class="col-xs-1 text-center np" ><span style="color:gray">[</span><span ng-if="row2.amount_external!=0" style="color:red">{{row2.amount_external}}</span><span ng-if="row2.amount_external==0">&nbsp;&nbsp;</span><span style="color:gray">]</span></div>
+                                                                                                                <div class="col-xs-1 text-center np" ><span style="color:gray">[</span><span ng-if="row2.amount_spare!=0">{{row2.amount_spare}}</span><span ng-if="row2.amount_spare==0">&nbsp;&nbsp;</span><span style="color:gray">]</span></div>
+                                                                                                                <div class="col-xs-1 text-left np" >{{row2.unit_product}}</div>
+                                                                                                                <div class="col-xs-2 text-center np" >{{row2.warehouse_str}}</div>
+                                                                                                                <div class="col-xs-2 text-right np" >{{row2.rental_price | currency:"" }}</div>
+                                                                                                                <div class="col-xs-1 text-right np" ><span ng-if="row2.factor>0">{{row2.factor}}</span><span ng-if="row2.factor==0">&nbsp;</span></div>
+                                                                                                                <div class="col-xs-1 text-right np" ><span ng-if="row2.discount_percent>0">{{row2.discount_percent}}%</span><span ng-if="row2.discount_percent==0">&nbsp;</span></div>
+                                                                                                                <div class="col-xs-2 text-right np" style="padding-right:5px;">{{row2.sum_total_net | currency:"" }}</div>
+                                                                                                        </div>
+                                                                                                        <div ng-if="row2._type==5 || row2._type==6 || row2._type==12">
+                                                                                                                <div class="col-xs-1 text-center np" ><span>&nbsp</span></div>
+                                                                                                                <div class="col-xs-1 text-center np" ><span>&nbsp</span></div>
+                                                                                                                <div class="col-xs-1 text-center np" ><span>&nbsp</span></div>
+                                                                                                                <div class="col-xs-1 text-left np" ><span>&nbsp</span></div>
+                                                                                                                <div class="col-xs-2 text-center np" ><span>&nbsp</span></div>
+                                                                                                                <div class="col-xs-2 text-right np" ><span>&nbsp</span></div>
+                                                                                                                <div class="col-xs-1 text-right np" ><span>&nbsp</span></div>
+                                                                                                                <div class="col-xs-1 text-right np" ><span>&nbsp</span></div>
+                                                                                                                <div class="col-xs-2 text-right np" style="padding-right:5px;">{{row2.sum_total_net | currency:"" }}</div>
+                                                                                                        </div>
+                                                                                                        
+                                                                                                </div>
+                                                                                        </div>
+                                                                                        
+                                                                                </div>
+                                                                        </div>
+                                                                </uib-accordion>
+                                                        </div>
+                                                </div>
+    
+                                                
+                                        
+                                            </div>
+                                        </div>
+                                   
+                            </div>
+                            <br>
+                            <div class="prices" >
+									<div class="row background_lightgray" >
+										<div class="col-xs-8 text-left" style="padding-left:8px">Miete</div>
+										<div class="col-xs-4 text-right bold color-535353" style="padding-right:5px">{{getInvoice.sum_rent | currency:""}} </div>
+									</div>
+									<div class="row">
+										<div class="col-xs-8 text-left" style="padding-left:8px">Verkauf</div>
+										<div class="col-xs-4 text-right bold color-535353" style="padding-right:5px">{{getInvoice.sum_sales | currency:""}} </div>
+									</div>
+									<div class="row background_lightgray">
+										<div class="col-xs-8 text-left" style="padding-left:8px">Service</div>
+										<div class="col-xs-4 text-right bold color-535353" style="padding-right:5px">{{getInvoice.sum_service | currency:""}} </div>
+									</div>
+									<div class="row">
+										<div class="col-xs-8 text-left" style="padding-left:8px">Transport</div>
+										<div class="col-xs-4 text-right bold color-535353" style="padding-right:5px">{{getInvoice.sum_transport | currency:""}} </div>
+									</div>
+									<div class="row background_lightgray">
+										<div class="col-xs-8 text-left" style="padding-left:8px">Versicherung</div>
+										<div class="col-xs-4 text-right bold color-535353" style="padding-right:5px">{{getInvoice.sum_insurance | currency:""}} </div>
+									</div>
+									
+									<div class="row">
+										<div class="col-xs-8 text-left" style="padding-left:8px">Rabatt</div>
+										<div class="col-xs-4 text-right bold color-535353" style="padding-right:5px">{{getInvoice.sum_discount | currency:""}} </div>
+                                    </div>
+                                    <div class="row background_lightgray">
+                                            <div class="col-xs-8 text-left" style="padding-left:8px">Gesamtpreis Netto</div>
+                                            <div class="col-xs-4 text-right bold color-535353" style="padding-right:5px">{{getInvoice.sum_net | currency:""}} </div>
+                                        </div>
+									<div>
+										<div class="row" ng-show="getInvoice.sum_salestax2 > 0">
+											<div class="col-xs-8 text-left" style="padding-left:8px">Mehrwertsteuer 7%</div>
+											<div class="col-xs-4 text-right bold color-535353" style="padding-right:5px">{{getInvoice.sum_salestax2 | currency:""}} </div>
+										</div>
+										<div class="row">
+											<div class="col-xs-8 text-left" style="padding-left:8px">Mehrwertsteuer 19%</div>
+											<div class="col-xs-4 text-right bold color-535353" style="padding-right:5px">{{getInvoice.sum_salestax1 | currency:""}} </div>
+										</div>
+									</div>
+									
+									<div class="row background_lightgray" >
+										<div class="col-xs-8 text-left" style="padding-left:8px">Gesamtpreis Brutto</div>
+										<div class="col-xs-4 text-right bold" style="padding-right:5px">{{getInvoice.sum_gro | currency:""}} </div>
+									</div>
+							</div>
+                            <br>
+                            <!--
+                            <div uib-accordion-group is-open="acc_group5.open">
+                                    <uib-accordion-heading>
+                                        <div class="row"  >
+                                            <div class="col-xs-4 text-left"></div>
+                                            <div class="col-xs-4 text-center panelHeader">Dateiablage</div>
+                                            <div class="col-xs-4 text-right" ><span ng-class="{'glyphicon glyphicon-chevron-down': acc_group5.open, 'glyphicon glyphicon-chevron-right': !acc_group5.open}"></span></div>
+                                        </div>
+                                    </uib-accordion-heading>
+                                    <div class="text-left my-list" >
+                                        <div class="list-group-item row" >
+                                            <div class="col-xs-4 text-left">12.08.2017</div>
+                                            <div class="col-xs-4 text-center">Catering_Flying-liste.pdf</div>
+                                            <div class="col-xs-4"></div>
+                                        </div>
+                                        <div class="list-group-item row" >
+                                            <div class="col-xs-4 text-left">12.08.2017</div>
+                                            <div class="col-xs-4 text-center">Übersicht-planung.xls</div>
+                                            <div class="col-xs-4"></div>
+                                        </div>
+                                        <div class="list-group-item row" >
+                                            <div class="col-xs-4 text-left">14.08.2017</div>
+                                            <div class="col-xs-4 text-center">Interview_CEO.mp4</div>
+                                            <div class="col-xs-4"></div>
+                                        </div>
+                                    </div>
+                            </div>
+                            -->
+                            <div uib-accordion-group is-open="acc_group6.open">
+                                            
+                                    <uib-accordion-heading>
+                                        
+                                        <div class="row"  >
+                                            
+                                            <div class="col-xs-4 text-left"></div>
+                                            <div class="col-xs-4 text-center panelHeader">Notizen</div>
+                                            <div class="col-xs-4 text-right" ><span ng-class="{'glyphicon glyphicon-chevron-down': acc_group6.open, 'glyphicon glyphicon-chevron-right': !acc_group6.open}"></span></div>
+                                            
+                                        
+                                        </div>
+                                        
+                                    </uib-accordion-heading>
+                                    <div class="text-left my-list" >
+                                            
+                                        <div class="list-group-item row" >
+                                            
+                                            <div class="col-xs-12" style="height:200px">{{getInvoice.notes}}</div>
+                                            
+                                        </div>
+                                        
+                                        
+                                        
+                                    </div>
+                                
+                                
+                            </div>
+                                    
+                </uib-accordion>
+            </div>
+            
+        
+        </div>
+    </main>
+</div>

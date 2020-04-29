@@ -1,0 +1,216 @@
+<div class="meetingPage">
+    <!-- HEADER -->
+   
+    <header>
+        <div class="container-fluid my-panel-header">
+            <div class="row my-btn-group1" ng-include="'Components/Shared/panelHeader/index.html'"></div>
+            <div class="row my-btn-group2">
+                
+
+                <div class="col-xs-2 siteTitleTool text-right"><span class="glyphicon glyphicon-pencil" ng-class="{'tool-disabled': !services.common.clientRights.meetings.can_update, 'tool-on': !services.common.clientRights.meetings.read_only ,'tool-off': services.common.clientRights.meetings.read_only  }" ng-click="changeViewMode('meetings')"></span> </div>
+                <div class="col-xs-8 text-center siteTitle" >
+                    <span class="pointer siteTitle2" ng-click="services.searchNavigate.meetings(searchFilters,daysFilter)">Termine</span>
+                </div>
+                <div class="col-xs-2 siteTitleTool text-left"><span class="glyphicon glyphicon-plus" ng-click="services.tools.navigateTo('/meetingInsert')" ng-class="{'tool-disabled': !services.common.clientRights.meetings.can_insert, 'tool-on': services.common.clientRights.meetings.can_insert }"></span> </div>
+
+            
+            </div>
+
+        </div>
+    </header>
+    <!-- HEADER END -->
+   
+    <main>
+            <div class="container" >   
+                    <div class="row bodyRow" style="margin-top:22px">
+                            
+                        <div class="col-xs-12" ng-include="'Components/Shared/autocomplete/index.html'"></div>
+            
+                    </div>
+                    <br>
+                    <div ng-show="services.common.clientRights.meetings.read_only"> <!-- READ ONLY MODE-->
+                                
+                                <div ng-show="data.is_start_date && !data.is_end_date" >
+                                    <span class="title-bold" >{{services.tools.dayNameFrom4d(data.date_start)}}</span><br>
+                                    <span >{{services.tools.dateFrom4d(data.date_start)}} {{services.tools.hoursMins(data.time_start).hours}}:{{services.tools.hoursMins(data.time_start).mins}} Uhr</span>
+                                </div>
+                                <div ng-show="data.is_start_date && data.is_end_date" >
+                                    <div ng-if="data.date_start!=data.date_end">
+                                            <span class="title-bold" >{{services.tools.dayNameFrom4d(data.date_start)}}</span><br>
+                                            <span>{{services.tools.dateFrom4d(data.date_start)}} {{services.tools.hoursMins(data.time_start).hours}}:{{services.tools.hoursMins(data.time_start).mins}} </span>
+                                            -
+                                            <span>{{services.tools.dateFrom4d(data.date_end)}} {{services.tools.hoursMins(data.time_end).hours}}:{{services.tools.hoursMins(data.time_end).mins}} Uhr</span>
+                                    </div>
+                                    <div ng-if="data.date_start==data.date_end">
+                                            <span class="title-bold" >{{services.tools.dayNameFrom4d(data.date_start)}}</span><br>
+                                            <span>{{services.tools.dateFrom4d(data.date_start)}} {{services.tools.hoursMins(data.time_start).hours}}:{{services.tools.hoursMins(data.time_start).mins}} </span>
+                                            -
+                                            <span>{{services.tools.hoursMins(data.time_end).hours}}:{{services.tools.hoursMins(data.time_end).mins}} Uhr</span>
+                                    </div>
+                                
+                                </div>
+            
+                                
+                                <div style="height:21px"></div>
+                                <div>
+                                        <!--
+                                        <h3 style="font-family: myriad-set-pro-bold;" class="pointer" ng-click="services.tools.navigateTo('contact/'+data.contact_pk)">{{data.contact_name}}</h3>
+                                        <button class="my-act-btn" ng-click="services.tools.navigateTo('contact/'+data.contact_pk)">{{data.contact_name}}</button>
+                                        -->
+            
+                                        <div ng-show="data.contact_name != ''" class="title-bold pointer link" ng-click="services.tools.navigateTo('contact/'+data.contact_pk)">{{data.contact_name}}<br></div>
+                                    
+                                        <div class="title-bold" style="word-break: break-all;">{{data.text}}</div>
+            
+            
+                                </div>
+                                <div style="height:21px"></div>
+                                <div class="my-panel-acc">
+                                        <uib-accordion close-others="false">
+                                                
+                                                <div uib-accordion-group is-open="true" is-disabled="true">
+                                                        <uib-accordion-heading>
+                                                                
+                                                            <div class="row"  >
+                                                                
+                                                                <div class="col-xs-4 text-left"></div>
+                                                                <div class="col-xs-4 text-center panelHeader">Notizen</div>
+                                                                <div class="col-xs-4 text-right" ></div>
+                                                                
+                                                            
+                                                            </div>
+                                                            
+                                                        </uib-accordion-heading>
+                                                        <div class="text-left my-list" >
+                                                                
+                                                            <div class="list-group-item row" >
+                                                                
+                                                                <div class="col-xs-12" style="height:200px">
+                            
+                                                                        {{data.notes}}
+                            
+                                                                </div>
+                                                                
+                                                            </div>
+                                                            
+                                                            
+                                                            
+                                                        </div>
+                                                </div>
+                                                            
+                                        </uib-accordion>
+                                        
+                                       <!--
+                                        <div class="row">
+                                            <div class="col-xs-6 text-left"><button class="my-act-btn" ng-click="openModalParticipant(data)">Teilnehmer</button></div>
+                                            <div class="col-xs-6 text-right"><button class="my-act-btn" ng-click="openModalSearchContact(data)">Adresse</button></div>
+                                        </div>  
+                                    -->  
+                                    <div class="row" ng-if="data.participant.length>0">
+                                        <br>
+                                        <div class="col-xs-12 text-center"><button class="my-act-btn" ng-click="openModalParticipant(data)">Teilnehmer</button></div>
+                                    </div>  
+                                        
+                                </div>   
+
+                    </div>
+                    <div ng-show="!services.common.clientRights.meetings.read_only" class="EDIT_MODE"> <!-- EDIT MODE -->
+                        
+                        <div ng-click="openModalSelectDates(data)" class="edit-text">
+
+                            <div ng-show="data.is_start_date && !data.is_end_date" >
+                                    <span class="title-bold" >{{services.tools.dayNameFrom4d(data.date_start)}}</span><br>
+                                <span >{{services.tools.dateFrom4d(data.date_start)}} {{services.tools.hoursMins(data.time_start).hours}}:{{services.tools.hoursMins(data.time_start).mins}} Uhr</span>
+                            </div>
+                            <div ng-show="data.is_start_date && data.is_end_date" >
+                                <div ng-if="data.date_start!=data.date_end">
+                                        <span class="title-bold" >{{services.tools.dayNameFrom4d(data.date_start)}}</span><br>
+                                        <span>{{services.tools.dateFrom4d(data.date_start)}} {{services.tools.hoursMins(data.time_start).hours}}:{{services.tools.hoursMins(data.time_start).mins}} </span>
+                                        -
+                                        <span>{{services.tools.dateFrom4d(data.date_end)}} {{services.tools.hoursMins(data.time_end).hours}}:{{services.tools.hoursMins(data.time_end).mins}} Uhr</span>
+                                </div>
+                                <div ng-if="data.date_start==data.date_end">
+                                        <span class="title-bold" >{{services.tools.dayNameFrom4d(data.date_start)}}</span><br>
+                                        <span>{{services.tools.dateFrom4d(data.date_start)}} {{services.tools.hoursMins(data.time_start).hours}}:{{services.tools.hoursMins(data.time_start).mins}} </span>
+                                        -
+                                        <span>{{services.tools.hoursMins(data.time_end).hours}}:{{services.tools.hoursMins(data.time_end).mins}} Uhr</span>
+                                </div>
+                            </div>
+
+
+                    </div>
+        
+                            
+                            <div style="height:21px"></div>
+                            <div>
+                            
+                                   <form class="form-inline" >
+                                        <div class="form-group">
+                                            <label>Kontakt:</label>
+                                            <input type="text" class="form-control" ng-model="data.contact_name" ng-click="openModalSearchContact(data)">
+                                        </div>
+                                        <div class="form-group">
+                                            <label>Text:</label>
+                                            <input type="text" class="form-control" ng-model="data.text">
+                                        </div>
+                                  </form>
+
+                            </div>
+                            <div style="height:21px"></div>
+                            <div class="my-panel-acc">
+                                    <uib-accordion close-others="false">
+                                            
+                                            <div uib-accordion-group is-open="true" is-disabled="true">
+                                                    <uib-accordion-heading>
+                                                            
+                                                        <div class="row"  >
+                                                            
+                                                            <div class="col-xs-4 text-left"></div>
+                                                            <div class="col-xs-4 text-center panelHeader">Notizen</div>
+                                                            <div class="col-xs-4 text-right" ></div>
+                                                            
+                                                        
+                                                        </div>
+                                                        
+                                                    </uib-accordion-heading>
+                                                    <div class="text-left my-list edit-text2" >
+                                                            
+                                                        <div class="list-group-item row" >
+                                                            
+                                                            <div class="col-xs-12" style="height:200px;padding:0px">
+                        
+                                                                <textarea class="e-txtarea" ng-model="data.notes">
+                                                                    
+                                                                </textarea> 
+                        
+                                                            </div>
+                                                            
+                                                        </div>
+                                                        
+                                                        
+                                                        
+                                                    </div>
+                                            </div>
+                                                        
+                                    </uib-accordion>
+                                    
+                                   
+                                <div class="row" >
+                                    <br>
+                                    <div class="col-xs-12 text-center"><button class="my-act-btn" ng-click="openModalParticipant(data)">Teilnehmer</button></div>
+                                </div>  
+                                <br>
+                                <div style="display: table;margin: 0 auto;">
+                                    <div style="display: inline-block;"><button ng-click="services.common.openMsgAutoclose('Datensatz wurde gespeichert!')" class="my-act-btn edit-btn" >Speichern</button></div>
+                                    <div style="display: inline-block;width: 30px;"></div>
+                                    <div style="display: inline-block;"><button ng-click="services.common.openMsgAutoclose('Datensatz wurde zurückgestellt')" class="my-act-btn edit-btn" >Zurückstellen</button></div>
+                                </div>
+                                    
+                            </div>   
+
+                    </div><!-- EDIT MODE END -->
+                       
+            </div>    
+    </main>
+    
+</div>

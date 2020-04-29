@@ -1,0 +1,210 @@
+	
+	
+	<div class="modal-header text-center">
+        <h3 class="modal-title">Einstellungen</h3>
+    </div>
+	<div class="text-center">
+		<br>
+		<h3 style="font-family: myriad-set-pro-ultralight;">Sichtbarkeit der Bereiche</h3>
+	</div>
+	
+
+    <form class="form-horizontal" role="form">
+	    <div class="modal-body">
+	        
+	        <div class="row">
+	        	<div class="col-xs-12 text-center">
+					
+					<!--
+					<input
+					bs-switch
+					emit-change="globalSearch"
+					ng-model="services.common.app_settings.showSearch"
+					type="checkbox"
+					switch-active="true"
+					switch-on-text="ON"
+					switch-off-text="OFF"
+					switch-on-color="success"
+					switch-off-color="danger"
+					switch-animate="true"
+					switch-size="large"
+					switch-label="Globale Suche"
+					switch-label-width="150px"
+					>
+					<br>
+					-->
+				    <input
+				      bs-switch
+				      ng-model="services.common.app_settings.showTermin"
+				      type="checkbox"
+				      switch-active="true"
+				      switch-on-text="ON"
+				      switch-off-text="OFF"
+				      switch-on-color="success"
+				      switch-off-color="danger"
+				      switch-animate="true"
+				      switch-size="large"
+				      switch-label="Termine" 
+				      switch-label-width="150px"
+				      >
+				      <br>
+				      <input
+				      bs-switch
+				      ng-model="services.common.app_settings.showAufgabe"
+				      type="checkbox"
+				      switch-active="true"
+				      switch-on-text="ON"
+				      switch-off-text="OFF"
+				      switch-on-color="success"
+				      switch-off-color="danger"
+				      switch-animate="true"
+				      switch-size="large"
+				      switch-label="Aufgaben"
+				      switch-label-width="150px"
+				      >
+					  <br>
+      				  <input
+				      bs-switch
+				      ng-model="services.common.app_settings.showAdress"
+				      type="checkbox"
+				      switch-active="true"
+				      switch-on-text="ON"
+				      switch-off-text="OFF"
+				      switch-on-color="success"
+				      switch-off-color="danger"
+				      switch-animate="true"
+				      switch-size="large"
+				      switch-label="Adressen"
+				      switch-label-width="150px"
+				      >
+					  <br>
+					  <!--
+					  <input
+					  bs-switch
+				      ng-model="services.common.app_settings.showZeiterfassung"
+				      type="checkbox"
+				      switch-active="true"
+				      switch-on-text="ON"
+				      switch-off-text="OFF"
+				      switch-on-color="success"
+				      switch-off-color="danger"
+				      switch-animate="true"
+				      switch-size="large"
+				      switch-label="Zeiterfassung"
+					  switch-label-width="150px"
+					  >
+					  <br>
+					  -->
+				      <input
+				      bs-switch
+				      ng-model="services.common.app_settings.showArtikel"
+				      type="checkbox"
+				      switch-active="true"
+				      switch-on-text="ON"
+				      switch-off-text="OFF"
+				      switch-on-color="success"
+				      switch-off-color="danger"
+				      switch-animate="true"
+				      switch-size="large"
+				      switch-label="Artikel"
+				      switch-label-width="150px"
+				      >
+				      <br>
+				      <input
+				      bs-switch
+				      ng-model="services.common.app_settings.showAuftrag"
+				      type="checkbox"
+				      switch-active="true"
+				      switch-on-text="ON"
+				      switch-off-text="OFF"
+				      switch-on-color="success"
+				      switch-off-color="danger"
+				      switch-animate="true"
+				      switch-size="large"
+				      switch-label="Aufträge"
+				      switch-label-width="150px"
+				      >
+					  <br>
+				      <input
+				      bs-switch
+				      ng-model="services.common.app_settings.showRechnung"
+				      type="checkbox"
+				      switch-active="true"
+				      switch-on-text="ON"
+				      switch-off-text="OFF"
+				      switch-on-color="success"
+				      switch-off-color="danger"
+				      switch-animate="true"
+				      switch-size="large"
+				      switch-label="Rechnungen"
+				      switch-label-width="150px">
+					  <br>
+					  <!--
+					  <div style="padding-right:4px" ng-show="services.tools.deviceDetector.browser!='firefox'">
+						<input 
+						bs-switch
+						ng-model="services.common.app_settings.showChat"
+						type="checkbox"
+						switch-active="true"
+						switch-on-text="ON"
+						switch-off-text="OFF"
+						switch-on-color="success"
+						switch-off-color="danger"
+						switch-animate="true"
+						switch-size="large"
+						switch-label="Chat"
+						switch-label-width="150px">
+					  </div>
+					  <div ng-show="services.tools.deviceDetector.browser=='firefox'">
+						<input 
+						bs-switch
+						ng-model="services.common.app_settings.showChat"
+						type="checkbox"
+						switch-active="true"
+						switch-on-text="ON"
+						switch-off-text="OFF"
+						switch-on-color="success"
+						switch-off-color="danger"
+						switch-animate="true"
+						switch-size="large"
+						switch-label="Chat"
+						switch-label-width="150px">
+					  </div>
+					-->
+					  
+	        		
+	        	</div>
+	        	
+			</div>
+			
+			<br>
+			<div class="text-center" style="margin-bottom:10px">
+				<h3 style="font-family: myriad-set-pro-ultralight;">Suchanfragen merken</h3>
+			</div>
+			
+				
+			<div class="row">
+				<div class="col-xs-12 text-center">
+					<div class="input-group" style="width:243px; margin:auto">
+						<span class="input-group-addon pointer" ng-click="services.common.app_settings.searchMemory_set('-')"><i class="glyphicon glyphicon-minus"></i></span>
+						<input  type="text" class="form-control text-center" ng-model="services.common.app_settings.searchMemory" readonly style="border: 1px solid rgb(204, 204, 204);">
+						<span class="input-group-addon pointer" ng-click="services.common.app_settings.searchMemory_set('+')"><i class="glyphicon glyphicon-plus"></i></span>
+					</div>
+				</div>
+				
+			</div>
+		  
+	    </div>
+	    <div class="modal-footer">
+	        <div class="row">
+	        	 
+	        	 <div class="col-xs-12 text-center">
+	        	 	<button class="my-act-btn" ng-click="ok()" >OK</button>
+	        	 </div>
+	        </div>
+	        
+	    </div>
+	</form>
+	
+
+	

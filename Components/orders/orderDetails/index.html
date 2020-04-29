@@ -1,0 +1,1057 @@
+
+<style>
+
+.orderPage .EDIT_MODE .accordion-toggle {
+	text-decoration: none !important;
+}
+
+.orderPage .my-panel-acc .panel-heading {
+    
+	background: {{accordionColor}};
+	
+	
+  }
+
+	.orderPage .my-panel-acc_kap .panel-heading {
+
+		background: #8898F7;
+		
+}
+
+	.orderPage .EDIT_MODE .my-panel-acc_kap .panel-heading {
+
+		
+		height: 70px !important;
+}
+</style>
+
+<div class="orderPage">
+	
+	<!-- HEADER -->
+	<header>
+		<div class="container-fluid my-panel-header">
+			<div class="row my-btn-group1" ng-include="'Components/Shared/panelHeader/index.html'"></div>
+			
+
+			<div class="row my-btn-group2" >
+				<div class="col-xs-2 siteTitleTool text-right"><span class="glyphicon glyphicon-pencil" ng-class="{'tool-disabled': !services.common.clientRights.orders.can_update, 'tool-on': !services.common.clientRights.orders.read_only ,'tool-off': services.common.clientRights.orders.read_only  }" ng-click="changeViewMode('orders')"></span> </div>
+				<div class="col-xs-8 text-center siteTitle" >
+					<span class="pointer siteTitle2" ng-click="services.searchNavigate.orders(searchFilters)">Aufträge</span>
+				</div>
+				<div class="col-xs-2 siteTitleTool text-left"><span class="glyphicon glyphicon-plus" ng-click="services.tools.navigateTo('/orderInsert')" ng-class="{'tool-disabled': !services.common.clientRights.orders.can_insert, 'tool-on': services.common.clientRights.orders.can_insert }"></span> </div>
+			</div>
+
+		</div>
+	</header>
+	
+	<!-- HEADER END -->
+	<main>
+		<div class="container" >    
+			<div class="row bodyRow" style="margin-top:22px">
+
+				<div class="col-xs-12" ng-include="'Components/Shared/autocomplete/index.html'"></div>
+
+			</div>
+			<div style="height:21px"></div>
+			
+		    <div  ng-class="{'btn-group my-btn-group my-btn-group-top': services.tools.deviceDetector.browser=='firefox', 'btn-group my-btn-group my-btn-group-top notFirefox': services.tools.deviceDetector.browser!='firefox'}">
+			
+					
+						<button type="button" ng-click="setRentStatus()" ng-disabled="services.common.clientRights.orders.read_only" ng-class="{'btn my-group-btn my-group-btn-on ': !getOrder.is_sale, 'btn my-group-btn my-group-btn-off': getOrder.is_sale}">MIETE</button>
+						<button type="button" ng-click="setSaleStatus()" ng-disabled="services.common.clientRights.orders.read_only" ng-class="{'btn my-group-btn my-group-btn-on ': getOrder.is_sale, 'btn my-group-btn my-group-btn-off': !getOrder.is_sale}">VERKAUF</button>
+			</div>
+		
+		
+			<div style="height:1px"></div>
+			<div class="btn-group my-btn-group my-btn-group-bottom">
+					
+						<button type="button" ng-click="setMrpStatus()" ng-disabled="services.common.clientRights.orders.read_only" class="btn my-group-btn auto-width" ng-class="{'my-group-btn-on ': getOrder.is_mrp, 'my-group-btn-off': !getOrder.is_mrp}">DISPOSITION</button>
+						<button type="button" ng-click="setConfirmStatus()" ng-disabled="services.common.clientRights.orders.read_only" class="btn my-group-btn auto-width" ng-class="{'my-group-btn-on ': getOrder.is_confirmed, 'my-group-btn-off': !getOrder.is_confirmed}">BEAUFTRAGT</button>	
+						
+			</div>	
+			<br><br>
+			<div ng-show="services.common.clientRights.orders.read_only"> <!-- READ ONLY MODE-->
+				
+				<div>
+					<div>Nr: {{getOrder.order_no_fmt}}</div>
+					<div>Datum: {{services.tools.dateFrom4d(getOrder.order_date)}}</div>
+					<br>
+					<div>
+						<span class="link" ng-click="services.tools.navigateTo('contact/'+getOrder.contact.primary_key)">{{getOrder.contact.name}}</span>
+					</div>
+					<div>
+						<span class="link" ng-click="services.common.getGoogleMap(getContact.address.street,getContact.address.postal_code,getContact.address.city)" >
+							{{getContact.address.street}}<br>
+							{{getContact.address.postal_code+" "+getContact.address.city}}
+						</span>
+					</div>
+					<br>
+					<div ng-include="'Components/Shared/communicationData/index.html'"></div>
+					
+					
+					<br>
+					<div class="bold" >{{getOrder.event}}</div>
+					
+				</div>
+			
+				<div style="height:20px"></div>
+				
+				<div ng-class="{'text-center dot-group': services.tools.deviceDetector.browser=='firefox', 'text-center dot-group notFirefox': services.tools.deviceDetector.browser!='firefox'}" >
+					<div class="dot {{getOrder.state_booked}}"  tooltip-placement="top" uib-tooltip="{{services.states.order.state_booked[getOrder.state_booked]}}">F</div>
+					<div class="dot {{getOrder.state_packagingnote}}" tooltip-placement="top" uib-tooltip="{{services.states.order.state_packagingnote[getOrder.state_packagingnote]}}">PS</div>
+					<div class="dot {{getOrder.state_packaging}}" tooltip-placement="top" uib-tooltip="{{services.states.order.state_packaging[getOrder.state_packaging]}}" ng-if="getOrder.state_packaging">P</div>
+					<div class="dot dot_transparent" tooltip-placement="top" uib-tooltip="Nicht vorgepackt" ng-if="!getOrder.state_packaging">P</div>
+					<div class="dot {{getOrder.state_checkout}}" tooltip-placement="top" uib-tooltip="{{services.states.order.state_checkout[getOrder.state_checkout]}}">O</div>
+					<div class="dot {{getOrder.state_checkin}}" tooltip-placement="top" uib-tooltip="{{services.states.order.state_checkin[getOrder.state_checkin]}}">I</div>
+					<div class="dot {{getOrder.state_billing}}" tooltip-placement="top" uib-tooltip="{{services.states.order.state_billing[getOrder.state_billing]}}">A</div>
+				</div>
+				<div style="height:30px"></div>
+
+				<div class="my-panel-acc">
+					<uib-accordion close-others="false">
+							
+							<div uib-accordion-group is-open="acc_group1.open">
+								
+									<uib-accordion-heading>
+										
+										<div class="row"  >
+											
+											<div class="col-xs-4 text-left"></div>
+											<div class="col-xs-4 text-center panelHeader">Zeitraum</div>
+											<div class="col-xs-4 text-right" ><span ng-class="{'glyphicon glyphicon-chevron-down': acc_group1.open, 'glyphicon glyphicon-chevron-right': !acc_group1.open}"></span></div>
+										
+										</div>
+										
+									</uib-accordion-heading>
+									
+
+									<div class="text-left my-list" >
+										
+											
+											<div class="list-group-item row" ng-repeat="row in getOrder.order_schedule | orderBy : 'position'"  ng-show="row.is_start_date" >
+												
+												<div class="col-xs-4 text-left">{{row.name}}</div>
+												<div class="col-xs-4 text-center">{{services.tools.dateFrom4d(row.date_start)}} {{services.tools.hoursMins(row.time_start).hours}}:{{services.tools.hoursMins(row.time_start).mins}}</div>
+												<div class="col-xs-4 text-right">{{services.tools.dateFrom4d(row.date_end)}} {{services.tools.hoursMins(row.time_end).hours}}:{{services.tools.hoursMins(row.time_end).mins}}</div>
+											
+											</div>
+												
+									</div>
+									
+							</div>
+							
+							<div uib-accordion-group is-open="acc_group1_1.open" ng-if="showAddressPanel">
+								
+									<uib-accordion-heading>
+										
+										<div class="row"  >
+											
+											<div class="col-xs-4 text-left"></div>
+											<div class="col-xs-4 text-center panelHeader">Adressen</div>
+											<div class="col-xs-4 text-right" ><span ng-class="{'glyphicon glyphicon-chevron-down': acc_group1_1.open, 'glyphicon glyphicon-chevron-right': !acc_group1_1.open}"></span></div>
+										
+										</div>
+										
+									</uib-accordion-heading>
+									
+									<div class="my-list" >
+												
+											<div class="list-group-item row text-center" ng-if="getOrder.address_delivery.postal_code!=''">
+												<div class="bold">Lieferadresse</div>
+												<div>{{getOrder.address_delivery.name}}</div>
+												<div>{{getOrder.address_delivery.address_addition}}</div>
+												<div class="link" ng-click="services.common.getGoogleMap(getOrder.address_delivery.street,getOrder.address_delivery.postal_code,getOrder.address_delivery.city)" >
+													<div>{{getOrder.address_delivery.street}}</div>
+													<div>{{getOrder.address_delivery.postal_code+" "+getOrder.address_delivery.city}}</div>
+													<div>{{getOrder.address_delivery.country}}</div>
+												</div>
+												<div style="height:6px"></div>
+												<div>
+													<div ng-if="getOrder.address_delivery.contact">{{getOrder.address_delivery.contact}}</div>
+													<div ng-if="getOrder.address_delivery.phone_no"><a href="tel:{{getOrder.address_delivery.phone_no}}" >{{getOrder.address_delivery.phone_no}}</a></div>
+													<div ng-if="getOrder.address_delivery.info">{{getOrder.address_delivery.info}}</div>
+												</div>	
+											</div>
+											<div class="list-group-item row text-center" ng-if="getOrder.address_pickup.postal_code!=''">
+												<div class="bold">Abholadresse</div>
+												<div>{{getOrder.address_pickup.name}}</div>
+												<div>{{getOrder.address_pickup.address_addition}}</div>
+												
+												<div class="link" ng-click="services.common.getGoogleMap(getOrder.address_pickup.street,getOrder.address_pickup.postal_code,getOrder.address_pickup.city)" >
+													<div>{{getOrder.address_pickup.street}}</div>
+													<div>{{getOrder.address_pickup.postal_code+" "+getOrder.address_pickup.city}}</div>
+													<div>{{getOrder.address_pickup.country}}</div>
+												</div>
+												<div style="height:6px"></div>
+												<div>
+													<div ng-if="getOrder.address_pickup.contact">{{getOrder.address_pickup.contact}}</div>
+													<div ng-if="getOrder.address_pickup.phone_no"><a href="tel:{{getOrder.address_pickup.phone_no}}" >{{getOrder.address_pickup.phone_no}}</a></div>
+													<div ng-if="getOrder.address_pickup.info">{{getOrder.address_pickup.info}}</div>
+												</div>
+											</div>
+											
+									</div>
+									
+							</div>
+
+
+							<div uib-accordion-group is-open="acc_group2.open" ng-show="getOrder.order_items.length">
+									
+										<uib-accordion-heading >
+											
+											<div class="row" style="height:200px">
+													
+												<div class="col-xs-4 text-left" ></div> 
+												<div class="col-xs-4 text-center panelHeader" >Gesamtliste</div>
+												<div class="col-xs-4 text-right" >[{{getOrder.order_items.length}}]&nbsp;&nbsp;<span ng-class="{'glyphicon glyphicon-chevron-down': acc_group2.open, 'glyphicon glyphicon-chevron-right': !acc_group2.open}"></span></div>
+											
+											</div>
+											
+										</uib-accordion-heading>
+
+										<div class="my-list totalList" >
+											<!-- <div class="list-group-item row" ng-click="openMaterialModal(row.product_pk)" ng-repeat="row in getOrder.order_items | orderBy : '_pos_no_intern' "> -->
+											<div ng-repeat="row in getOrder.order_items | orderBy : '_pos_no_intern' " >
+												<div ng-if="row._type != 5" >
+													
+													
+													<div class="row bold" ng-class="{'rowColor1': $index%2==0, 'rowColor2': $index%2!=0}" ng-if="row._type < 20">
+														<div ng-if="row._type!=5 && row._type!=6 && row._type!=12">
+															<div class="col-xs-1 text-left np" style="padding-left:5px;">
+																<span>{{row.position_no_str}}</span>
+															</div>
+															<div class="col-xs-1 text-center np" >
+																<span ng-if="row.product_no!=0">{{row.product_no}}</span>
+															</div>
+															<div class="col-xs-2 text-center np" >
+																<span>{{row.inventory_no}}</span>
+															</div>
+															<div class="col-xs-8 text-left np" >{{row.title}}</div>
+														</div>
+														<div ng-if="row._type==5 || row._type==6 || row._type==12">
+															<div class="col-xs-1 text-left np" style="padding-left:5px;">
+																<span>&nbsp;</span>
+															</div>
+															<div class="col-xs-1 text-center np" >
+																<span>&nbsp;</span>
+															</div>
+															<div class="col-xs-2 text-center np" >
+																<span>&nbsp;</span>
+															</div>
+															<div class="col-xs-8 text-left np" >{{row.title}}</div>
+														</div>
+													</div>
+													<div class="row bold" ng-class="{'rowColor1': $index%2==0, 'rowColor2': $index%2!=0}" ng-if="row._type >= 20">
+														<div class="col-xs-1 text-left np" style="padding-left:5px;">&nbsp;</div>
+														<div class="col-xs-1 text-center np" >&nbsp;</div>
+														<div class="col-xs-2 text-center np" >&nbsp;</div>
+														<div class="col-xs-8 text-left np" >{{row.title}}</div>
+													</div>
+													<div class="row" ng-class="{'rowColor1': $index%2==0, 'rowColor2': $index%2!=0}" ng-if="row._type < 20">
+														<div ng-if="row._type!=5 && row._type!=6 && row._type!=12">
+																<div class="col-xs-1 text-center np" ><span style="color:gray">[</span><span ng-if="row.amount_total!=0">{{row.amount_total}}</span><span ng-if="row.amount_total==0">&nbsp;&nbsp;</span><span style="color:gray">]</span></div>
+																<div class="col-xs-1 text-center np" ><span style="color:gray">[</span><span ng-if="row.amount_external!=0" style="color:red">{{row.amount_external}}</span><span ng-if="row.amount_external==0">&nbsp;&nbsp;</span><span style="color:gray">]</span></div>
+																<div class="col-xs-1 text-center np" ><span style="color:gray">[</span><span ng-if="row.amount_spare!=0">{{row.amount_spare}}</span><span ng-if="row.amount_spare==0">&nbsp;&nbsp;</span><span style="color:gray">]</span></div>
+																<div class="col-xs-1 text-left np" >{{row.unit_product}}</div>
+																<div class="col-xs-2 text-center np" >{{row.warehouse_str}}</div>
+																<div class="col-xs-2 text-right np" >{{row.rental_price | currency:"" }}</div>
+																<div class="col-xs-1 text-right np" ><span ng-if="row.factor>0">{{row.factor}}</span><span ng-if="row.factor==0">&nbsp;</span></div>
+																<div class="col-xs-1 text-right np" ><span ng-if="row.discount_percent>0">{{row.discount_percent}}%</span><span ng-if="row.discount_percent==0">&nbsp;</span></div>
+																<div class="col-xs-2 text-right np" style="padding-right:5px;">{{row.sum_total_net | currency:"" }}</div>
+														</div>
+														<div ng-if="row._type==5 || row._type==6 || row._type==12">
+																<div class="col-xs-1 text-center np" ><span>&nbsp</span></div>
+																<div class="col-xs-1 text-center np" ><span>&nbsp</span></div>
+																<div class="col-xs-1 text-center np" ><span>&nbsp</span></div>
+																<div class="col-xs-1 text-left np" ><span>&nbsp</span></div>
+																<div class="col-xs-2 text-center np" ><span>&nbsp</span></div>
+																<div class="col-xs-2 text-right np" ><span>&nbsp</span></div>
+																<div class="col-xs-1 text-right np" ><span>&nbsp</span></div>
+																<div class="col-xs-1 text-right np" ><span>&nbsp</span></div>
+																<div class="col-xs-2 text-right np" style="padding-right:5px;">{{row.sum_total_net | currency:"" }}</div>
+														</div>
+														
+													</div><!-- -->
+												</div>	
+
+
+												<div ng-if="row._type == 5" style="padding:0px" ng-show="true">
+														<div class="row my-panel-acc_kap" style="padding:0px">
+																<uib-accordion close-others="false" style="padding:0px">
+																		<div uib-accordion-group is-open="acc_kap_group[$index]" style="padding:0px">
+																				<uib-accordion-heading style="padding:0px">
+																							
+																							<div class="row">
+																								<div class="col-xs-1 text-left np bold" style="padding-left:5px;">
+																									<span>{{row.position_no_str}}</span>
+																								</div>
+																								<div class="col-xs-3 text-center np" >
+																									<span></span>
+																								</div>
+																								
+																								<div class="col-xs-6 text-left np bold" window-width>
+																									<span ng-if="width<=414">
+																										<span ng-if="row.title.length>7" tooltip-placement="top" uib-tooltip="{{row.title}}">{{row.title | limitTo:7}}...</span>
+																										<span ng-if="row.title.length<=7">{{row.title}}</span>
+																									</span>
+																									<span ng-if="width>414">
+																											{{row.title}}
+																									</span>
+																									&nbsp;&nbsp;[{{row.__chapter_items.length}}]&nbsp;&nbsp;<span ng-class="{'glyphicon glyphicon-chevron-down': acc_kap_group[$index], 'glyphicon glyphicon-chevron-right': !acc_kap_group[$index]}"></span>
+																								</div>
+																								<div class="col-xs-2 text-right np" style="padding-right:5px;">{{row.sum_total_net | currency:"" }}</div>
+																							</div>
+
+																				</uib-accordion-heading>
+																				<div class="my-list" >
+																						<div ng-repeat="row2 in row.__chapter_items | orderBy : '_pos_no_intern' " >
+																								
+																									<div class="row bold" ng-class="{'rowColor3': $index%2==0, 'rowColor4': $index%2!=0}" ng-if="row2._type < 20">
+																										<div ng-if="row2._type!=5 && row2._type!=6 && row2._type!=12">
+																											<div class="col-xs-1 text-left np" style="padding-left:5px;">
+																												<span>{{row2.position_no_str}}</span>
+																											</div>
+																											<div class="col-xs-1 text-center np" >
+																												<span ng-if="row2.product_no!=0">{{row2.product_no}}</span>
+																											</div>
+																											<div class="col-xs-2 text-center np" >
+																												<span>{{row2.inventory_no}}</span>
+																											</div>
+																											<div class="col-xs-8 text-left np" >{{row2.title}}</div>
+																										</div>
+																										<div ng-if="row2._type==5 || row2._type==6 || row2._type==12">
+																											<div class="col-xs-1 text-left np" style="padding-left:5px;">
+																												<span>&nbsp;</span>
+																											</div>
+																											<div class="col-xs-1 text-center np" >
+																												<span>&nbsp;</span>
+																											</div>
+																											<div class="col-xs-2 text-center np" >
+																												<span>&nbsp;</span>
+																											</div>
+																											<div class="col-xs-8 text-left np" >{{row2.title}}</div>
+																										</div>
+																									</div>
+																									<div class="row bold" ng-class="{'rowColor3': $index%2==0, 'rowColor4': $index%2!=0}" ng-if="row2._type >= 20">
+																										<div class="col-xs-1 text-left np" style="padding-left:5px;">&nbsp;</div>
+																										<div class="col-xs-1 text-center np" >&nbsp;</div>
+																										<div class="col-xs-2 text-center np" >&nbsp;</div>
+																										<div class="col-xs-8 text-left np" >{{row2.title}}</div>
+																									</div>
+																									<div class="row" ng-class="{'rowColor3': $index%2==0, 'rowColor4': $index%2!=0}" ng-if="row2._type < 20">
+																										<div ng-if="row2._type!=5 && row2._type!=6 && row2._type!=12">
+																												<div class="col-xs-1 text-center np" ><span style="color:gray">[</span><span ng-if="row2.amount_total!=0">{{row2.amount_total}}</span><span ng-if="row2.amount_total==0">&nbsp;&nbsp;</span><span style="color:gray">]</span></div>
+																												<div class="col-xs-1 text-center np" ><span style="color:gray">[</span><span ng-if="row2.amount_external!=0" style="color:red">{{row2.amount_external}}</span><span ng-if="row2.amount_external==0">&nbsp;&nbsp;</span><span style="color:gray">]</span></div>
+																												<div class="col-xs-1 text-center np" ><span style="color:gray">[</span><span ng-if="row2.amount_spare!=0">{{row2.amount_spare}}</span><span ng-if="row2.amount_spare==0">&nbsp;&nbsp;</span><span style="color:gray">]</span></div>
+																												<div class="col-xs-1 text-left np" >{{row2.unit_product}}</div>
+																												<div class="col-xs-2 text-center np" >{{row2.warehouse_str}}</div>
+																												<div class="col-xs-2 text-right np" >{{row2.rental_price | currency:"" }}</div>
+																												<div class="col-xs-1 text-right np" ><span ng-if="row2.factor>0">{{row2.factor}}</span><span ng-if="row2.factor==0">&nbsp;</span></div>
+																												<div class="col-xs-1 text-right np" ><span ng-if="row2.discount_percent>0">{{row2.discount_percent}}%</span><span ng-if="row2.discount_percent==0">&nbsp;</span></div>
+																												<div class="col-xs-2 text-right np" style="padding-right:5px;">{{row2.sum_total_net | currency:"" }}</div>
+																										</div>
+																										<div ng-if="row2._type==5 || row2._type==6 || row2._type==12">
+																												<div class="col-xs-1 text-center np" ><span>&nbsp</span></div>
+																												<div class="col-xs-1 text-center np" ><span>&nbsp</span></div>
+																												<div class="col-xs-1 text-center np" ><span>&nbsp</span></div>
+																												<div class="col-xs-1 text-left np" ><span>&nbsp</span></div>
+																												<div class="col-xs-2 text-center np" ><span>&nbsp</span></div>
+																												<div class="col-xs-2 text-right np" ><span>&nbsp</span></div>
+																												<div class="col-xs-1 text-right np" ><span>&nbsp</span></div>
+																												<div class="col-xs-1 text-right np" ><span>&nbsp</span></div>
+																												<div class="col-xs-2 text-right np" style="padding-right:5px;">{{row2.sum_total_net | currency:"" }}</div>
+																										</div>
+																										
+																								</div>
+																						</div>
+																						
+																				</div>
+																		</div>
+																</uib-accordion>
+														</div>
+												</div>
+
+												
+										
+											</div>
+										</div>
+										
+								</div>
+								<br>
+								<div class="prices" >
+										<div class="row background_lightgray" >
+											<div class="col-xs-8 text-left" style="padding-left:8px">Miete</div>
+											<div class="col-xs-4 text-right bold color-535353" style="padding-right:5px">{{getOrder.sum_rent | currency:""}} </div>
+										</div>
+										<div class="row">
+											<div class="col-xs-8 text-left" style="padding-left:8px">Verkauf</div>
+											<div class="col-xs-4 text-right bold color-535353" style="padding-right:5px">{{getOrder.sum_sales | currency:""}} </div>
+										</div>
+										<div class="row background_lightgray">
+											<div class="col-xs-8 text-left" style="padding-left:8px">Service</div>
+											<div class="col-xs-4 text-right bold color-535353" style="padding-right:5px">{{getOrder.sum_service | currency:""}} </div>
+										</div>
+										<div class="row">
+											<div class="col-xs-8 text-left" style="padding-left:8px">Transport</div>
+											<div class="col-xs-4 text-right bold color-535353" style="padding-right:5px">{{getOrder.sum_transport | currency:""}} </div>
+										</div>
+										<div class="row background_lightgray">
+											<div class="col-xs-8 text-left" style="padding-left:8px">Versicherung</div>
+											<div class="col-xs-4 text-right bold color-535353" style="padding-right:5px">{{getOrder.sum_insurance | currency:""}} </div>
+										</div>
+										
+										<div class="row">
+											<div class="col-xs-8 text-left" style="padding-left:8px">Rabatt</div>
+											<div class="col-xs-4 text-right bold color-535353" style="padding-right:5px">{{getOrder.sum_discount | currency:""}} </div>
+										</div>
+										<div class="row background_lightgray">
+												<div class="col-xs-8 text-left" style="padding-left:8px">Gesamtpreis Netto</div>
+												<div class="col-xs-4 text-right bold color-535353" style="padding-right:5px">{{getOrder.sum_net | currency:""}} </div>
+											</div>
+										<div>
+											<div class="row" ng-show="getOrder.sum_salestax2 > 0">
+												<div class="col-xs-8 text-left" style="padding-left:8px">Mehrwertsteuer 7%</div>
+												<div class="col-xs-4 text-right bold color-535353" style="padding-right:5px">{{getOrder.sum_salestax2 | currency:""}} </div>
+											</div>
+											<div class="row">
+												<div class="col-xs-8 text-left" style="padding-left:8px">Mehrwertsteuer 19%--</div>
+												<div class="col-xs-4 text-right bold color-535353" style="padding-right:5px">{{1900 | currency:""}} </div>
+											</div>
+										</div>
+										
+										<div class="row background_lightgray" >
+											<div class="col-xs-8 text-left" style="padding-left:8px">Gesamtpreis Brutto</div>
+											<div class="col-xs-4 text-right bold" style="padding-right:5px">{{getOrder.sum_gro | currency:""}} </div>
+										</div>
+								</div>
+								<br>
+								<div uib-accordion-group is-open="acc_group3.open" ng-show="getOrder.__personal.length">
+										
+											<uib-accordion-heading>
+												
+												<div class="row"  >
+													
+													<div class="col-xs-4 text-left"></span></div>
+													<div class="col-xs-4 text-center panelHeader">Personal</div>
+													<div class="col-xs-4 text-right" >[{{getOrder.__personal.length}}]&nbsp;&nbsp;<span ng-class="{'glyphicon glyphicon-chevron-down': acc_group3.open, 'glyphicon glyphicon-chevron-right': !acc_group3.open}"></span></div>
+												
+												</div>
+												
+											</uib-accordion-heading>
+											<div class="text-left my-list" >
+													
+												<div class="list-group-item row" ng-repeat="row in getOrder.__personal | orderBy : 'primary_key' ">
+														
+														<div class="col-xs-6 text-left">{{row.service_function}}</div>
+														<div class="col-xs-6 text-right">{{row.tech_name}}</div>
+														<!--
+														<div class="col-xs-4 text-right"><span ng-hide="readOnly" class="glyphicon glyphicon-remove-sign" ></span></div>
+														-->		
+												</div>
+												
+											</div>
+										
+										
+									</div>
+									<div uib-accordion-group is-open="acc_group4.open" ng-show="getOrder.__renting.length">
+											
+												<uib-accordion-heading>
+													
+													<div class="row"  >
+														
+														<div class="col-xs-4 text-left"></div>
+														<div class="col-xs-4 text-center panelHeader">Anmietungen</div>
+														<div class="col-xs-4 text-right" >[{{getOrder.__renting.length}}]&nbsp;&nbsp;<span ng-class="{'glyphicon glyphicon-chevron-down': acc_group4.open, 'glyphicon glyphicon-chevron-right': !acc_group4.open}"></span></div>
+														
+													
+													</div>
+													
+												</uib-accordion-heading>
+												<div class="text-left my-list" >
+														
+													<div class="list-group-item row" ng-repeat="row in getOrder.__renting | orderBy : 'primary_key' ">
+															
+															<div class="col-xs-4 text-left">{{row.amount_target}}</div>
+															<div class="col-xs-4 text-center">{{row.name}}</div>
+															<div class="col-xs-4 text-right">{{row.contact_name_delivery}}</div>
+			
+													</div>
+
+
+													
+												</div>
+											
+											
+										</div>
+										
+										<div uib-accordion-group is-open="acc_group6.open">
+												
+													<uib-accordion-heading>
+														
+														<div class="row"  >
+															
+															<div class="col-xs-4 text-left"></div>
+															<div class="col-xs-4 text-center panelHeader">Notizen</div>
+															<div class="col-xs-4 text-right" ><span ng-class="{'glyphicon glyphicon-chevron-down': acc_group6.open, 'glyphicon glyphicon-chevron-right': !acc_group6.open}"></span></div>
+															
+														
+														</div>
+														
+													</uib-accordion-heading>
+													<div class="text-left my-list" >
+															
+														<div class="list-group-item row" >
+															
+															<div class="col-xs-12" style="height:200px">{{getOrder.notes}}</div>
+															
+														</div>
+														
+														
+														
+													</div>
+												
+												
+											</div>
+										
+					</uib-accordion>
+				</div>
+			</div>
+			
+			<!-- ***************************************************************************************** -->
+			
+			<div ng-show="!services.common.clientRights.orders.read_only" class="EDIT_MODE"> <!-- EDIT MODE-->
+				
+				
+					<form>
+						<div class="form-group" >
+							<label>Auftragsnummer:</label>
+							<input type="text" class="form-control text-center" ng-model="getOrder.order_no_fmt" >
+						</div>
+						<div class="form-group" >
+							<label>Datum:</label>
+							<input type="text" class="form-control text-center pointer" value="{{services.tools.dateFrom4d(getOrder.order_date)}}">
+						</div>
+						<div class="form-group" >
+							<label>Event:</label>
+							<input type="text" class="form-control text-center" ng-model="getOrder.event">
+						</div>
+						<div class="form-group" >
+							<label>Kunde:</label>
+							<input type="text" class="form-control text-center pointer" ng-model="getOrder.contact.name" ng-click="openModalSearchContact(getOrder.contact)">
+						</div>
+						
+						<div class="form-group" >
+							<label>Straße:</label>
+							<input type="text" class="form-control text-center" ng-model="getContact.address.street">
+						</div>
+						<div class="form-group" >
+							<label>PLZ:</label>
+							<input type="text" class="form-control text-center" ng-model="getContact.address.postal_code">
+						</div>
+						<div class="form-group" >
+							<label>Ort:</label>
+							<input type="text" class="form-control text-center" ng-model="getContact.address.city">
+						</div>
+				     </form>
+					 <div ng-include="'Components/Shared/communicationData/index.html'"></div>
+					 <br>
+					 <div ng-include="'Components/Shared/communicationTypes/index.html'"  ></div>
+
+
+				<div style="height:20px"></div>
+				<div ng-class="{'text-center dot-group': services.tools.deviceDetector.browser=='firefox', 'text-center dot-group notFirefox': services.tools.deviceDetector.browser!='firefox'}" >
+					<div class="dot {{getOrder.state_booked}}"  tooltip-placement="top" uib-tooltip="{{services.states.order.state_booked[getOrder.state_booked]}}">F</div>
+					<div class="dot {{getOrder.state_packagingnote}}" tooltip-placement="top" uib-tooltip="{{services.states.order.state_packagingnote[getOrder.state_packagingnote]}}">PS</div>
+					<div class="dot {{getOrder.state_packaging}}" tooltip-placement="top" uib-tooltip="{{services.states.order.state_packaging[getOrder.state_packaging]}}" ng-if="getOrder.state_packaging">P</div>
+					<div class="dot dot_transparent" tooltip-placement="top" uib-tooltip="Nicht vorgepackt" ng-if="!getOrder.state_packaging">P</div>
+					<div class="dot {{getOrder.state_checkout}}" tooltip-placement="top" uib-tooltip="{{services.states.order.state_checkout[getOrder.state_checkout]}}">O</div>
+					<div class="dot {{getOrder.state_checkin}}" tooltip-placement="top" uib-tooltip="{{services.states.order.state_checkin[getOrder.state_checkin]}}">I</div>
+					<div class="dot {{getOrder.state_billing}}" tooltip-placement="top" uib-tooltip="{{services.states.order.state_billing[getOrder.state_billing]}}">A</div>
+				</div>
+				<div style="height:30px"></div>
+
+				<div class="my-panel-acc">
+					<uib-accordion close-others="false">
+							
+							<div uib-accordion-group is-open="acc_group1.open">
+								
+									<uib-accordion-heading>
+										
+										<div class="row"  >
+											
+											<div class="col-xs-4 text-left"></div>
+											<div class="col-xs-4 text-center panelHeader">Zeitraum</div>
+											<div class="col-xs-4 text-right" ><span ng-class="{'glyphicon glyphicon-chevron-down': acc_group1.open, 'glyphicon glyphicon-chevron-right': !acc_group1.open}"></span></div>
+										
+										</div>
+										
+									</uib-accordion-heading>
+									
+
+									<div class="text-left my-list" >
+										
+											
+											<div class="list-group-item row"  ng-repeat="row in getOrder.order_schedule | orderBy : 'position'"  ng-show="row.is_start_date" ng-click="openModalSelectDates(row)">
+												
+												<div class="col-xs-4 text-left pointer">{{row.name}}</div>
+												<div class="col-xs-4 text-center pointer">{{services.tools.dateFrom4d(row.date_start)}} {{services.tools.hoursMins(row.time_start).hours}}:{{services.tools.hoursMins(row.time_start).mins}}</div>
+												<div class="col-xs-4 text-right pointer">{{services.tools.dateFrom4d(row.date_end)}} {{services.tools.hoursMins(row.time_end).hours}}:{{services.tools.hoursMins(row.time_end).mins}}</div>
+											
+											</div>
+												
+									</div>
+									
+							</div>
+							
+							<div uib-accordion-group is-open="acc_group1_1.open" >
+								
+									<uib-accordion-heading>
+										
+										<div class="row"  >
+											
+											<div class="col-xs-4 text-left"></div>
+											<div class="col-xs-4 text-center panelHeader">Adressen</div>
+											<div class="col-xs-4 text-right" ><span ng-class="{'glyphicon glyphicon-chevron-down': acc_group1_1.open, 'glyphicon glyphicon-chevron-right': !acc_group1_1.open}"></span></div>
+										
+										</div>
+										
+									</uib-accordion-heading>
+									
+									<div class="my-list" >
+												
+											<div class="list-group-item row text-center" style="cursor:pointer"  ng-click="openModalDeliverPickupAdr({'type':'address_delivery'})">
+												
+												<div class="bold">Lieferadresse</div>
+												<div>{{getOrder.address_delivery.name}}</div>
+												<div>{{getOrder.address_delivery.address_addition}}</div>
+												<div>
+													<div>{{getOrder.address_delivery.street}}</div>
+													<div>{{getOrder.address_delivery.postal_code+" "+getOrder.address_delivery.city}}</div>
+													<div>{{getOrder.address_delivery.country}}</div>
+												</div>
+												<div style="height:6px"></div>
+												<div>
+													<div ng-if="getOrder.address_delivery.contact">{{getOrder.address_delivery.contact}}</div>
+													<div ng-if="getOrder.address_delivery.phone_no">{{getOrder.address_delivery.phone_no}}</div>
+													<div ng-if="getOrder.address_delivery.info">{{getOrder.address_delivery.info}}</div>
+												</div>	
+											</div>
+											<div class="list-group-item row text-center" style="cursor:pointer"  ng-click="openModalDeliverPickupAdr({'type':'address_pickup'})">
+												<div class="bold">Abholadresse</div>
+												<div>{{getOrder.address_pickup.name}}</div>
+												<div>{{getOrder.address_pickup.address_addition}}</div>
+												
+												<div>
+													<div>{{getOrder.address_pickup.street}}</div>
+													<div>{{getOrder.address_pickup.postal_code+" "+getOrder.address_pickup.city}}</div>
+													<div>{{getOrder.address_pickup.country}}</div>
+												</div>
+												<div style="height:6px"></div>
+												<div>
+													<div ng-if="getOrder.address_pickup.contact">{{getOrder.address_pickup.contact}}</div>
+													<div ng-if="getOrder.address_pickup.phone_no"></div>
+													<div ng-if="getOrder.address_pickup.info">{{getOrder.address_pickup.info}}</div>
+												</div>
+											</div>
+											
+									</div>
+									
+							</div>
+
+
+							<div uib-accordion-group is-open="acc_group2.open" >
+									
+										<uib-accordion-heading >
+											
+											<div class="row">
+													
+												<div class="col-xs-4 text-left" ><span  class="glyphicon glyphicon-plus" title="Artikel hinzufügen" ng-click="openModalSearchProduct($event)"></span></div> 
+												<div class="col-xs-4 text-center panelHeader" >Gesamtliste</div>
+												<div class="col-xs-4 text-right" >[{{getOrder.order_items.length}}]&nbsp;&nbsp;<span ng-class="{'glyphicon glyphicon-chevron-down': acc_group2.open, 'glyphicon glyphicon-chevron-right': !acc_group2.open}"></span></div>
+											
+											</div>
+											
+										</uib-accordion-heading>
+
+										<div class="my-list totalList" >
+											<!-- <div class="list-group-item row" ng-click="openMaterialModal(row.product_pk)" ng-repeat="row in getOrder.order_items | orderBy : '_pos_no_intern' "> -->
+											<div ng-repeat="row in getOrder.order_items | orderBy : '_pos_no_intern' " >
+												<div ng-if="row._type != 5" >
+													
+													
+													<div class="row bold" ng-class="{'rowColor1': $index%2==0, 'rowColor2': $index%2!=0}" ng-if="row._type < 20">
+														<div ng-if="row._type!=5 && row._type!=6 && row._type!=12">
+															<div class="col-xs-1 text-left np" style="padding-left:5px;">
+																<span>{{row.position_no_str}}</span>
+															</div>
+															<div class="col-xs-1 text-center np" >
+																<span ng-if="row.product_no!=0">{{row.product_no}}</span>
+															</div>
+															<div class="col-xs-2 text-center np" >
+																<span>{{row.inventory_no}}</span>
+															</div>
+															<div class="col-xs-8 text-left np" >{{row.title}}</div>
+														</div>
+														<div ng-if="row._type==5 || row._type==6 || row._type==12">
+															<div class="col-xs-1 text-left np" style="padding-left:5px;">
+																<span>&nbsp;</span>
+															</div>
+															<div class="col-xs-1 text-center np" >
+																<span>&nbsp;</span>
+															</div>
+															<div class="col-xs-2 text-center np" >
+																<span>&nbsp;</span>
+															</div>
+															<div class="col-xs-8 text-left np" >{{row.title}}</div>
+														</div>
+													</div>
+													<div class="row bold" ng-class="{'rowColor1': $index%2==0, 'rowColor2': $index%2!=0}" ng-if="row._type >= 20">
+														<div class="col-xs-1 text-left np" style="padding-left:5px;">&nbsp;</div>
+														<div class="col-xs-1 text-center np" >&nbsp;</div>
+														<div class="col-xs-2 text-center np" >&nbsp;</div>
+														<div class="col-xs-8 text-left np" >{{row.title}}</div>
+													</div>
+													<div class="row" ng-class="{'rowColor1': $index%2==0, 'rowColor2': $index%2!=0}" ng-if="row._type < 20">
+														<div ng-if="row._type!=5 && row._type!=6 && row._type!=12">
+																<div class="col-xs-1 text-center np" ><span style="color:gray">[</span><span ng-if="row.amount_total!=0">{{row.amount_total}}</span><span ng-if="row.amount_total==0">&nbsp;&nbsp;</span><span style="color:gray">]</span></div>
+																<div class="col-xs-1 text-center np" ><span style="color:gray">[</span><span ng-if="row.amount_external!=0" style="color:red">{{row.amount_external}}</span><span ng-if="row.amount_external==0">&nbsp;&nbsp;</span><span style="color:gray">]</span></div>
+																<div class="col-xs-1 text-center np" ><span style="color:gray">[</span><span ng-if="row.amount_spare!=0">{{row.amount_spare}}</span><span ng-if="row.amount_spare==0">&nbsp;&nbsp;</span><span style="color:gray">]</span></div>
+																<div class="col-xs-1 text-left np" >{{row.unit_product}}</div>
+																<div class="col-xs-2 text-center np" >{{row.warehouse_str}}</div>
+																<div class="col-xs-2 text-right np" >{{row.rental_price | currency:"" }}</div>
+																<div class="col-xs-1 text-right np" ><span ng-if="row.factor>0">{{row.factor}}</span><span ng-if="row.factor==0">&nbsp;</span></div>
+																<div class="col-xs-1 text-right np" ><span ng-if="row.discount_percent>0">{{row.discount_percent}}%</span><span ng-if="row.discount_percent==0">&nbsp;</span></div>
+																<div class="col-xs-2 text-right np" style="padding-right:5px;">{{row.sum_total_net | currency:"" }}</div>
+														</div>
+														<div ng-if="row._type==5 || row._type==6 || row._type==12">
+																<div class="col-xs-1 text-center np" ><span>&nbsp</span></div>
+																<div class="col-xs-1 text-center np" ><span>&nbsp</span></div>
+																<div class="col-xs-1 text-center np" ><span>&nbsp</span></div>
+																<div class="col-xs-1 text-left np" ><span>&nbsp</span></div>
+																<div class="col-xs-2 text-center np" ><span>&nbsp</span></div>
+																<div class="col-xs-2 text-right np" ><span>&nbsp</span></div>
+																<div class="col-xs-1 text-right np" ><span>&nbsp</span></div>
+																<div class="col-xs-1 text-right np" ><span>&nbsp</span></div>
+																<div class="col-xs-2 text-right np" style="padding-right:5px;">{{row.sum_total_net | currency:"" }}</div>
+														</div>
+														
+													</div><!-- -->
+												</div>	
+
+
+												<div ng-if="row._type == 5" style="padding:0px" ng-show="true">
+														<div class="row my-panel-acc_kap" style="padding:0px">
+																<uib-accordion close-others="false" style="padding:0px">
+																		<div uib-accordion-group is-open="acc_kap_group[$index]" style="padding:0px">
+																				<uib-accordion-heading >
+																							<!--
+																							<div class="row">
+																								<div class="col-xs-1 text-left np bold" style="padding-left:5px;">
+																									<span>{{row.position_no_str}}</span>
+																								</div>
+																								<div class="col-xs-3 text-center np" >
+																									<span></span>
+																								</div>
+																								
+																								<div class="col-xs-6 text-left np bold" window-width>
+																									<span ng-if="width<=414">
+																										<span ng-if="row.title.length>7" tooltip-placement="top" uib-tooltip="{{row.title}}">{{row.title | limitTo:7}}...</span>
+																										<span ng-if="row.title.length<=7">{{row.title}}</span>
+																									</span>
+																									<span ng-if="width>414">
+																											{{row.title}}
+																									</span>
+																									&nbsp;&nbsp;[{{row.__chapter_items.length}}]&nbsp;&nbsp;<span ng-class="{'glyphicon glyphicon-chevron-down': acc_kap_group[$index], 'glyphicon glyphicon-chevron-right': !acc_kap_group[$index]}"></span>
+																								</div>
+																								<div class="col-xs-2 text-right np" style="padding-right:5px;">{{row.sum_total_net | currency:"" }}</div>
+																							</div>
+																						-->
+
+																							<div class="row">
+																									<div class="col-xs-2 text-left np bold" style="padding-left:5px;">
+																										<span>{{row.position_no_str}}</span>
+																									</div>
+																									
+																									<div class="col-xs-8 text-center np bold" window-width>
+																										<span ng-if="width<=414">
+																											<span ng-if="row.title.length>7" tooltip-placement="top" uib-tooltip="{{row.title}}">{{row.title | limitTo:7}}...</span>
+																											<span ng-if="row.title.length<=7">{{row.title}}</span>
+																										</span>
+																										<span ng-if="width>414">
+																												{{row.title}}
+																										</span>
+																										&nbsp;&nbsp;[{{row.__chapter_items.length}}]&nbsp;&nbsp;<span ng-class="{'glyphicon glyphicon-chevron-down': acc_kap_group[$index], 'glyphicon glyphicon-chevron-right': !acc_kap_group[$index]}"></span>
+																									</div>
+																									<div class="col-xs-2 text-right np" style="padding-right:5px;">{{row.sum_total_net | currency:"" }}</div>
+																							</div>
+																							
+
+
+																							<!-- ###-->			
+																							<div class="text-center" style="padding-top: 10px;" ng-show="!services.common.clientRights.orders.can_delete">
+																								<span class="glyphicon glyphicon-pencil" title="Kapitel editieren"></span>
+																								&nbsp;&nbsp;&nbsp;&nbsp;
+																								 <span class="glyphicon glyphicon-plus" title="Artikel in Kapitel hinzufügen" ng-click="openModalSearchProduct($event,row.__chapter_items)"></span>
+																							</div>
+																							<div class="text-center" style="padding-top: 10px;" ng-show="services.common.clientRights.orders.can_delete">
+																								<span class="glyphicon glyphicon-pencil" title="Kapitel editieren"></span>
+																								 &nbsp;&nbsp;&nbsp;&nbsp;
+																								 <span class="glyphicon glyphicon-plus" title="Artikel in Kapitel hinzufügen" ng-click="openModalSearchProduct($event,row.__chapter_items)"></span>
+																								 &nbsp;&nbsp;&nbsp;&nbsp;
+																								<span class="glyphicon glyphicon-trash" title="Kapitel löschen" ng-click="deleteKapitel(row,$event)"></span>
+																							</div>
+																							
+																				</uib-accordion-heading>
+																				<div class="my-list" >
+																						<div ng-repeat="row2 in row.__chapter_items | orderBy : '_pos_no_intern' " >
+																								
+																									<div class="row bold" ng-class="{'rowColor3': $index%2==0, 'rowColor4': $index%2!=0}" ng-if="row2._type < 20">
+																										<div ng-if="row2._type!=5 && row2._type!=6 && row2._type!=12">
+																											<div class="col-xs-1 text-left np" style="padding-left:5px;">
+																												<span>{{row2.position_no_str}}</span>
+																											</div>
+																											<div class="col-xs-1 text-center np" >
+																												<span ng-if="row2.product_no!=0">{{row2.product_no}}</span>
+																											</div>
+																											<div class="col-xs-2 text-center np" >
+																												<span>{{row2.inventory_no}}</span>
+																											</div>
+																											<div class="col-xs-8 text-left np" >{{row2.title}}</div>
+																										</div>
+																										<div ng-if="row2._type==5 || row2._type==6 || row2._type==12">
+																											<div class="col-xs-1 text-left np" style="padding-left:5px;">
+																												<span>&nbsp;</span>
+																											</div>
+																											<div class="col-xs-1 text-center np" >
+																												<span>&nbsp;</span>
+																											</div>
+																											<div class="col-xs-2 text-center np" >
+																												<span>&nbsp;</span>
+																											</div>
+																											<div class="col-xs-8 text-left np" >{{row2.title}}</div>
+																										</div>
+																									</div>
+																									<div class="row bold" ng-class="{'rowColor3': $index%2==0, 'rowColor4': $index%2!=0}" ng-if="row2._type >= 20">
+																										<div class="col-xs-1 text-left np" style="padding-left:5px;">&nbsp;</div>
+																										<div class="col-xs-1 text-center np" >&nbsp;</div>
+																										<div class="col-xs-2 text-center np" >&nbsp;</div>
+																										<div class="col-xs-8 text-left np" >{{row2.title}}</div>
+																									</div>
+																									<div class="row" ng-class="{'rowColor3': $index%2==0, 'rowColor4': $index%2!=0}" ng-if="row2._type < 20">
+																										<div ng-if="row2._type!=5 && row2._type!=6 && row2._type!=12">
+																												<div class="col-xs-1 text-center np" ><span style="color:gray">[</span><span ng-if="row2.amount_total!=0">{{row2.amount_total}}</span><span ng-if="row2.amount_total==0">&nbsp;&nbsp;</span><span style="color:gray">]</span></div>
+																												<div class="col-xs-1 text-center np" ><span style="color:gray">[</span><span ng-if="row2.amount_external!=0" style="color:red">{{row2.amount_external}}</span><span ng-if="row2.amount_external==0">&nbsp;&nbsp;</span><span style="color:gray">]</span></div>
+																												<div class="col-xs-1 text-center np" ><span style="color:gray">[</span><span ng-if="row2.amount_spare!=0">{{row2.amount_spare}}</span><span ng-if="row2.amount_spare==0">&nbsp;&nbsp;</span><span style="color:gray">]</span></div>
+																												<div class="col-xs-1 text-left np" >{{row2.unit_product}}</div>
+																												<div class="col-xs-2 text-center np" >{{row2.warehouse_str}}</div>
+																												<div class="col-xs-2 text-right np" >{{row2.rental_price | currency:"" }}</div>
+																												<div class="col-xs-1 text-right np" ><span ng-if="row2.factor>0">{{row2.factor}}</span><span ng-if="row2.factor==0">&nbsp;</span></div>
+																												<div class="col-xs-1 text-right np" ><span ng-if="row2.discount_percent>0">{{row2.discount_percent}}%</span><span ng-if="row2.discount_percent==0">&nbsp;</span></div>
+																												<div class="col-xs-2 text-right np" style="padding-right:5px;">{{row2.sum_total_net | currency:"" }}</div>
+																										</div>
+																										<div ng-if="row2._type==5 || row2._type==6 || row2._type==12">
+																												<div class="col-xs-1 text-center np" ><span>&nbsp</span></div>
+																												<div class="col-xs-1 text-center np" ><span>&nbsp</span></div>
+																												<div class="col-xs-1 text-center np" ><span>&nbsp</span></div>
+																												<div class="col-xs-1 text-left np" ><span>&nbsp</span></div>
+																												<div class="col-xs-2 text-center np" ><span>&nbsp</span></div>
+																												<div class="col-xs-2 text-right np" ><span>&nbsp</span></div>
+																												<div class="col-xs-1 text-right np" ><span>&nbsp</span></div>
+																												<div class="col-xs-1 text-right np" ><span>&nbsp</span></div>
+																												<div class="col-xs-2 text-right np" style="padding-right:5px;">{{row2.sum_total_net | currency:"" }}</div>
+																										</div>
+																										
+																								</div>
+																								<div ng-class="{'rowColor3': $index%2==0, 'rowColor4': $index%2!=0}"  class="row">
+																									
+																									<div class="text-center" style="padding-top: 10px;" ng-show="!services.common.clientRights.orders.can_delete">
+																										<span class="glyphicon glyphicon-pencil pointer" title="Artikel editieren" ng-click="editKapitelOrderItemModal($index,$parent.$index)"></span>
+																									</div>
+																									<div class="text-center" style="padding-top: 10px;" ng-show="services.common.clientRights.orders.can_delete">
+																										<span class="glyphicon glyphicon-pencil pointer" title="Artikel editieren" ng-click="editKapitelOrderItemModal($index,$parent.$index)"></span>
+																										 &nbsp;&nbsp;&nbsp;&nbsp;
+																										<span class="glyphicon glyphicon-trash pointer" title="Artikel löschen" ng-click="deleteOrderItemFromKapitel(row2,row.__chapter_items)"></span>
+																									</div>
+																								</div>
+																						</div>
+																						
+																				</div>
+																		</div>
+																</uib-accordion>
+														</div>
+												</div>
+												<div ng-class="{'rowColor1': $index%2==0, 'rowColor2': $index%2!=0}"  class="row" ng-if="row._type!=5">
+													
+													<div class="text-center" style="padding-top: 10px;" ng-show="!services.common.clientRights.orders.can_delete">
+														<span class="glyphicon glyphicon-pencil pointer" title="Artikel editieren" ng-click="editOrderItemModal($index)"></span>
+													</div>
+													<div class="text-center" style="padding-top: 10px;" ng-show="services.common.clientRights.orders.can_delete">
+														<span class="glyphicon glyphicon-pencil pointer" title="Artikel editieren" ng-click="editOrderItemModal($index)"></span>
+														 &nbsp;&nbsp;&nbsp;&nbsp;
+														<span class="glyphicon glyphicon-trash pointer" title="Artikel löschen" ng-click="deleteOrderItem(row)"></span>
+													</div>
+												</div>
+												
+												
+										
+											</div>
+										</div>
+										
+								</div>
+								<br>
+								<div class="prices" >
+										<div class="row background_lightgray" >
+											<div class="col-xs-8 text-left" style="padding-left:8px">Miete</div>
+											<div class="col-xs-4 text-right bold color-535353" style="padding-right:5px">{{getOrder.sum_rent | currency:""}} </div>
+										</div>
+										<div class="row">
+											<div class="col-xs-8 text-left" style="padding-left:8px">Verkauf</div>
+											<div class="col-xs-4 text-right bold color-535353" style="padding-right:5px">{{getOrder.sum_sales | currency:""}} </div>
+										</div>
+										<div class="row background_lightgray">
+											<div class="col-xs-8 text-left" style="padding-left:8px">Service</div>
+											<div class="col-xs-4 text-right bold color-535353" style="padding-right:5px">{{getOrder.sum_service | currency:""}} </div>
+										</div>
+										<div class="row">
+											<div class="col-xs-8 text-left" style="padding-left:8px">Transport</div>
+											<div class="col-xs-4 text-right bold color-535353" style="padding-right:5px">{{getOrder.sum_transport | currency:""}} </div>
+										</div>
+										<div class="row background_lightgray">
+											<div class="col-xs-8 text-left" style="padding-left:8px">Versicherung</div>
+											<div class="col-xs-4 text-right bold color-535353" style="padding-right:5px">{{getOrder.sum_insurance | currency:""}} </div>
+										</div>
+										
+										<div class="row">
+											<div class="col-xs-8 text-left" style="padding-left:8px">Rabatt</div>
+											<div class="col-xs-4 text-right bold color-535353" style="padding-right:5px">{{getOrder.sum_discount | currency:""}} </div>
+										</div>
+										<div class="row background_lightgray">
+												<div class="col-xs-8 text-left" style="padding-left:8px">Gesamtpreis Netto</div>
+												<div class="col-xs-4 text-right bold color-535353" style="padding-right:5px">{{getOrder.sum_net | currency:""}} </div>
+											</div>
+										<div>
+											<div class="row" ng-show="getOrder.sum_salestax2 > 0">
+												<div class="col-xs-8 text-left" style="padding-left:8px">Mehrwertsteuer 7%</div>
+												<div class="col-xs-4 text-right bold color-535353" style="padding-right:5px">{{getOrder.sum_salestax2 | currency:""}} </div>
+											</div>
+											<div class="row">
+												
+												<div class="col-xs-8 text-left" style="padding-left:8px">Mehrwertsteuer 19%--</div>
+												<div class="col-xs-4 text-right bold color-535353" style="padding-right:5px">{{1900 | currency:""}} </div>
+											</div>
+										</div>
+										
+										<div class="row background_lightgray" >
+											<div class="col-xs-8 text-left" style="padding-left:8px">Gesamtpreis Brutto</div>
+											<div class="col-xs-4 text-right bold" style="padding-right:5px">{{getOrder.sum_gro | currency:""}} </div>
+										</div>
+								</div>
+								<br>
+								<div uib-accordion-group is-open="acc_group3.open" ng-show="getOrder.__personal.length">
+										
+											<uib-accordion-heading>
+												
+												<div class="row"  >
+													
+													<div class="col-xs-4 text-left"><span ng-click="openModalPersonnel($event);" class="glyphicon glyphicon-plus"></span></div>
+													<div class="col-xs-4 text-center panelHeader">Personal</div>
+													<div class="col-xs-4 text-right" >[{{getOrder.__personal.length}}]&nbsp;&nbsp;<span ng-class="{'glyphicon glyphicon-chevron-down': acc_group3.open, 'glyphicon glyphicon-chevron-right': !acc_group3.open}"></span></div>
+												
+												</div>
+												
+											</uib-accordion-heading>
+											<div class="text-left my-list" >
+													
+												<div class="list-group-item row" ng-repeat="row in getOrder.__personal | orderBy : 'primary_key' ">
+														
+														<div class="col-xs-6 text-left">{{row.service_function}}</div>
+														<div class="col-xs-6 text-right">{{row.tech_name}}</div>
+														<!--
+														<div class="col-xs-4 text-right"><span ng-hide="readOnly" class="glyphicon glyphicon-remove-sign" ></span></div>
+														-->		
+												</div>
+												
+											</div>
+										
+										
+									</div>
+									<div uib-accordion-group is-open="acc_group4.open" ng-show="getOrder.__renting.length">
+											
+												<uib-accordion-heading>
+													
+													<div class="row"  >
+														
+														<div class="col-xs-4 text-left"></div>
+														<div class="col-xs-4 text-center panelHeader">Anmietungen</div>
+														<div class="col-xs-4 text-right" >[{{getOrder.__renting.length}}]&nbsp;&nbsp;<span ng-class="{'glyphicon glyphicon-chevron-down': acc_group4.open, 'glyphicon glyphicon-chevron-right': !acc_group4.open}"></span></div>
+														
+													
+													</div>
+													
+												</uib-accordion-heading>
+												<div class="text-left my-list" >
+														
+													<div class="list-group-item row" ng-repeat="row in getOrder.__renting | orderBy : 'primary_key' ">
+															
+															<div class="col-xs-4 text-left">{{row.amount_target}}</div>
+															<div class="col-xs-4 text-center">{{row.name}}</div>
+															<div class="col-xs-4 text-right">{{row.contact_name_delivery}}</div>
+			
+													</div>
+
+
+													
+												</div>
+											
+											
+										</div>
+										
+										<div uib-accordion-group is-open="acc_group6.open">
+												
+													<uib-accordion-heading>
+														
+														<div class="row"  >
+															
+															<div class="col-xs-4 text-left"></div>
+															<div class="col-xs-4 text-center panelHeader">Notizen</div>
+															<div class="col-xs-4 text-right" ><span ng-class="{'glyphicon glyphicon-chevron-down': acc_group6.open, 'glyphicon glyphicon-chevron-right': !acc_group6.open}"></span></div>
+															
+														
+														</div>
+														
+													</uib-accordion-heading>
+													<div class="text-left my-list" >
+															
+														<div class="list-group-item row" >
+															
+															<div class="col-xs-12" style="height:200px;padding:0px">
+                        
+                                                                <textarea class="e-txtarea" ng-model="getOrder.notes">
+                                                                    
+                                                                </textarea> 
+                        
+                                                            </div>
+
+														</div>
+														
+														
+														
+													</div>
+												
+												
+											</div>
+										
+					</uib-accordion>
+				</div>
+
+				<br>
+				<div style="display: table;margin: 0 auto;">
+					<div style="display: inline-block;"><button ng-click="services.common.openMsgAutoclose('Datensatz wurde gespeichert!')" class="my-act-btn edit-btn" >Speichern</button></div>
+					<div style="display: inline-block;width: 30px;"></div>
+					<div style="display: inline-block;"><button ng-click="services.common.openMsgAutoclose('Datensatz wurde zurückgestellt')" class="my-act-btn edit-btn" >Zurückstellen</button></div>
+				</div>
+			</div>
+
+		</div>
+	</main>
+</div>

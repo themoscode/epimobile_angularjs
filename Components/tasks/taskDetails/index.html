@@ -1,0 +1,138 @@
+<div class="taskPage">
+    <!-- HEADER -->
+    <header>
+        <div class="container-fluid my-panel-header">
+            <div class="row my-btn-group1" ng-include="'Components/Shared/panelHeader/index.html'"></div>
+            <div class="row my-btn-group2">
+                
+                <div class="col-xs-2 siteTitleTool text-right"><span class="glyphicon glyphicon-pencil" ng-class="{'tool-disabled': !services.common.clientRights.tasks.can_update, 'tool-on': !services.common.clientRights.tasks.read_only ,'tool-off': services.common.clientRights.tasks.read_only  }" ng-click="changeViewMode('tasks')"></span> </div>
+                <div class="col-xs-8 text-center siteTitle" >
+                    <span class="pointer siteTitle2" ng-click="services.searchNavigate.tasks(searchFilters,daysFilter)">Aufgaben</span>
+                </div>
+                <div class="col-xs-2 siteTitleTool text-left"><span class="glyphicon glyphicon-plus" ng-click="services.tools.navigateTo('/taskInsert')" ng-class="{'tool-disabled': !services.common.clientRights.tasks.can_insert, 'tool-on': services.common.clientRights.tasks.can_insert }"></span> </div>
+            
+            </div>
+        </div>
+    </header>
+    <!-- HEADER END -->
+    <main>
+        <div class="container" >   
+                <div class="row bodyRow" style="margin-top:22px">
+                        
+                    <div class="col-xs-12" ng-include="'Components/Shared/autocomplete/index.html'"></div>
+                    
+                </div>
+                <br>
+                <div ng-show="services.common.clientRights.tasks.read_only"> <!-- READ ONLY MODE-->
+                        <div ng-show="data.is_start_date && !data.is_end_date" >
+                                <span class="title-bold" >{{services.tools.dayNameFrom4d(data.date_start)}}</span><br>
+                            <span >{{services.tools.dateFrom4d(data.date_start)}} {{services.tools.hoursMins(data.time_start).hours}}:{{services.tools.hoursMins(data.time_start).mins}} Uhr</span>
+                        </div>
+                        <div ng-show="data.is_start_date && data.is_end_date" >
+                            <div ng-if="data.date_start!=data.date_end">
+                                    <span class="title-bold" >{{services.tools.dayNameFrom4d(data.date_start)}}</span><br>
+                                    <span>{{services.tools.dateFrom4d(data.date_start)}} {{services.tools.hoursMins(data.time_start).hours}}:{{services.tools.hoursMins(data.time_start).mins}} </span>
+                                    -
+                                    <span>{{services.tools.dateFrom4d(data.date_end)}} {{services.tools.hoursMins(data.time_end).hours}}:{{services.tools.hoursMins(data.time_end).mins}} Uhr</span>
+                            </div>
+                            <div ng-if="data.date_start==data.date_end">
+                                    <span class="title-bold" >{{services.tools.dayNameFrom4d(data.date_start)}}</span><br>
+                                    <span>{{services.tools.dateFrom4d(data.date_start)}} {{services.tools.hoursMins(data.time_start).hours}}:{{services.tools.hoursMins(data.time_start).mins}} </span>
+                                    -
+                                    <span>{{services.tools.hoursMins(data.time_end).hours}}:{{services.tools.hoursMins(data.time_end).mins}} Uhr</span>
+                            </div>
+                        
+                        </div>
+
+
+                        <div style="height:21px"></div>
+                        <div>
+                                
+                                <div ng-show="data.contact_name != ''" class="title-bold pointer link" ng-click="services.tools.navigateTo('contact/'+data.contact_pk)">{{data.contact_name}}<br></div>
+                                
+                                <div class="title-bold" style="word-break: break-all;">{{data.text}}</div>
+                                
+                                
+                                
+                        </div>
+                        <div style="height:21px"></div>
+                        <div class="my-panel-acc">
+                            
+                            <div class="row" ng-if="data.participant.length>0">
+                                <br>
+                                <div class="col-xs-12 text-center"><button class="my-act-btn" ng-click="openModalParticipant(data)">Teilnehmer</button></div>
+                            </div>  
+                            
+                        </div> 
+                </div>   
+
+                <!-- ----------------------------------------------------------------------------------------------- -->
+
+                <div ng-show="!services.common.clientRights.tasks.read_only" class="EDIT_MODE"> <!-- EDIT MODE -->
+                            
+                    <div ng-click="openModalSelectDates(data)" class="edit-text">
+
+                            <div ng-show="data.is_start_date && !data.is_end_date" >
+                                    <span class="title-bold" >{{services.tools.dayNameFrom4d(data.date_start)}}</span><br>
+                                <span >{{services.tools.dateFrom4d(data.date_start)}} {{services.tools.hoursMins(data.time_start).hours}}:{{services.tools.hoursMins(data.time_start).mins}} Uhr</span>
+                            </div>
+                            <div ng-show="data.is_start_date && data.is_end_date" >
+                                <div ng-if="data.date_start!=data.date_end">
+                                        <span class="title-bold" >{{services.tools.dayNameFrom4d(data.date_start)}}</span><br>
+                                        <span>{{services.tools.dateFrom4d(data.date_start)}} {{services.tools.hoursMins(data.time_start).hours}}:{{services.tools.hoursMins(data.time_start).mins}} </span>
+                                        -
+                                        <span>{{services.tools.dateFrom4d(data.date_end)}} {{services.tools.hoursMins(data.time_end).hours}}:{{services.tools.hoursMins(data.time_end).mins}} Uhr</span>
+                                </div>
+                                <div ng-if="data.date_start==data.date_end">
+                                        <span class="title-bold" >{{services.tools.dayNameFrom4d(data.date_start)}}</span><br>
+                                        <span>{{services.tools.dateFrom4d(data.date_start)}} {{services.tools.hoursMins(data.time_start).hours}}:{{services.tools.hoursMins(data.time_start).mins}} </span>
+                                        -
+                                        <span>{{services.tools.hoursMins(data.time_end).hours}}:{{services.tools.hoursMins(data.time_end).mins}} Uhr</span>
+                                </div>
+                            </div>
+
+
+                    </div>
+                            
+
+
+                    <div style="height:21px"></div>
+                    <div>
+                            
+                            <form class="form-inline" >
+                                <div class="form-group">
+                                    <label>Kontakt:</label>
+                                    <input type="text" class="form-control" ng-model="data.contact_name" ng-click="openModalSearchContact(data)">
+                                </div>
+                                <div class="form-group">
+                                    <label>Text:</label>
+                                    <input type="text" class="form-control" ng-model="data.text">
+                                </div>
+                            </form>
+                            
+                            
+                    </div>
+                    <div style="height:21px"></div>
+                    <div class="my-panel-acc">
+                        
+                        <div class="row" >
+                            <br>
+                            <div class="col-xs-12 text-center"><button class="my-act-btn" ng-click="openModalParticipant(data)">Teilnehmer</button></div>
+                        </div>  
+                       
+                        
+                    </div> 
+
+                    <br>
+                    <div style="display: table;margin: 0 auto;">
+                        <div style="display: inline-block;"><button ng-click="services.common.openMsgAutoclose('Datensatz wurde gespeichert!')" class="my-act-btn edit-btn" >Speichern</button></div>
+                        <div style="display: inline-block;width: 30px;"></div>
+                        <div style="display: inline-block;"><button ng-click="services.common.openMsgAutoclose('Datensatz wurde zurückgestellt')" class="my-act-btn edit-btn" >Zurückstellen</button></div>
+                    </div>
+
+            </div> 
+                           
+        </div>    
+    </main>
+    
+</div>

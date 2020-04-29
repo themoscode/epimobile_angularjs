@@ -1,0 +1,64 @@
+<div class="modal-header text-center">
+    <h3 class="modal-title">Adresse suche</h3>
+</div>
+
+
+<div class="modal-body">
+        
+    <div class="row">
+        <div class="col-xs-12 text-center">
+            
+            <div class="text-left my-list" >
+                
+                <form name="form" ng-submit="getContactsData(searchText)">   
+                    <input type="search" class="form-control glyphicon glyphicon-search searchBox text-center"  placeholder="Adresse Suche..." ng-model="searchText"  /> 
+                </form>
+                <br>   
+                <div class="text-center" ng-if="services.common.loading.contacts">
+                    <img src="Assets/img/icons/loading.gif" class="dataLoading" >
+                </div> 
+
+                <div class="search_results_label" ng-show="searchDone && !services.common.loading.contacts">
+                    <div ng-show="getContacts.length" class="found text-center" >
+                        {{getContacts.length}} 
+                        <span ng-show="getContacts.length>1">Einträge</span> 
+                        <span ng-show="getContacts.length==1">Eintrag</span> 
+                        gefunden
+                    </div>
+                    <div ng-show="!getContacts.length" class="notFound text-center" >Keine Einträge gefunden</div>
+                </div>
+
+                <div ng-show="getContacts.length">
+                    <dir-pagination-controls template-url="Assets/modules/pagination/index.html"></dir-pagination-controls>
+                    
+                    <div ng-class="{'list-group-item on': modalSelectedContact.primary_key == row.primary_key, 'list-group-item': modalSelectedContact.primary_key != row.primary_key}" dir-paginate="row in getContacts | itemsPerPage: pageSize" current-page="currentPage">
+                        
+                        <div class="text-center" ng-click="selectContact(row)">{{row.name}}</div>
+
+                    </div>
+                        
+                </div>
+                
+            </div>
+                
+            
+        </div>
+        
+    </div>
+                 
+</div>
+<div class="modal-footer">
+    <div class="row">
+            
+            <div class="col-xs-6 text-left">
+                <button class="my-act-btn" ng-click="cancel()" >Abbrechen</button>
+            </div>
+            <div class="col-xs-6 text-right">
+            <button class="my-act-btn" ng-click="ok()" >OK</button>
+        </div>
+    </div>
+    
+</div>
+
+
+

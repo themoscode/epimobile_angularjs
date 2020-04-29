@@ -1,0 +1,22 @@
+<form name="form" ng-submit="autocomplete.getTextValue()" class="autocomplete_form">
+   
+        <div angucomplete-alt id="ac"
+        placeholder="Suchbegriff eingeben…"
+        maxlength="50"
+        pause="100"
+        selected-object="autocomplete.getSelectedValue"
+        input-changed="autocomplete.inputChanged"
+        local-data="searchArray"
+        search-fields="key"
+        title-field="key"
+        minlength="1"
+        input-class="form-control glyphicon glyphicon-search searchBox text-center"
+        match-class="highlight"
+        initial-value="searchFilters.searchText"
+        text-no-results=false
+        focus-in="autocomplete.focusIn()">
+       </div>
+        <i ng-show="autocomplete.showXbutton" class="glyphicon glyphicon-remove" ng-click="autocomplete.clear()"></i>
+        
+        
+</form>

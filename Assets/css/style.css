@@ -1,0 +1,1488 @@
+/*******************************************************************************/ 
+/******************************************GLOBAL START*************************/
+/*******************************************************************************/    
+   
+   
+   /****************************ROUTING ANIMATION*******************************/
+   
+   .ng-enter {
+    
+    transition: 1s;
+
+    
+    opacity: 0;
+    }
+
+    .ng-enter-active {
+        
+        opacity: 1;
+    }
+  
+   /****************************ROUTING ANIMATION END***************************/
+    
+    @font-face {
+    font-family: FontAwesome;
+    src: url(../fonts/fontawesome-webfont.ttf);
+     }
+     @font-face {
+    font-family: myriad-set-pro-ultralight;
+    src: url(../fonts/myriad-set-pro-ultralight-58e60aedd86bf.ttf);
+     }
+     @font-face {
+    font-family: myriad-set-pro-thin;
+    src: url(../fonts/myriad-set-pro-thin-58e4d796bb47b.ttf);
+     }
+     @font-face {
+    font-family: myriad-set-pro-bold;
+    src: url(../fonts/myriad-set-pro-bold-58e60489f32da.ttf);
+     }
+     @font-face {
+    font-family: myriad-set-pro-text;
+    src: url(../fonts/myriad-set-pro-text-58e604d215bc8.ttf);
+     }
+     
+
+     .bold {
+      font-family: myriad-set-pro-bold;
+     }
+
+     .color-ff9c01 {
+      color: #ff9c01
+     }
+
+     .color-818181{
+      color: #818181
+     }
+
+     .color-fda158{
+      color: #fda158
+     }
+
+     .color-208700{
+      color: #208700
+     }
+
+     .color-585fb7{
+      color: #585fb7
+     }
+
+     .color-3ba050{
+      color: #3ba050
+     }
+
+     .color-00129a{
+      color: #00129a
+     }
+
+     .color-535353{
+      color: #535353
+     }
+
+     .color-red{
+      color: red
+     }
+
+     .color-green{
+      color: green
+     }
+
+     .color-blue{
+      color: blue
+     }
+
+     .background_lightgray{
+      background:lightgray
+     }
+
+     .margin-0px {
+      margin: 0px;
+     }
+
+     
+
+     body {
+      font-family: myriad-set-pro-thin;
+      font-size: 18px;
+     }
+    
+     .googleMap,
+     .link{
+       cursor:pointer;
+       color: #6b6bd8;
+     }
+
+    
+
+     .link:hover{
+       text-decoration: underline
+     }
+
+     .block:hover{
+      background-color: #F1F1F1;
+     } 
+
+
+     a {
+      text-decoration: none;
+      outline : none;
+     }
+     a:hover, a:focus {
+      xcolor: #23527c;
+      xtext-decoration: none;
+      outline : none;
+     }
+
+     textarea:focus{
+        outline:0px !important;
+        -webkit-appearance:none;
+    }
+
+    *:focus {
+      outline:0 !important;
+     }
+
+     .notes{
+      border: 1px solid #dedede;
+      border-radius: 10px;
+      min-height: 80%;
+      padding: 10px 10px 15px 10px;
+      }
+
+      input[type],.form-control{
+        border: 2px solid gray;
+        border-radius: 10px;
+      }
+
+      
+
+      /**/
+      .input-group.sorting {
+        display: table;
+        margin: 0 auto;
+        width:250px
+      }
+
+      .input-group.sorting select{
+        border: 1px solid #ccc;
+        -webkit-appearance: none;
+      }
+      /**/
+     
+
+     .h1, .h2, .h3, h1, h2, h3 {
+      margin-top: 0;
+      margin-bottom: 0;
+    }
+     
+     
+     .pointer {
+      cursor:pointer;
+     }
+     
+     .searchBox{
+      height: 37px;
+      border-radius: 20px;
+      font-size:18px;
+      font-family: myriad-set-pro-text;
+     }
+     
+     .my-paging-label {
+      font-size:15px;
+     }
+     
+      .search_results_label {
+        font-family: myriad-set-pro-bold;
+        font-size:15px;
+      }
+
+      .search_results_label .found{
+          color:green
+      }
+      .search_results_label .notFound{
+          color:red
+      }
+     
+
+     .img-center{
+      
+      margin: 0 auto;
+      
+    }
+
+    .fixed{
+      position:fixed;
+      z-index:100
+    }
+    
+    .communication-block{
+      display: table;
+      margin: 0 auto;
+      padding-bottom:15px;
+      padding-top:15px;
+    }
+    
+    .communication-block .glyphicon {
+      font-size:16px
+    }
+
+     /******icons************************************/
+     
+      /* loading icon */
+
+      .dataLoading{
+        width:40px;
+       }
+
+       .dataLoading.responsive{
+        width:30%;
+        max-width:200px;
+       }
+  
+       /* loading icon */
+    
+    
+
+    .dot-group .dot:last-child{
+        ggmargin-right:0px
+    }
+
+    .dot{
+      border-radius: 15px;
+      width: 29px;
+      height: 29px;
+      background-color: black;
+      color: white;
+      padding-top: 3px;
+      font-size: 14px;
+      font-family: myriad-set-pro-text;
+    } 
+
+    .dot-group.notFirefox .dot{
+      padding-top: 3px;
+    }
+
+    .dot.dot_green,
+    .dot.true
+    {
+      background-color: rgb(143,188,143);
+      border:2px solid rgb(143,188,143);
+    }
+   
+
+    .dot.dot_orange {
+      background-color: rgb(244,164,96);
+      border:2px solid rgb(244,164,96);
+    }
+
+    .dot.dot_yellow {
+      background-color: yellow;
+      border:2px solid yellow;
+      color:black
+    }
+
+    .dot.dot_red,
+    .dot.false
+    {
+      background-color: rgb(255,99,71);
+      border:2px solid rgb(255,99,71);
+    }
+
+    .false{
+      /* color:red */
+    }
+
+    .true{
+      /* color:green */
+    }
+
+    .dot.dot_greyoutline,
+    .dot.dot_transparent
+    {
+      border:2px solid gray;
+      background-color: transparent;
+      color:gray;
+      
+    }
+
+  .dot.dot_blackoutline{
+      border:2px solid gray;
+      background-color: transparent;
+      color:black;
+      
+    }
+
+    
+     .circle-state-icon{
+       width:15px
+     }
+    
+    /******icons end*********************************/
+     
+    /******************EDITABLE TEXT-BOXES AND TOOLS***************************************/
+    
+    .EDIT_MODE input[type=text].form-control
+
+       {
+        border:none;
+        border-radius:0px;
+        border-color:white;
+        border-bottom:1px dotted black;
+        box-shadow: inset 0 1px 1px rgba(255, 255, 255, 0.075);
+        -webkit-box-shadow: inset 0 1px 1px rgba(255, 255, 255, 0.075);
+      }
+
+
+    .tool-on
+    {
+      color:white;
+    }
+   
+    .tool-off
+    {
+      color:#4B4B4B
+    }
+    
+    .tool-disabled{
+      color:gray;
+    }
+
+    /**/
+
+    .e-txtbox { /*flag for editable text */
+      
+      border: 0px;
+      border-bottom:1px solid transparent;
+      width:100%;
+      text-align: center;
+  }
+
+  .e-txtbox.text-left{
+    text-align: left;
+  }
+
+
+
+    .e-txtbox2 {
+      height: 37px;
+      border:1px solid transparent;
+      border-radius: 20px;
+      font-size:18px;
+      font-family: myriad-set-pro-text;
+    }
+
+    .e-txtbox.auto-width{
+      width:auto;
+    }
+    
+    .title-bold { /*styles for editable textboxes*/
+      
+      font-family: myriad-set-pro-bold;
+      font-size: 24px;
+     
+    }
+
+    .e-txt2 { /*styles for editable textboxes*/
+      
+      font-family: inherit;
+      font-size: 24px;
+     
+    }
+
+    
+    .edit-text { /*text box on edit mode*/
+      border-bottom:1px dotted;
+      cursor:pointer
+    }
+
+    .edit-text2 { /*text box on edit mode*/
+      border:1px dotted;
+      cursor:pointer
+    }
+    
+    /**/
+
+    .e-txtarea { /*flag for editable text */
+      
+        border:none;
+
+        width:100%;
+
+        height:100%;
+
+        resize: none;
+
+        color: #657070;
+
+        font-size: 14px;
+
+        font-family: myriad-set-pro-thin;
+
+        padding-left: 15px;
+     }
+
+    .e-txtarea[readonly],
+    .e-txtbox2[readonly] {
+      background-color: white;
+    }
+
+    .edit-textarea { /*text box on edit mode*/
+      border:1px dotted;
+    }
+    
+
+
+   /******************EDITABLE TEXT-BOXES AND TOOLS END***********************************/
+
+
+
+
+
+
+     /****************************MY BUTTONS*************************************/
+     
+     .my-arrow-left-btn {
+      font-size:28px;
+      margin-left: 14px;
+     }
+     
+     .my-arrow-left-btn.no-margin,
+     .my-arrow-right-btn.no-margin {
+       margin:auto
+     }
+  
+  
+     .my-arrow-right-btn {
+      font-size:28px;
+      margin-right: 14px;
+     }
+  
+     
+  
+  
+  
+     /***act-btn***/
+  
+     .my-act-btn {
+      border-radius: 10px;
+      
+       background-color: #898886;
+       color: white;
+      border-color: gray;
+      border: 1px solid;
+      font-family: myriad-set-pro-text;
+      padding-left:10px;
+      padding-right:10px;
+      padding-top:2px;
+      padding-bottom:2px;
+      width: 100%;
+     }
+     .my-act-btn:hover {
+     
+      color: gray;
+     background: none;
+     }
+  
+     /***act-btn end***/
+      
+    .my-act-btn.edit-btn{
+      width:120px;
+      padding-top: 5px;
+      padding-bottom: 5px;
+     }
+
+      
+     .my-act-btn.edit-btn.save{
+       background-color:green
+     }
+      
+     .my-act-btn.edit-btn.cancel{
+       background-color:red
+     } 
+
+     .my-act-btn.edit-btn:hover {
+     
+        color: gray;
+        background: none;
+     }
+     
+
+
+     /***func-btn***/
+  
+    .my-func-btn{
+      
+      border-radius: 8px; 
+      font-size: 17px;
+      padding-top: 2px;
+      padding-bottom: 2px;
+      font-family: myriad-set-pro-text;
+      background-color: #8e8e8e;
+    
+    }
+  
+    .my-func-btn:hover{
+      xcolor: #f9c210;
+    }
+  
+  
+    .my-func-btn-on{
+    color: #f9c210;
+    }
+  
+    .my-func-btn-off{
+    color: white;
+    }
+  
+  /***func-btn end***/
+  
+  /****************************MY BUTTONS END**********************************/
+  
+  /*ACCORDIONS HEADER*/
+  .panelHeaderContainer {
+    display: table;
+    margin: 0 auto;
+  }
+
+  .panelHeaderContainer div{
+    display: inline-block;
+  }
+
+  .panelHeaderContainer .left{
+    margin-right:15px;
+  }
+
+  .panelHeaderContainer .right{
+    margin-left:15px;
+  }
+
+  /*ACCORDIONS HEADER END*/
+
+  /****************************MY BTN GROUP*******************************/
+     
+   .my-btn-group .my-group-btn {
+      width: 130px;
+      border-radius: 0px;
+      font-size: 17px;
+      padding-top: 2px;
+      padding-bottom: 2px;
+      margin-right: 2px;
+      font-family: myriad-set-pro-text;
+      background-color: #8e8e8e;
+     }
+    
+      
+  
+     .my-btn-group .my-group-btn:first-child {
+      border-top-left-radius: 8px;
+      border-bottom-left-radius: 8px;
+     }
+  
+     .my-btn-group .my-group-btn:last-child {
+      border-top-right-radius: 8px; 
+      border-bottom-right-radius: 8px;
+     }
+     
+  
+   .my-btn-group .my-group-btn.auto-width {
+      width:auto;
+     }   
+  
+   .my-btn-group .my-group-btn:hover{
+       xcolor:#f9c210
+     }
+  
+    
+     .my-btn-group .my-group-btn.my-group-btn-smaller {
+      font-size: 12px;
+      padding-top: 6px;
+      padding-bottom: 5px;
+     } 
+  
+    .productsListPage .my-group-btn-off,
+    .ordersListPage .my-group-btn-off,
+    .invoicesListPage .my-group-btn-off,
+    .tasksListPage .my-group-btn-off,
+    .meetingsListPage .my-group-btn-off
+     {
+      color:white;
+     }
+
+
+    .ordersListPage .dot-group .dot {
+        margin-right: 20px;
+        display: inline-block;
+        cursor: pointer;
+
+        }
+
+      .ordersListPage .dot-group .order_no {
+        margin-right: 20px;
+        display: inline-block;
+        cursor: pointer;
+        padding-bottom:5px;
+        }  
+  
+  .my-group-btn-off {
+      color:lightgray;
+     }
+   
+   .my-group-btn-on {
+      color: #f9c210;
+     }
+  
+  
+  
+  /*******burger btn-group top*****/
+  .btn-group.my-btn-group.my-btn-group-top.notFirefox{
+    XXmargin-left:1px;
+   
+  }
+  
+  
+
+  .btn-group.my-btn-group.my-btn-group-top button{
+    
+    width: 126px;
+    background: none;
+    border: 1px solid #8c8c8c;
+    color: #8c8c8c;
+    
+  }
+  
+  .btn-group.my-btn-group.my-btn-group-top button:first-child{
+    border-top-left-radius: 30px;
+    border-bottom-left-radius: 0px;
+  }
+  
+  .btn-group.my-btn-group.my-btn-group-top button:last-child{
+    border-top-right-radius: 30px;
+    border-bottom-right-radius: 0px;
+    
+  }
+  
+  .btn-group.my-btn-group.my-btn-group-top button:hover{
+    
+    color:#f9c210;
+    xbackground-color: #8e8e8e;
+    
+  }
+  
+  .btn-group.my-btn-group.my-btn-group-top button.my-group-btn-on{
+    
+       color:#f9c210;
+       background-color: #8e8e8e;
+    
+  }
+  
+  .btn-group.my-btn-group.my-btn-group-top button.my-group-btn-off{
+    
+      color:lightgrey;
+    
+     background-color: #8e8e8e;
+  }
+  
+  
+
+ 
+  /*******burger btn-group top end*****/
+  
+  
+  /*******burger btn-group bottom*****/
+  .btn-group.my-btn-group.my-btn-group-bottom button:first-child{
+    border-top-left-radius: 0px;
+  }
+  
+  .btn-group.my-btn-group.my-btn-group-bottom button:last-child{
+    border-top-right-radius: 0px
+  }
+  
+  .btn-group.my-btn-group.my-btn-group-bottom.no-radius button {
+    border-radius: 0px;
+  }
+  
+  /*******burger btn-group bottom end*****/
+  
+  .my-btn-group button[disabled] {
+    opacity: 1;
+    xxcolor: lightgray;
+  }
+
+
+  
+    /***************************MY BTN GROUP END*******************************/
+  
+     /**************************************MY LIST************************************/
+     .my-list{
+    
+padding-left:15px;
+    
+padding-right:15px;
+    
+font-size: 16px;
+    
+font-family:myriad-set-pro-text;
+    
+}
+
+    .my-list .row{
+      padding-right:0px;
+     }
+      
+     .my-list .list-group-item{
+        padding-top: 8px;
+        padding-bottom: 8px;
+        xheight: 39px;
+        padding-left:0px;
+        cursor:pointer;
+        word-wrap: break-word;
+      }
+
+    .my-list .list-group-item.no-pointer{
+      cursor: default
+    }
+    
+    .my-list .list-group-item:hover,
+    .my-list .list-group-item.on
+    
+    {
+    
+        background-color: #F1F1F1;
+    }
+
+   
+
+    .orderPage .totalList .np,
+    .invoicePage .totalList .np
+    {
+      font-size:16px; 
+      padding:0px;
+    }
+
+    .orderPage .totalList .rowColor1,
+    .invoicePage .totalList .rowColor1
+    {
+      background-color:lavender;
+    }
+
+    .orderPage .totalList .rowColor2,
+    .invoicePage .totalList .rowColor2
+    {
+      background-color:transparent;
+    }
+
+    .orderPage .totalList .rowColor3,
+    .invoicePage .totalList .rowColor3
+    {
+      background-color:rgb(247, 240, 240)
+    }
+
+    .orderPage .totalList .rowColor4,
+    .invoicePage .totalList .rowColor4
+    {
+      background-color:rgb(193, 193, 233)
+    }
+
+    .participantPage .my-list .list-group-item:hover,
+    .participantPage .my-list .list-group-item.on,
+    .taskPage .my-list .list-group-item:hover,
+    .taskPage .my-list .list-group-item.on,
+    .meetingPage .my-list .list-group-item:hover,
+    .meetingPage .my-list .list-group-item.on,
+    .contactPage .my-list .list-group-item:hover,
+    .contactPage .my-list .list-group-item.on,
+    .productPage .my-list .list-group-item:hover,
+    .productPage .my-list .list-group-item.on,
+    .orderPage .my-list .list-group-item:hover,
+    .orderPage .my-list .list-group-item.on,
+    .invoicePage .my-list .list-group-item:hover,
+    .invoicePage .my-list .list-group-item.on
+    
+    {
+    
+        background-color:transparent;
+        cursor:auto
+    }
+
+
+      
+    .my-list .list-group-item.my-list-header{
+        border-top-left-radius: 6px;
+        border-top-right-radius: 6px;
+        
+      }
+      
+    .my-list .list-group-item.my-list-header:hover{
+        background-color: white;
+        cursor: auto;
+      }
+    
+    .my-list .list-group-item.my-list-header a{
+        cursor: pointer;
+        font-family: myriad-set-pro-bold;
+        color: #3d98ed;
+      }
+
+    .my-list .list-group-item.my-list-header a:hover{
+        text-decoration: none;
+      }
+    
+    .my-list .list-group-item:last-child {
+        border-bottom-left-radius: 6px;
+        border-bottom-right-radius: 6px;
+      
+      }
+    
+    .my-list .glyphicon.glyphicon-triangle-top{
+        color:#429AE9
+      }
+
+     .my-list .glyphicon.glyphicon-triangle-bottom{
+        color:#429AE9
+      }
+    /**************************************MY LIST END ************************************/
+    
+    /*autocomplete*/
+    .autocomplete_form i{
+      position:absolute;
+      right:30px;
+      top:10px;
+      cursor:pointer
+    }
+    /*autocomplete*/  
+
+
+    /*******************************************************************************/  
+    /*************************HEADER*************************************************/
+    /*******************************************************************************/ 
+     
+    
+    header .my-panel-header {
+      width: 100%;
+      oposition:fixed;
+      z-index:100
+    }
+
+    header .my-panel-header .epiMobileLogo {
+      width:29px;
+      height: 29px;
+      cursor: pointer;
+    }
+
+    header .my-panel-header .siteTitle {
+      font-family: myriad-set-pro-text;
+      color: white;
+      font-size: 25px;
+    }
+
+    header .my-panel-header .siteTitle span.siteTitle2 {
+     
+/* color: #6b6bd8; */
+     
+font-family: myriad-set-pro-bold;
+    }
+
+    
+    header .my-panel-header .siteTitleTool {
+       padding-top: 5px;
+       color: #4B4B4B;
+     }
+    
+    header .my-panel-header .siteTitleTool.disabled span{
+      color:grey;
+      cursor:auto
+    }
+  
+    header .my-panel-header .siteTitleTool span {
+      font-size: 24px;
+      cursor: pointer;
+     }
+ 
+    header .my-panel-header .siteTitleTool span:hover {
+     xxcolor:white;
+     xxcursor: pointer;
+   }
+
+    header .my-panel-header .my-btn-group1 { /* preferences, home, logout*/
+      background-color:#4b4b4b;
+      height: 43px;
+      padding-top: 7px;
+    }
+    header .my-panel-header .my-btn-group1 i {
+      font-size:30px;
+      color: #a5a5a5;
+    }
+    header .my-panel-header .my-btn-group1 i:hover {
+      xcolor: white;
+    }
+   
+   /************/
+   header .my-panel-header .my-btn-group2 .btn-group {
+     
+     padding-bottom:5px
+     
+   }
+   header .my-panel-header .my-btn-group2 {
+    gbackground-color:#c1c1c1;
+    background-color: #797777;
+    padding-top:5px;
+    padding-bottom:5px;
+    height: 45px;
+    }
+
+/*******************************************************************************/    
+/***************************HEADER END******************************************/
+/*******************************************************************************/ 
+
+
+    /*******************************************************************************/  
+    /***************************GLOBAL END******************************************/
+    /*******************************************************************************/  
+    
+    
+    
+      
+  
+  /*******************************************************************************/ 
+  /***************************MAIN******************************************/
+  /*******************************************************************************/ 
+  
+  main .container {
+    max-width: 768px;
+  }
+  
+   /*MUDULES CSS*/
+   /*
+   .product_css{
+     background-color:#3DA264!important;
+     border-color:#3DA264!important;
+     color:white!important;
+   }
+
+   .order_css{
+      background-color:#EAA54E!important;
+      border-color:#EAA54E!important;
+      color:white!important;
+   }
+
+   .invoice_css{
+    background-color:#8BAFE8!important;
+    border-color:#8BAFE8!important;
+    color:white!important;
+   }
+   */
+     /*MUDULES CSS*/
+
+  
+  /************PANEL ACCORDION HOME*********************/
+     
+  main .container .my-home-panel-acc {
+  
+      padding-right:12px;padding-left:12px
+    }
+   
+  main .container .my-home-panel-acc .panel {
+    border:0px;
+     }
+  
+  main .container .my-home-panel-acc .panel-heading {
+    border-radius:10px;
+    height: 54px;
+     }
+  
+  main .container .my-home-panel-acc .panel-termin > .panel-heading,
+  main .container .my-home-panel-acc .panel-aufgaben > .panel-heading,
+  main .container .my-home-panel-acc .panel-chat > .panel-heading
+     {
+    background: #507C86;
+     }
+  
+  main .container .my-home-panel-acc .panel-adressen > .panel-heading,
+  main .container .my-home-panel-acc .panel-artikel > .panel-heading
+     {
+    background: #39A461;
+     }
+  
+  main .container   .my-home-panel-acc .panel-rechnung > .panel-heading
+     {
+    background: #8BAFE8;
+     }
+  
+  main .container .my-home-panel-acc .panel-zeiterfassung > .panel-heading,
+  main .container .my-home-panel-acc .panel-auftrag > .panel-heading
+     {
+    background: #EAA54E;
+     }
+  
+  main .container .my-home-panel-acc .panelHeader {
+      cursor:pointer;
+      color:white;
+      font-family: myriad-set-pro-text;
+      font-size:25px;
+      padding-top:5px;
+     }
+  
+  main .container   .my-home-panel-acc .panelHeader2 {
+    /* font-family: myriad-set-pro-ultralight; */
+    font-size:25px;
+    color:white;
+    padding-top:5px;
+    }
+  
+  
+     
+  /************PANEL ACCORDION HOME END*********************/
+     
+
+  
+     /************PANEL ACCORDION *********************/
+  
+  main .container .my-panel-acc .panel{
+        border:none;
+     }
+     
+  main .container .my-panel-acc .panel-heading {
+    border-radius:6px;
+    height: 37px;
+     gbackground: #C1C1C4;
+     padding-bottom: 5px
+      }
+  
+  
+  main .container .my-panel-acc .panel-heading .panelHeader {
+      font-family: myriad-set-pro-bold;
+      font-size:17px;
+      /*! padding-bottom:8px */
+    }
+     
+  main .container .my-panel-acc .panel-body{
+      padding:0px
+      }
+
+
+     /************PANEL ACCORDION END*********************/ 
+      
+  /*****************************************/
+  /*css for pages*/
+  /*****************************************/
+
+
+ 
+
+  /**/
+  .homePage header .my-panel-header .siteTitle span{
+    xfont-family: myriad-set-pro-ultralight;
+    font-family: myriad-set-pro-thin;
+  }
+  
+  .homePage .my-home-panel-acc .circle-state-icon {
+     margin-top:3px
+    }
+ 
+  .homePage .my-home-panel-acc .circle-time-icon {
+   margin-top: 7px;
+   color: white;
+ } 
+
+
+  /**/
+  .productsListPage .my-btn-group.my-btn-group-top .my-group-btn,
+  .ordersListPage .my-btn-group.my-btn-group-top .my-group-btn,
+  .invoicesListPage .my-btn-group.my-btn-group-top .my-group-btn
+  {
+    width:200px;
+  }
+  .productsListPage .my-btn-group.my-btn-group-bottom .my-group-btn,
+  .ordersListPage .my-btn-group.my-btn-group-bottom .my-group-btn,
+  .invoicesListPage .my-btn-group.my-btn-group-bottom .my-group-btn
+  
+  {
+    width: 100px;
+  }
+
+   .productsListPage .my-btn-group-top button{
+     background-color:#3DA264!important;
+     border-color:#3DA264!important;
+     color:white!important;
+   }
+ 
+
+  .productPage .my-panel-acc .panel-heading {
+    
+      background: #39A461;
+     color:white;
+}
+
+
+  /**/
+  
+  .ordersListPage .my-btn-group-top button{
+     background-color:#EAA54E!important;
+      border-color:#EAA54E!important;
+      color:white!important;
+   }
+
+   
+   .invoicesListPage .dot{
+    /* width: 20px; */
+    /* height: 20px; */
+    margin-top: 9px;
+    margin-bottom: 14px;
+    color: white;
+  }
+
+ 
+  
+ 
+
+   .block
+  {
+    
+    padding-top: 10px;
+    padding-bottom: 10px;
+  }
+
+  .meetingsListPage .title-bold,
+  .tasksListPage .title-bold
+  {
+    font-size:16px
+  }
+
+  .ordersListPage .my-list .block .contact,
+  .invoicesListPage .my-list .block .contact
+  {
+    padding-left:5px;padding-right:5px;
+    font-family: myriad-set-pro-bold;
+    font-size: 18px;
+   
+  }
+
+  .ordersListPage .my-list .block .inlineBlock{
+    display: inline-block;padding-left:13px
+  }
+
+  
+
+  .orderPage .btn-group.my-btn-group.my-btn-group-top.notFirefox{
+    margin-right:4px;
+   
+ }
+
+  .orderPage .my-btn-group.my-btn-group-top .my-group-btn:first-child {
+    width:115px;
+  }
+  .orderPage .my-btn-group.my-btn-group-top .my-group-btn:last-child {
+    width: 117px;
+  }
+  
+  
+  .orderPage .prices,
+  .invoicePage .prices
+  {
+    font-size: 16px;
+    padding-left: 15px;
+    padding-right: 15px;
+  }
+
+  .orderPage  .panel-heading {
+    
+    color:white;
+  }
+
+/*
+  .orderPage .my-panel-acc .panel-heading {
+    
+      bbackground: #EAA54E;
+      color:white;
+    }
+
+    .orderPage .my-panel-acc_kap .panel-heading {
+
+      background: #8898F7;
+        cccolor:black;
+      }
+*/
+    .orderPage .dot-group .dot {
+       margin-right: 20px;
+       display: inline-block;
+       cursor: pointer;
+    }
+    
+  .invoicesListPage .block,
+  .meetingsListPage .block,
+  .tasksListPage .block
+  {
+    border-bottom:1px solid #DDDDDD;
+    padding-top:10px
+  }
+
+  .invoicesListPage .my-btn-group-top button{
+     background-color:#8BAFE8!important;
+     border-color:#8BAFE8!important;
+     color:white!important;
+   }
+
+   .invoicesListPage .dot-group .dot {
+    margin-right: 65px;
+   }
+  
+  .invoicePage .my-panel-acc .panel-heading {
+  
+    background: #8BAFE8;
+    color:white;
+   }
+
+
+
+  /**/
+
+  .timeTrackingPage .googleEarthIcon {
+    font-size: 40px; 
+    color:blue;
+  }
+
+ .timeTrackingPage .input-group.timer span{
+
+    background: #4B4B4B; 
+    border:2px solid #484848;
+    color: white;
+ }
+
+ .timeTrackingPage .input-group input {
+  border:2px solid #4b4b4b;
+ }
+
+ .timeTrackingPage .input-group.timer #timer[readonly]{
+  background-color:white
+}
+
+ .timeTrackingPage .my-panel-acc .panel-heading {
+   
+     background: #EAA54E;
+    
+      }
+
+  /**/
+  .chatPage .my-chat-avatar {
+      height:50px;
+    }
+  
+  /**/
+  
+  .contactPage .notes_container  {
+    padding-right: 0px;
+    padding-left: 15px;
+    
+  } 
+
+  .contactPage .my-panel-acc .panel-heading {
+   
+     background: #39A461;
+     color:white;
+      }
+  
+      
+  /**/
+  .meetingPage .my-panel-acc .panel-heading,
+  .taskPage .my-panel-acc .panel-heading
+  {
+    
+      background: #507C86;
+      color:white;     
+  }
+
+  .meetingPage .my-panel-acc .panel-heading .panelHeader,
+  .taskPage .my-panel-acc .panel-heading .panelHeader
+  {
+    
+      
+      color:white;     
+  }
+
+
+
+  .modalSelectDates .uib-timepicker a.btn.btn-link{
+    outline: none
+    
+  }
+ 
+  .modalSelectDates .input-group-btn button{
+    border: 2px solid gray;
+    height: 34px;
+    border-left: 1px;
+  }
+   
+   /****************************************/
+  /*css for pages end*/
+  /*****************************************/
+
+
+     
+  /*******************************************************************************/ 
+  /***************************MAIN END********************************************/
+  /*******************************************************************************/ 
+     
+  /*******************************************************************************/ 
+  /************************************FOOTER*************************************/
+  /*******************************************************************************/ 
+  
+  footer .info-btn{
+  
+        color:gray;
+        font-size:40px;
+  
+      }
+  
+    /*******************************************************************************/ 
+    /************************************FOOTER END*********************************/
+    /*******************************************************************************/ 
+  
+  
+  
+     /*******************************************************************************/  
+     /************************************BOOTSTRAP OVERWRITE************************/
+     /*******************************************************************************/ 
+      .modal{
+          top: 90px;
+      }
+    
+      .modal-title {
+        font-family: myriad-set-pro-bold;
+      }
+      .text-muted {
+        color:black
+      }
+
+      .panel-group {
+        margin-bottom:0px
+      }
+     
+     /*******************************************************************************/  
+     /************************************BOOTSTRAP OVERWRITE END********************/
+     /*******************************************************************************/ 
+     
+     /*******************************************************************************/  
+     /************************************MEDIA QUERIES******************************/
+     /*******************************************************************************/
+  
+
+     
+     
+    
+    @media (max-width:379px) {   
+    
+      .EDIT_MODE .communication_title{
+        font-size:17px
+     }
+    } 
+
+     @media (max-width:368px) {   
+    
+      .EDIT_MODE .communication_title{
+        font-size:16px
+     }
+    } 
+
+    @media (max-width:358px) {   
+    
+      .EDIT_MODE .communication_title{
+        font-size:14px
+     }
+    } 
+
+    @media (max-width:334px) {   
+    
+      .EDIT_MODE .communication_title{
+        font-size:12px
+     }
+    } 
+
+
+    @media (max-width:515px) and (min-width:407px) {   
+    .ordersListPage .dot-group .dot  {
+      font-size: 12px;
+      margin-right: 10px;
+      width:25px;
+      height:25px
+      }
+
+    .ordersListPage .dot-group .order_no{
+      margin-right: 10px;
+      
+    }
+    
+  }
+
+  @media (max-width:406px) {   
+    .ordersListPage .dot-group .dot  {
+      font-size: 10px;
+      margin-right: 3px;
+      padding-top:2px;
+      width:20px;
+      height:20px
+      }
+
+    .ordersListPage .dot-group .order_no{
+      margin-right: 3px;
+      
+    }
+    
+  } 
+
+
+     @media (max-width:375px) {
+      
+      main .container .my-home-panel-acc  .panelHeader2 {
+      font-size:16px;
+       margin-top: 3px
+      }
+     }
+     
+     @media (max-width:346px) {   
+       .my-paging-label,
+       .my-list
+       {
+         font-size: 13px;
+       }
+       
+     }
+
+      @media (max-width:358px){
+
+        .orderPage .dot-group .dot {
+         margin-right: 10px;
+        
+        }
+        
+      }
+    
+    
+      @media (max-width:375px) and (min-width:321px) { 
+          
+        .orderPage .totalList .np,
+        .invoicePage .totalList .np
+        {
+            font-size:15px; 
+
+          }
+
+      }
+
+      @media (max-width:320px)  { 
+          
+        .orderPage .totalList .np,
+        .invoicePage .totalList .np
+        {
+            font-size:10px; 
+
+          }
+
+    }
+
+      
+
+    /*******************************************************************************/  
+    /**************************************MEDIA QUERIES END************************/
+    /*******************************************************************************/
+
+
+    

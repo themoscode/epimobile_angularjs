@@ -1,0 +1,30 @@
+<!-- 
+original plugin template
+
+<ul class="pagination" ng-if="1 < pages.length || !autoHide">
+    <li ng-if="boundaryLinks" ng-class="{ disabled : pagination.current == 1 }">
+        <a href="" ng-click="setCurrent(1)">&laquo;</a>
+    </li>
+    <li ng-if="directionLinks" ng-class="{ disabled : pagination.current == 1 }">
+        <a href="" ng-click="setCurrent(pagination.current - 1)">&lsaquo;</a>
+    </li>
+    <li ng-repeat="pageNumber in pages track by tracker(pageNumber, $index)" ng-class="{ active : pagination.current == pageNumber, disabled : pageNumber == '...' }">
+        <a href="" ng-click="setCurrent(pageNumber)">{{ pageNumber }}</a>
+    </li>
+
+    <li ng-if="directionLinks" ng-class="{ disabled : pagination.current == pagination.last }">
+        <a href="" ng-click="setCurrent(pagination.current + 1)">&rsaquo;</a>
+    </li>
+    <li ng-if="boundaryLinks"  ng-class="{ disabled : pagination.current == pagination.last }">
+        <a href="" ng-click="setCurrent(pagination.last)">&raquo;</a>
+    </li>
+</ul>
+-->    
+
+<div class="row" ng-hide="pagination.last == 1" style="margin: 0px;">
+    <div style="height:21px"></div>
+    <div class="col-xs-2 text-left"><span class="glyphicon glyphicon-circle-arrow-left my-arrow-left-btn pointer" ng-hide="pagination.current == 1"  ng-click="setCurrent(pagination.current - 1)"></span></div>
+    <div class="col-xs-8 text-center"><span class="my-paging-label" >Seite {{pagination.current}} von {{pagination.last}}</span></div>
+    <div class="col-xs-2 text-right"><span class="glyphicon glyphicon-circle-arrow-right my-arrow-right-btn pointer" ng-hide="pagination.current == pagination.last" ng-click="setCurrent(pagination.current + 1)" ></span></div>
+</div>
+<div style="height:21px"></div>

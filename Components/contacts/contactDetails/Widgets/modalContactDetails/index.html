@@ -1,0 +1,77 @@
+<div class="modal-header text-center">
+    <h3 class="modal-title">Kommunikation</h3>
+</div>
+
+<form class="form-horizontal" role="form">
+    
+    <div class="modal-body ">
+        <!-- telephone -->
+        <div class="row" ng-repeat="row in getContact.communication | filter : {type:0}" >
+            <div class="col-xs-4"><b>{{communicationTypes[row.type]}}{{$index+1}}</b></div>
+            <div class="col-xs-8">
+                <input type="text" ng-hide="readOnly" ng-model="row.uplink" class="e-txtbox edit-text text-left"  ng-readonly="readOnly"> 
+                <div ng-show="readOnly"><a href="tel:{{row.phone_match_number}}" >{{row.uplink}}</a></div>
+            </div>
+        </div>
+        <!-- fax -->
+        <div class="row" ng-repeat="row in getContact.communication | filter : {type:1}" >
+            <div class="col-xs-4"><b>{{communicationTypes[row.type]}}{{$index+1}}</b></div>
+            <div class="col-xs-8">
+                <input type="text" ng-hide="readOnly" ng-model="row.uplink" ng-class="{'e-txtbox text-left': readOnly, 'e-txtbox edit-text text-left': !readOnly}"  ng-readonly="readOnly"> 
+            </div>
+        </div>
+        <!-- Mobiltelefon -->
+        <div class="row" ng-repeat="row in getContact.communication | filter : {type:2}" >
+            <div class="col-xs-4"><b>{{communicationTypes[row.type]}}{{$index+1}}</b></div>
+            <div class="col-xs-8">
+                <input type="text" ng-hide="readOnly" ng-model="row.uplink" class="e-txtbox edit-text text-left"  ng-readonly="readOnly"> 
+                <div ng-show="readOnly"><a href="tel:{{row.phone_match_number}}" >{{row.uplink}}</a></div>
+            </div>
+        </div>
+        <!-- E-mail -->
+        <div class="row" ng-repeat="row in getContact.communication | filter : {type:3}" >
+            <div class="col-xs-4"><b>{{communicationTypes[row.type]}}{{$index+1}}</b></div>
+            <div class="col-xs-8">
+                <input type="text" ng-hide="readOnly" ng-model="row.uplink" class="e-txtbox edit-text text-left"  ng-readonly="readOnly"> 
+                <div ng-show="readOnly"><a href="mailto:{{row.uplink}}" >{{row.uplink}}</a></div>
+            </div>
+        </div>
+        <!-- E-Webseite -->
+        <div class="row" ng-repeat="row in getContact.communication | filter : {type:4}" >
+            <div class="col-xs-4"><b>{{communicationTypes[row.type]}}{{$index+1}}</b></div>
+            <div class="col-xs-8">
+                <input type="text" ng-hide="readOnly" ng-model="row.uplink" class="e-txtbox edit-text text-left"  ng-readonly="readOnly"> 
+                <div ng-show="readOnly"><a href="http://{{row.uplink}}" target="_blank">{{row.uplink}}</a></div>
+            </div>
+        </div>
+        <!-- chat -->
+        <div class="row" ng-repeat="row in getContact.communication | filter : {type:5}" >
+            <div class="col-xs-4"><b>{{communicationTypes[row.type]}}{{$index+1}}</b></div>
+            <div class="col-xs-8">
+                <input type="text" ng-hide="readOnly" ng-model="row.uplink" ng-class="{'e-txtbox text-left': readOnly, 'e-txtbox edit-text text-left': !readOnly}"  ng-readonly="readOnly"> 
+            </div>
+        </div>
+        <!-- sonstiges -->
+        <div class="row" ng-repeat="row in getContact.communication | filter : {type:6}" >
+            <div class="col-xs-4"><b>{{communicationTypes[row.type]}}{{$index+1}}</b></div>
+            <div class="col-xs-8">
+                <input type="text" ng-hide="readOnly" ng-model="row.uplink" ng-class="{'e-txtbox text-left': readOnly, 'e-txtbox edit-text text-left': !readOnly}"  ng-readonly="readOnly"> 
+            </div>
+        </div>
+        <div ng-include="'Components/Shared/communicationTypes/index.html'"></div>
+    </div>
+    <div class="modal-footer">
+        <div class="row">
+             
+             <div class="col-xs-6 text-left">
+                 <button class="my-act-btn" ng-click="cancel()" >Abbrechen</button>
+             </div>
+             <div class="col-xs-6 text-right">
+                <button class="my-act-btn" ng-click="ok()" >OK</button>
+            </div>
+        </div>
+        
+    </div>
+</form>
+
+

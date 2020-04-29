@@ -1,0 +1,89 @@
+<div class="meetingsListPage">
+    <!-- HEADER -->
+    <header>
+        <div class="container-fluid my-panel-header">
+            <div class="row my-btn-group1" ng-include="'Components/Shared/panelHeader/index.html'"></div>
+            <div class="row my-btn-group2" >
+                
+                <div class="col-xs-2"></div>
+                <div class="col-xs-8 text-center siteTitle" >
+                        Termine
+                </div>
+                <div class="col-xs-2 siteTitleTool text-left"><span class="glyphicon glyphicon-plus" ng-click="services.tools.navigateTo('/meetingInsert')" ng-class="{'tool-disabled': !services.common.clientRights.meetings.can_insert, 'tool-on': services.common.clientRights.meetings.can_insert }"></span> </div>
+            </div>
+        </div>
+    </header>
+        <!-- HEADER END -->
+    <main>
+        <div class="container" >    
+            <div class="row bodyRow" style="margin-top:22px">
+        
+                <div class="col-xs-12" ng-include="'Components/Shared/autocomplete/index.html'"></div>
+        
+            </div>
+            <div style="height:21px"></div>
+            
+            
+            <div class="btn-group my-btn-group">
+                
+                    <button type="button" ng-class="{'btn my-group-btn my-group-btn-on auto-width': daysFilter, 'btn my-group-btn my-group-btn-off auto-width': !daysFilter}"  ng-click="setDays('reset');" >Heute</button>
+                    
+                    <button type="button" ng-class="{'btn my-group-btn my-group-btn-on my-group-btn-smaller auto-width': searchFilters.days!=0, 'btn my-group-btn my-group-btn-off my-group-btn-smaller auto-width': searchFilters.days==0}"  ng-click="setDays('dec')" ><span class="glyphicon glyphicon-minus"></span></button>	
+                    <button type="button" ng-class="{'btn my-group-btn my-group-btn-on auto-width': searchFilters.days!=0, 'btn my-group-btn my-group-btn-off auto-width': searchFilters.days==0}" >{{searchFilters.days}}</button>	
+                    <button type="button" ng-class="{'btn my-group-btn my-group-btn-on my-group-btn-smaller auto-width': searchFilters.days!=0, 'btn my-group-btn my-group-btn-off my-group-btn-smaller auto-width': searchFilters.days==0}"  ng-click="setDays('inc')" ><span class="glyphicon glyphicon-plus"></span></button>	
+                    
+            </div>
+            <div class="text-center" ng-if="services.common.loading.meetings">
+                <br>
+                <img src="Assets/img/icons/loading.gif" class="dataLoading">
+                <br>
+            </div>
+            <br><br>
+            <div class="search_results_label" ng-show="searchDone && !services.common.loading.meetings">
+                <div ng-show="getMeetings.length" class="found" >
+                    {{getMeetings.length}} 
+                    <span ng-show="getMeetings.length>1">Einträge</span> 
+                    <span ng-show="getMeetings.length==1">Eintrag</span> 
+                    gefunden
+                </div>
+                <div ng-show="!getMeetings.length" class="notFound" >Keine Einträge gefunden</div>
+            </div>
+
+            <div ng-show="getMeetings.length">
+                <dir-pagination-controls template-url="Assets/modules/pagination/index.html"></dir-pagination-controls>
+                <div style="height:21px"></div>
+                <div class="text-left my-list" >
+                    
+                    <div  class="text-center block"  dir-paginate="row in getMeetings | orderBy:['date_start','time_start','text'] | itemsPerPage: pageSize" current-page="currentPage">
+                        
+                        <div ng-if="row.date_start!=row.date_end">
+
+                            <span class="title-bold" >{{services.tools.dayNameFrom4d(row.date_start)}}</span><br>
+                            <span ng-if="row.is_private">[P]&nbsp;</span><span>{{services.tools.dateFrom4d(row.date_start)}} {{services.tools.hoursMins(row.time_start).hours}}:{{services.tools.hoursMins(row.time_start).mins}} </span>
+                            -
+                            <span>{{services.tools.dateFrom4d(row.date_end)}} {{services.tools.hoursMins(row.time_end).hours}}:{{services.tools.hoursMins(row.time_end).mins}} Uhr</span>
+                        </div>
+                        <div ng-if="row.date_start==row.date_end">
+                            <span class="title-bold" >{{services.tools.dayNameFrom4d(row.date_start)}}</span><br>
+                            <span ng-if="row.is_private">[P]&nbsp;</span><span>{{services.tools.dateFrom4d(row.date_start)}} {{services.tools.hoursMins(row.time_start).hours}}:{{services.tools.hoursMins(row.time_start).mins}} </span>
+                            -
+                            <span>{{services.tools.hoursMins(row.time_end).hours}}:{{services.tools.hoursMins(row.time_end).mins}} Uhr</span>
+                        </div>
+                        <div style="word-break: break-all;">{{row.text}}</div>
+                        <div ng-show="row.contact_name!=''" style="color:orange" class="title-bold">{{row.contact_name}}</div>
+                        <div style="padding-top: 10px;" ng-show="!services.common.clientRights.meetings.can_delete">
+                            <span class="glyphicon glyphicon-pencil pointer" ng-click="navigateDetails(searchFilters,row.primary_key)"></span>
+                        </div>
+                        <div style="padding-top: 10px;" ng-show="services.common.clientRights.meetings.can_delete">
+                            <span class="glyphicon glyphicon-pencil pointer" ng-click="navigateDetails(searchFilters,row.primary_key)"></span>
+                             &nbsp;&nbsp;&nbsp;&nbsp;
+                            <span class="glyphicon glyphicon-trash pointer" ng-click="deleteMeeting(row)"></span>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+            
+        </div>
+    </main>
+</div>    

@@ -1,0 +1,109 @@
+<div class="modal-header text-center">
+    <h3 class="modal-title">{{getContactHistory.keyword}}</h3>
+</div>
+
+<form class="form-horizontal" role="form" ng-show="read_only"> 
+   
+    <div class="modal-body" style="word-wrap: break-word;"> 
+
+        <div class="row">
+            <div class="col-xs-4"><span>Datum</span></div>
+            <div class="col-xs-8 text-right">
+                <div >{{services.tools.dateFrom4d(getContactHistory.date)}}&nbsp;{{services.tools.timeFrom4d(getContactHistory.time)}}</div>
+            </div> 
+        </div>
+        <div class="row">
+            <div class="col-xs-4"><span>Kontaktart</span></div>
+            <div class="col-xs-8 text-right">
+                <div >{{getContactHistory.com_type_str}}</div>
+            </div> 
+        </div>
+        <div class="row">
+            <div class="col-xs-4"><span>Dauer</span></div>
+            <div class="col-xs-8 text-right">
+                <div >{{getContactHistory.duration}}</div>
+            </div> 
+        </div>
+        <div class="row">
+            <div class="col-xs-4"><span>Ansprechpartner</span></div>
+            <div class="col-xs-8 text-right">
+                <div >{{getContactHistory.contact_partner}}</div>
+            </div> 
+        </div>
+        <div class="row">
+            <div class="col-xs-4"><span>Stichwort</span></div>
+            <div class="col-xs-8 text-right">
+                <div >{{getContactHistory.keyword}}</div>
+            </div> 
+        </div>
+        
+        
+    </div>
+ 
+    <div class="modal-footer">
+        <div class="row">
+             
+             <div class="col-xs-12 text-center">
+                <button class="my-act-btn" ng-click="ok()" >OK</button>
+            </div>
+        </div>
+        
+    </div>
+</form>
+
+<form class="form-horizontal EDIT_MODE" role="form" ng-show="!read_only">
+   
+
+    <div class="modal-body" style="word-wrap: break-word;">
+
+        <div class="row">
+            <div class="col-xs-4"><span>Datum</span></div>
+            <div class="col-xs-8 text-right pointer" ng-click="openModalSelectDate(getContactHistory)">
+                <input type="text" ng-readonly="true" value="{{services.tools.dateFrom4d(getContactHistory.date)}}&nbsp;{{services.tools.timeFrom4d(getContactHistory.time)}}" class="form-control"  >
+            </div> 
+        </div>
+        <div class="row">
+            <div class="col-xs-4"><span>Kontaktart</span></div>
+            <div class="col-xs-8 text-right">
+                
+                <input type="text" ng-model="getContactHistory.com_type_str" class="form-control"  > 
+            </div> 
+        </div>
+        <div class="row">
+            <div class="col-xs-4"><span>Dauer</span></div>
+            <div class="col-xs-8 text-right">
+                
+                <input type="text" ng-model="getContactHistory.duration" class="form-control"  > 
+            </div> 
+        </div>
+        <div class="row">
+            <div class="col-xs-4"><span>Ansprechpartner</span></div>
+            <div class="col-xs-8 text-right">
+                
+                <input type="text" ng-model="getContactHistory.contact_partner" class="form-control"  > 
+            </div> 
+        </div>
+        <div class="row">
+            <div class="col-xs-4"><span>Stichwort</span></div>
+            <div class="col-xs-8 text-right">
+                
+                <input type="text" ng-model="getContactHistory.keyword" class="form-control"  > 
+            </div> 
+        </div>
+
+       
+    </div>
+
+    
+         
+    <div class="modal-footer">
+        <div class="row">
+             
+             <div class="col-xs-12 text-center">
+                <button class="my-act-btn" ng-click="ok()" >OK</button>
+            </div>
+        </div>
+        
+    </div>
+</form>
+

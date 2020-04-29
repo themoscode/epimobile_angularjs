@@ -1,0 +1,92 @@
+<div class="productsListPage">
+    <!-- HEADER -->
+    <header>
+        <div class="container-fluid my-panel-header">
+            <div class="row my-btn-group1" ng-include="'Components/Shared/panelHeader/index.html'"></div>
+            <div class="row my-btn-group2" >
+                <div class="col-xs-2"> </div>
+                <div class="col-xs-8 text-center siteTitle" >
+                    Artikel
+                </div>
+                <div class="col-xs-2 siteTitleTool text-left"><span class="glyphicon glyphicon-plus" ng-click="services.tools.navigateTo('/productInsert')" ng-class="{'tool-disabled': !services.common.clientRights.products.can_insert, 'tool-on': services.common.clientRights.products.can_insert }"></span> </div>
+            </div>
+        </div>
+    </header>
+    <!-- HEADER END -->
+
+    <main>
+        <div class="container" >    
+            <div class="row bodyRow" style="margin-top:22px">
+
+                <div class="col-xs-12" ng-include="'Components/Shared/autocomplete/index.html'"></div>
+
+            </div>
+            <div style="height:21px"></div>
+            <div>
+                <div  ng-class="{'btn-group my-btn-group my-btn-group-top': services.tools.deviceDetector.browser=='firefox', 'btn-group my-btn-group my-btn-group-top notFirefox': services.tools.deviceDetector.browser!='firefox'}" >
+                    <button type="button" class="btn my-group-btn product_css" ng-click="openModalSelectDates()" >{{datesSelector.label}}</button>
+                </div>
+                <div style="height:1px"></div>
+                <div class="btn-group my-btn-group my-btn-group-bottom">
+                    <button type="button" ng-class="{'btn my-group-btn my-group-btn-on': searchFilters.isRent, 'btn my-group-btn my-group-btn-off': !searchFilters.isRent}" ng-click="searchFilters.toggleRentStatus()">MIETE</button>
+                    <button type="button" ng-class="{'btn my-group-btn my-group-btn-on': searchFilters.isSell, 'btn my-group-btn my-group-btn-off': !searchFilters.isSell}" ng-click="searchFilters.toggleSellStatus()">VERKAUF</button>	
+                </div>
+            </div>
+            
+            <br><br>
+            
+            <div class="text-center" ng-if="services.common.loading.products">
+                
+                <img src="Assets/img/icons/loading.gif" class="dataLoading">
+            </div>
+
+            <div class="search_results_label" ng-show="searchDone && !services.common.loading.products">
+                    <div ng-show="getProducts.length" class="found" >
+                        {{getProducts.length}} 
+                        <span ng-show="getProducts.length>1">Einträge</span> 
+                        <span ng-show="getProducts.length==1">Eintrag</span> 
+                        gefunden
+                    </div>
+                    <div ng-show="!getProducts.length && searchFilters.searchText.length!=0" class="notFound" >Keine Einträge gefunden</div>
+                </div>
+
+            <div ng-show="getProducts.length">
+                <dir-pagination-controls template-url="Assets/modules/pagination/index.html"></dir-pagination-controls>
+                <div class="input-group sorting" >
+                        <div class="input-group-btn">
+                            <button class="btn btn-default" type="button" ng-click="sortBy(sortName)"><i ng-class="{'glyphicon glyphicon-triangle-top': sortAsc[sortName], 'glyphicon glyphicon-triangle-bottom': !sortAsc[sortName]}"></i></button>
+                        </div>
+                        <select class="form-control pointer"  ng-model="sortName" ng-change="sortBy(sortName)">
+                                
+                                <option value="name">Name</option>
+                                <option value="product_no">Artikelnummer</option>
+                                <option value="stock_data[0].stock_total">Bestand</option>
+                                
+                        </select>
+                 </div>
+                <br><br>
+                <div class="text-left my-list" >
+                 
+                    <div dir-paginate="row in getProducts | itemsPerPage: pageSize" current-page="currentPage"  class="block" style="border-bottom:1px solid #dddddd;padding-top:8px">
+                        <div class="text-center" style="font-family: myriad-set-pro-bold;" ><span>{{row.name}}</span></div>
+                        <div class="text-center">{{row.product_no}}<span ng-if="row._stock_data_length>0">&nbsp;Bestand: {{row.stock_data[0].stock_total}}</span></div>
+                        <div class="text-center" ng-if="searchFilters.datesSelected"><button class="my-act-btn" style="width:auto" ng-click="openModalAvailability(row)">Verfügbarkeit</button></div>
+                        <div class="text-center" style="padding-top: 10px;" ng-show="!services.common.clientRights.products.can_delete">
+                            <span class="glyphicon glyphicon-pencil pointer" ng-click="services.searchNavigate.products(searchFilters,row.primary_key)"></span>
+                        </div>
+                        <div class="text-center" style="padding-top: 10px;" ng-show="services.common.clientRights.products.can_delete">
+                            <span class="glyphicon glyphicon-pencil pointer" ng-click="services.searchNavigate.products(searchFilters,row.primary_key)"></span>
+                             &nbsp;&nbsp;&nbsp;&nbsp;
+                            <span class="glyphicon glyphicon-trash pointer" ng-click="deleteProduct(row)"></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+
+
+        </div>
+    </main>
+
+</div>

@@ -1,0 +1,55 @@
+
+    <div class="modal-header">
+       <h3 class="modal-title">Mandant und Lager Auswahl</h3>
+    </div>
+  
+    <form class="form-horizontal" role="form" ng-submit="submit()">
+	    <div class="modal-body">
+	        
+	        <div class="row">
+	        	 <div class="col-sm-6 ">
+	        	 		<div class="row">
+				        	 <div class="col-sm-12 ">
+				        	 	<h3 style="font-size:15px"><b>Mandant</b></h3>	
+				        	 </div>
+						</div>
+						<div class="hidden-xs"><br></div>	
+				        <div class="row">
+				        	 <div class="col-sm-12 ">
+							    <select class="form-control"  ng-model="selectedMandant" ng-options="x.mandant_name for x in userData.mandanten" ng-change="on_mandant_change()"></select>
+				        	 	<!--{{selectedMandant.mandant_id}}-->
+				        	 </div>
+				        </div>
+	        	 </div>
+	        	 <div class="col-sm-6 "> 
+	        	 		<div class="row">
+				        	 <div class="col-sm-12 ">
+				        	 	<h3 style="font-size:15px"><b>Lager</b></h3>
+				        	 </div>
+						</div>
+						<div class="hidden-xs"><br></div>	
+				        <div class="row">
+				        	 <div class="col-sm-12 ">
+							    <select class="form-control"  ng-model="selectedLager" ng-options="x.Name for x in selectedMandant.warehouse"></select>
+								 <!--{{selectedLager.Primary_Key}}--> 
+				        	 </div>
+				        </div>
+	        	 </div>
+	        </div>
+	           
+	    </div>
+	    <div class="modal-footer">
+			
+			<div class="row">
+				<div class="col-xs-12 text-center">
+					<button class="my-act-btn" type="button" ng-click="cancel($event)" ng-show="!selectedLager">Abbrechen</button>
+					<button type="submit" class="my-act-btn" ng-show="selectedLager">Anmelden</button>
+				</div>
+				
+		   </div>
+			
+			
+	        
+	    </div>
+    </form>
+

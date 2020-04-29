@@ -1,0 +1,1 @@
+app.controller('orderTimeTableCtrl',['$scope',function($scope){}]);

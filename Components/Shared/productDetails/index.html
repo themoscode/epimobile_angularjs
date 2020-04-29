@@ -1,0 +1,17 @@
+<span>Nr: {{getProduct.product_no}}</span>
+<h3 class="bold" >{{getProduct.name}}</h3>
+<br>
+<img src="{{getProduct.__image}}" class="img-responsive img-center" style="max-width:250px" >
+<br>
+<div>
+    
+    <span class="color-818181 bold" >Preis</span><br>
+    <span class="bold">{{getProduct.pricing.price_rent}} € Tag / {{getProduct.pricing.price_sale_net}} € VK</span><br>
+    <span>{{getProduct.tech_data.height_net}} x {{getProduct.tech_data.width_net}} x {{getProduct.tech_data.depth_net}} mm</span><br>
+    <span>{{getProduct.tech_data.weight_net}} kg Gewicht</span><br>
+    <span class="color-818181 bold">Bestand Miete</span>&nbsp;<span class="color-ff9c01 bold" >{{getProduct.stock_data[0].stock_access_rent}} Stück</span><br>
+    <span class="color-818181 bold">Bestand Verkauf</span>&nbsp;<span class="color-ff9c01 bold" >{{getProduct.stock_data[0].stock_access_sale}} Stück</span>
+    <div style="height:17px;"></div>
+    <h4 class="bold" >Artikelinformation</h4>
+    <span>{{getProduct.__description}}</span>
+</div>

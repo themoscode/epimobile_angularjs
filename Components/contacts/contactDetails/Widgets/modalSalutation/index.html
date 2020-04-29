@@ -1,0 +1,56 @@
+<div class="modal-header text-center">
+    <h3 class="modal-title">Anrede</h3>
+</div>
+
+<form class="form-horizontal" role="form">
+    <div class="modal-body">
+        
+        <div class="row">
+            <div class="col-xs-12 text-center">
+                
+
+                <div class="text-left my-list" >
+                    
+                
+                    <div ng-class="{'list-group-item on': getContact.salutation == 'Herr', 'list-group-item': getContact.salutation != 'Herr' }"  >
+                        
+                        <div class="text-center" ng-click="setSalutation('Herr')">Herr</div>
+                        
+                    </div>
+                    <div ng-class="{'list-group-item on': getContact.salutation == 'Frau', 'list-group-item': getContact.salutation != 'Frau' }" >
+                        
+                        <div class="text-center" ng-click="setSalutation('Frau')">Frau</div>
+
+                    </div>
+                    <div ng-class="{'list-group-item on': getContact.salutation == 'Fräulein', 'list-group-item': getContact.salutation != 'Fräulein' }" >
+                            
+                        <div class="text-center" ng-click="setSalutation('Fräulein')">Fräulein</div>
+
+                    </div>
+                    
+                    
+                </div>
+                  
+                
+            </div>
+            
+        </div>
+         
+         
+               
+    </div>
+    <div class="modal-footer">
+        <div class="row">
+             
+             <div class="col-xs-6 text-left">
+                 <button class="my-act-btn" ng-click="cancel()" >Abbrechen</button>
+             </div>
+             <div class="col-xs-6 text-right">
+                <button class="my-act-btn" ng-click="ok()" >OK</button>
+            </div>
+        </div>
+        
+    </div>
+</form>
+
+

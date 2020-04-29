@@ -1,0 +1,52 @@
+<div class="modalSelectDates">
+
+    <div class="modal-header text-center">
+        <h3 class="modal-title">Zeitraum wählen</h3>
+    </div>
+    
+
+    <div class="modal-body">
+       
+        <div class="row">
+                <div class="col-xs-6">
+                    <label>Von:</label><br>
+                    <div class="input-group">
+                        <input type="text" class="form-control" uib-datepicker-popup="{{dateSelectorFrom.format}}" ng-model="dateSelectorFrom.date" is-open="dateSelectorFrom.opened" datepicker-options="dateSelectorFrom.dateOptions" ng-required="true" close-text="Close" alt-input-formats="dateSelectorFrom.altInputFormats" />
+                        <span class="input-group-btn">
+                        <button type="button" class="btn btn-default" ng-click="dateSelectorFrom.open()"><i class="glyphicon glyphicon-calendar"></i></button>
+                        </span>
+                    </div>
+                    
+                    <div style="display: table;margin: 0 auto;" uib-timepicker ng-model="timeSelectorFrom.time"  hour-step="1" minute-step="1" show-meridian="false" ng-show="showTime"></div>
+                   
+                </div>
+                <div class="col-xs-6">
+                    <label>Bis:</label><br>
+                    <div class="input-group">
+                        <input type="text" class="form-control" uib-datepicker-popup="{{dateSelectorTo.format}}" ng-model="dateSelectorTo.date" is-open="dateSelectorTo.opened" datepicker-options="dateSelectorTo.dateOptions" ng-required="true" close-text="Close" alt-input-formats="dateSelectorTo.altInputFormats" />
+                        <span class="input-group-btn">
+                        <button type="button" class="btn btn-default" ng-click="dateSelectorTo.open()"><i class="glyphicon glyphicon-calendar"></i></button>
+                        </span>
+                    </div>
+                    
+                    <div style="display: table;margin: 0 auto;" uib-timepicker ng-model="timeSelectorTo.time"  hour-step="1" minute-step="1" show-meridian="false" ng-show="showTime"></div>
+                    
+                </div>
+        </div>    
+
+            
+    </div>
+    <div class="modal-footer">
+        <div class="row">
+                
+                <div class="col-xs-6 text-left">
+                    <button class="my-act-btn" ng-click="cancel()" >Löschen</button>
+                </div>
+                <div class="col-xs-6 text-right">
+                    <button class="my-act-btn" ng-click="ok()" >OK</button>
+                </div>
+        </div>
+        
+    </div>
+
+</div>

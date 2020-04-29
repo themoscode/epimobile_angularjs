@@ -1,0 +1,308 @@
+
+<div class="timeTrackingPage">
+    <!-- HEADER -->
+    <header>
+        <div class="container-fluid my-panel-header">
+            <div class="row my-btn-group1" ng-include="'Components/Shared/panelHeader/index.html'"></div>
+            
+            <div class="row my-btn-group2" >
+                <div class="col-xs-2 siteTitleTool disabled text-right"><span class="glyphicon glyphicon-pencil"></span> </div>
+                <div class="col-xs-8 text-center siteTitle" >
+                    <span class="pointer siteTitle">Zeiterfassung</span>
+                </div>
+                <div class="col-xs-2 siteTitleTool disabled text-left"><span class="glyphicon glyphicon-plus"></span> </div>
+            </div>
+
+        </div>
+    </header>
+        <!-- HEADER END -->
+    <main>
+        <div class="container" >    
+            <div class="row bodyRow" style="margin-top:22px">
+                <div class="col-xs-2 text-left" style="padding-top: 60px"><span class="glyphicon glyphicon-circle-arrow-left my-arrow-left-btn pointer no-margin" ></span></div>
+                <div class="col-xs-8">
+                    <br>
+                    <h3 class="bold">Rene Schier</h3>
+                    <br>
+                    <span class="color-ff9c01">Nächster Task</span><br>   
+                    <span>Auf- und Abbau</span><br>
+                    <span>Geplante Zeit</span><br>
+                    <span>Mittwoch, 12.08.2017</span><br>
+                    <span>8.00 Uhr - 12.00 Uhr</span>
+                </div>
+                <div class="col-xs-2 text-right" style="padding-top: 60px"><span class="glyphicon glyphicon-circle-arrow-right my-arrow-right-btn pointer no-margin" ></span></div>
+            </div>  
+            <br>
+           
+            <div class="row">
+                <div class="col-xs-1"></div>
+                <div class="col-xs-10">
+                    <div class="input-group timer">
+                        <span class="input-group-addon pointer" ng-click="toggleTimer()"><i ng-class="{'glyphicon glyphicon-play': !timerRuns, 'glyphicon glyphicon-pause': timerRuns}"></i></span>
+                        <input class="form-control text-center" value="" type="text" id="timer" readonly>
+                        <span class="input-group-addon pointer" ng-click="resetTimer()"><i class="glyphicon glyphicon-stop" ></i></span>
+                    </div>
+                </div>
+                <div class="col-xs-1"></div>
+            </div>  
+            <br>
+
+            <div>
+                <h3 class="bold margin-0px" >Brands Make Sense Ltd.</h3>
+                <span>Flugheimstrasse 66</span>
+                <br><span>14456 Berlin</span><br><br><i class="fa fa-globe pointer googleEarthIcon" aria-hidden="true" ></i><br><br>
+                <h3 class="bold color-ff9c01 margin-0px" >IFA Berlin 2018 Release</h3>
+            </div>
+            <br>
+            <br>
+            <div class="my-panel-acc">
+                <uib-accordion close-others="false">
+                        
+                        <div uib-accordion-group is-open="acc_group1.open">
+                            
+                                <uib-accordion-heading>
+                                    
+                                    <div class="row"  >
+                                        
+                                        <div class="col-xs-4 text-left"></div>
+                                        <div class="col-xs-4 text-center panelHeader">Zeitplan</div>
+                                        <div class="col-xs-4 text-right" ><span ng-class="{'glyphicon glyphicon-chevron-down': acc_group1.open, 'glyphicon glyphicon-chevron-right': !acc_group1.open}"></span></div>
+                                    
+                                    </div>
+                                    
+                                </uib-accordion-heading>
+                                
+
+                                <div class="text-left my-list" >
+                                    
+                                
+                                    <div class="list-group-item row" >
+                                        
+                                        <div class="col-xs-4 text-left">8.00 - 12.59</div>
+                                        <div class="col-xs-4 text-center">Auf- und Abbau</div>
+                                        <div class="col-xs-4"></div>
+                                    </div>
+                                    <div class="list-group-item row" >
+                                        
+                                        <div class="col-xs-4 text-left">9.00 - 13.00</div>
+                                        <div class="col-xs-4 text-center">FOH-Installation</div>
+                                        <div class="col-xs-4"></div>
+                                    </div>
+                                    <div class="list-group-item row" >
+                                            
+                                        <div class="col-xs-4 text-left">14.00 - 16.00</div>
+                                        <div class="col-xs-4 text-center">Soundscheck</div>
+                                        <div class="col-xs-4"></div>
+
+                                    </div>
+                                    
+                                    
+                                </div>
+                                
+                                
+                        </div>
+                        
+                        <div uib-accordion-group is-open="acc_group2.open" >
+                                
+                            <uib-accordion-heading>
+                                
+                                <div class="row"  >
+                                    
+                                    <div class="col-xs-4 text-left"></span></div>
+                                    <div class="col-xs-4 text-center panelHeader">Personal</div>
+                                    <div class="col-xs-4 text-right" ><span ng-class="{'glyphicon glyphicon-chevron-down': acc_group2.open, 'glyphicon glyphicon-chevron-right': !acc_group2.open}"></span></div>
+                                
+                                </div>
+                                
+                            </uib-accordion-heading>
+                                <div class="text-left my-list" >
+                                        
+                                    
+                                        <div class="list-group-item row color-red" >
+												
+												<div class="col-xs-4 text-left">Abbau...</div>
+												<div class="col-xs-4 text-center">Peter Meyer</div>
+												<div class="col-xs-4 text-right"></div>
+											
+											</div>
+
+											<div class="list-group-item row color-green" >
+												
+												<div class="col-xs-4 text-left">Abbau...</div>
+												<div class="col-xs-4 text-center">Peter Meyer</div>
+												<div class="col-xs-4 text-right"></div>
+
+											</div>
+											<div class="list-group-item row color-blue" >
+													
+												<div class="col-xs-4 text-left">Abbau...</div>
+												<div class="col-xs-4 text-center">Peter Meyer</div>
+												<div class="col-xs-4 text-right"></div>
+
+											</div>
+                                    
+                                    
+                                </div>
+                                    
+                            </div>
+                            <div uib-accordion-group is-open="acc_group3.open">
+                                    
+                                    <uib-accordion-heading>
+                                        
+                                        <div class="row"  >
+                                            
+                                            <div class="col-xs-4 text-left"></div>
+                                            <div class="col-xs-4 text-center panelHeader">Zeitraum</div>
+                                            <div class="col-xs-4 text-right" ><span ng-class="{'glyphicon glyphicon-chevron-down': acc_group3.open, 'glyphicon glyphicon-chevron-right': !acc_group3.open}"></span></div>
+                                        
+                                        </div>
+                                        
+                                    </uib-accordion-heading>
+                                    
+
+                                    <div class="text-left my-list" >
+                                        <div class="list-group-item row color-3ba050" ng-click="openModalSelectDates();">
+                                            <div class="col-xs-4 text-left">Dispo</div>
+                                            <div class="col-xs-4 text-center">12.08.2017</div>
+                                            <div class="col-xs-4 text-right">14.08.2017</div>
+                                        </div>
+                                        <div class="list-group-item row color-00129a" ng-click="openModalSelectDates();">
+                                            
+                                            <div class="col-xs-4 text-left">Event</div>
+                                            <div class="col-xs-4 text-center">13.08.2017</div>
+                                            <div class="col-xs-4 text-right">13.08.2017</div>
+                                        </div> 
+                                    </div>
+                                
+                                </div>
+                                <div uib-accordion-group is-open="acc_group4.open">
+                                        
+                                        <uib-accordion-heading >
+                                            
+                                            <div class="row" >
+                                                    
+                                                <div class="col-xs-4 text-left" ></span></div>
+                                                <div class="col-xs-4 text-center panelHeader" >Material</div>
+                                                <div class="col-xs-4 text-right" ><span ng-class="{'glyphicon glyphicon-chevron-down': acc_group4.open, 'glyphicon glyphicon-chevron-right': !acc_group4.open}"></span></div>
+                                            
+                                            </div>
+                                            
+                                        </uib-accordion-heading>
+                                        
+
+                                        <div class="text-left my-list" >
+                                                
+                                            
+                                            <div class="list-group-item row" ng-click="openMaterialModal()">
+                                                
+                                                <div class="col-xs-4 text-left">12 Stk.</div>
+                                                <div class="col-xs-4 text-center">Verteilerdosen</div>
+                                                <div class="col-xs-4 text-right"></div>
+    
+                                            </div>
+                                            <div class="list-group-item row" ng-click="openMaterialModal()">
+                                                
+                                                <div class="col-xs-4 text-left">12 Stk.</div>
+                                                <div class="col-xs-4 text-center">Netzteile</div>
+                                                <div class="col-xs-4 text-right"></div>
+    
+                                            </div>
+                                            <div class="list-group-item row" ng-click="openMaterialModal()">
+                                                    
+                                                <div class="col-xs-4 text-left">12 Stk.</div>
+                                                <div class="col-xs-4 text-center">Adapter</div>
+                                                <div class="col-xs-4 text-right"></div>
+    
+                                            </div>
+                                            
+                                            
+                                        </div>
+                                        
+                                        
+                                    </div>
+                                    <!--
+                                    <div uib-accordion-group is-open="acc_group5.open">
+                                        
+                                            <uib-accordion-heading>
+                                                
+                                                <div class="row"  >
+                                                    
+                                                    <div class="col-xs-4 text-left"></div>
+                                                    <div class="col-xs-4 text-center panelHeader">Dateiablage</div>
+                                                    <div class="col-xs-4 text-right" ><span ng-class="{'glyphicon glyphicon-chevron-down': acc_group5.open, 'glyphicon glyphicon-chevron-right': !acc_group5.open}"></span></div>
+                                                    
+                                                
+                                                </div>
+                                                
+                                            </uib-accordion-heading>
+                                            <div class="text-left my-list" >
+                                                    
+                                                
+                                                <div class="list-group-item row" >
+                                                    
+                                                    <div class="col-xs-4 text-left">12.08.2017</div>
+                                                    <div class="col-xs-4 text-center">Catering.pdf</div>
+                                                    <div class="col-xs-4"></div>
+
+                                                </div>
+                                                <div class="list-group-item row" >
+                                                    
+                                                    <div class="col-xs-4 text-left">12.08.2017</div>
+                                                    <div class="col-xs-4 text-center">Planung.xls</div>
+                                                    <div class="col-xs-4"></div>
+
+                                                </div>
+                                                <div class="list-group-item row" >
+                                                        
+                                                   
+                                                    <div class="col-xs-4 text-left">14.08.2017</div>
+                                                    <div class="col-xs-4 text-center">Interview_CEO.mp4</div>
+                                                    <div class="col-xs-4"></div>
+
+
+                                                </div>
+                                                
+                                                
+                                            </div>
+                                        
+                                        
+                                    </div>
+                                -->
+                                    <div uib-accordion-group is-open="acc_group6.open">
+                                            
+                                                <uib-accordion-heading>
+                                                    
+                                                    <div class="row"  >
+                                                        
+                                                        <div class="col-xs-4 text-left"></div>
+                                                        <div class="col-xs-4 text-center panelHeader">Notizen</div>
+                                                        <div class="col-xs-4 text-right" ><span ng-class="{'glyphicon glyphicon-chevron-down': acc_group6.open, 'glyphicon glyphicon-chevron-right': !acc_group6.open}"></span></div>
+                                                        
+                                                    
+                                                    </div>
+                                                    
+                                                </uib-accordion-heading>
+                                                <div class="text-left my-list" >
+                                                        
+                                                    <div class="list-group-item row" >
+                                                        
+                                                        <div class="col-xs-12" style="height:200px">
+
+
+
+                                                        </div>
+                                                        
+                                                    </div>
+                                                    
+                                                    
+                                                    
+                                                </div>
+                                            
+                                            
+                                        </div>
+                                    
+                </uib-accordion>
+            </div>
+        </div>
+    </main>
+</div>

@@ -1,0 +1,210 @@
+
+<div class="homePage">
+	<!--  
+		fff
+	<div window-width>
+		<div>={{width}}</div>
+	  </div>
+	-->
+	<!-- HEADER -->
+	<header>
+		<div class="container-fluid my-panel-header">
+			<div class="row my-btn-group1" ng-include="'Components/Shared/panelHeader/index.html'"></div>
+			<div class="row my-btn-group2" >
+				<div class="col-xs-12 text-center siteTitle">
+					epi<span>rent mobile</span>
+				</div>
+			</div>
+		</div>
+	</header>
+	<!-- HEADER END -->
+	<main>
+		<div class="container" >    
+			<div class="row bodyRow" style="margin-top:22px">
+			
+				<div class="col-xs-12 my-home-panel-acc">
+					<!--
+						<div ng-show="services.common.app_settings.showSearch">
+							<input type="search" class="form-control searchBox text-center"  placeholder="Suche..." ng-model="searchBox.value" id="ac_value" /> 
+							<br>
+						</div>
+					-->	
+					<div>
+						<div ng-show="services.common.app_settings.showSearch" ng-include="'Components/Shared/autocomplete/index.html'"></div>
+						<br>
+					</div>
+					
+					
+
+						<uib-accordion close-others="false">
+								
+								<div uib-accordion-group class="panel-termin" ng-show="services.common.app_settings.showTermin" style="margin-bottom:8px" is-disabled="true" is-open="false" ng-click="services.tools.navigateTo('/meetings/days/0')">
+									
+										<uib-accordion-heading>
+											
+											<div class="row"  >
+												
+												<div class="col-xs-2"></div>
+												<div class="col-xs-8 text-center panelHeader">Termine</div>
+												<div class="col-xs-2 text-right panelHeader2" >{{meetingsLength}}</div>
+											
+											</div>
+											
+										</uib-accordion-heading>
+										
+									
+									
+								</div>
+								
+								<div uib-accordion-group class="panel-aufgaben" ng-show="services.common.app_settings.showAufgabe" style="margin-bottom:20px" is-disabled="true" is-open="false" ng-click="services.tools.navigateTo('/tasks/days/0')">
+									
+										<uib-accordion-heading>
+											
+											<div class="row"  >
+											
+												
+												<div class="col-xs-2"></div>
+												<div class="col-xs-8 text-center panelHeader">Aufgaben</div>
+												<div class="col-xs-2 text-right panelHeader2" >{{tasksLength}}</div>
+											
+											</div>
+											
+										</uib-accordion-heading>
+										
+									
+									
+								</div>
+								
+								<div uib-accordion-group class="panel-adressen" is-disabled="true" is-open="false" ng-show="services.common.app_settings.showAdress" style="margin-bottom:8px" ng-click="services.tools.navigateTo('/contacts')">
+								
+										<uib-accordion-heading>
+											
+												<div class="row"  >
+													
+													
+													<div class="col-xs-2"></div>
+													<div class="col-xs-8 text-center panelHeader">Adressen</div>
+													<div class="col-xs-2 text-right panelHeader2" >{{contactsLength}}</div>
+													
+													
+												
+												</div>
+												
+											
+										</uib-accordion-heading>
+										
+										
+									
+								</div>
+								
+								<div uib-accordion-group class="panel-zeiterfassung" is-disabled="true" is-open="false" ng-show="services.common.app_settings.showZeiterfassung" style="margin-bottom:8px" ng-click="services.tools.navigateTo('/timeTracking')">
+									
+										<uib-accordion-heading>
+											
+											<div class="row">
+											
+												
+												<div class="col-xs-2"></div>
+												<div class="col-xs-8 text-center panelHeader">Zeiterfassung</div>
+												<div class="col-xs-2 text-right" ><span class="glyphicon glyphicon-time circle-time-icon"></span></div>
+											
+											</div>
+											
+										</uib-accordion-heading>
+										
+									
+									
+								</div>
+								
+								<div uib-accordion-group class="panel-artikel" is-disabled="true" is-open="false" ng-show="services.common.app_settings.showArtikel" style="margin-bottom:20px" ng-click="services.tools.navigateTo('/products')">
+									
+										<uib-accordion-heading>
+											
+												<div class="row"   >
+													
+													<div class="col-xs-2"></div>
+													<div class="col-xs-8 text-center panelHeader">Artikel</div>
+													<div class="col-xs-2 text-right panelHeader2" >{{productsLength}}</div>
+													
+												</div>
+												
+										</uib-accordion-heading>
+									
+									
+										
+								
+								
+								</div>
+								
+								<div uib-accordion-group class="panel-auftrag" is-disabled="true" is-open="false" ng-show="services.common.app_settings.showAuftrag" style="margin-bottom:8px" ng-click="services.tools.navigateTo('/orders/')">
+									
+										<uib-accordion-heading>
+											
+												<div class="row"   >
+												
+													<div class="col-xs-2"></div>
+													<div class="col-xs-8 text-center panelHeader">Auftrag</div>
+													<div class="col-xs-2 text-right panelHeader2" >{{ordersLength}}</div>
+												</div>
+												
+										</uib-accordion-heading>
+									
+									
+										
+								
+								
+								</div>
+								
+								<div uib-accordion-group class="panel-rechnung" is-disabled="true" is-open="false" ng-show="services.common.app_settings.showRechnung" style="margin-bottom:8px" ng-click="services.tools.navigateTo('/invoices')">
+									
+										<uib-accordion-heading>
+											
+											<div class="row">
+											
+											
+												<div class="col-xs-2"></div>
+												<div class="col-xs-8 text-center panelHeader">Rechnung</div>
+												<div class="col-xs-2 text-right panelHeader2" >{{invoicesLength}}</div>
+											
+											</div>
+											
+										</uib-accordion-heading>
+										
+								</div>
+								
+								<div uib-accordion-group class="panel-chat" is-disabled="true" is-open="false" ng-show="services.common.app_settings.showChat" ng-click="services.tools.navigateTo('/chat')">
+									
+										<uib-accordion-heading>
+											
+											<div class="row"  >
+											
+												
+												<div class="col-xs-2"></div>
+												<div class="col-xs-8 text-center panelHeader">Chat</div>
+												<div class="col-xs-2 text-right" ><img src="Assets/img/icons/dot_green_9.png" class="circle-state-icon"></div>
+											</div>
+											
+										</uib-accordion-heading>
+										
+										
+								
+						</uib-accordion>		
+							
+					<!--head-->
+				</div>	 	 
+				
+			</div>
+		</div>
+		<br>
+		
+		<div>{{loggedUserData.fullname}}</div>
+		<div>{{loggedUserData.selectedMandantName}} / {{loggedUserData.selectedLagerName}}</div>
+		<div>{{today | date:'dd.MM.yyyy'}}</div>
+		<br>
+		<div><span class="glyphicon glyphicon-info-sign pointer" style="font-size:40px" ng-click="openModalEpiInfo()"></span></div>
+
+	</main>
+
+</div>
+
+	

@@ -1,0 +1,91 @@
+
+<div class="participantPage" ng-show="read_only">
+    <div class="modal-header text-center">
+        <h3 class="modal-title">Teilnehmer</h3>
+    </div>
+    
+    <form class="form-horizontal" role="form">
+        <div class="modal-body">
+            
+            <div class="row">
+                <div class="col-xs-12 text-center">
+                    
+
+                    <div class="text-left my-list" >
+                        
+                        <div class="list-group-item row no-pointer" ng-repeat="row in array_temp" >
+                        
+                            <div class="col-xs-12 text-center">
+                                {{row.user_name}}
+                            </div>
+                            
+                        </div>
+                        
+                        
+                    </div>
+                    
+                    
+                </div>
+                
+            </div>
+            <br>   
+        </div>
+        <div class="modal-footer">
+            <div class="row">
+                <div class="col-xs-12 text-center">
+                    <button class="my-act-btn" ng-click="ok()" >OK</button>
+                </div>
+            </div>
+            
+        </div>
+    </form>
+</div>
+
+<div class="participantPage" ng-show="!read_only"> <! -- EDIT MODE -->
+        <div class="modal-header text-center">
+            <h3 class="modal-title">Teilnehmer</h3>
+        </div>
+        
+        <form class="form-horizontal" role="form">
+            <div class="modal-body">
+                
+                <div class="row">
+                    <div class="col-xs-12 text-center">
+                        
+    
+                        <div class="text-left my-list" >
+                            
+                            
+                            <div class="list-group-item row no-pointer" ng-repeat="row in array_temp" >
+                                
+                                <div class="col-xs-6 text-left">{{row.user_name}}</div>
+                                <div class="col-xs-6 text-right" ><span ng-hide="array_temp.length == 1" class="glyphicon glyphicon-remove pointer" ng-click="removeParticipant(row)"></span></div>
+                                
+                            </div>
+                            
+                        </div>
+                        
+                        
+                    </div>
+                    
+                </div>
+                <br>
+                <span uib-dropdown >
+                    <span uib-dropdown-toggle class="glyphicon glyphicon-plus pointer"></span>
+                    <ul class="dropdown-menu" uib-dropdown-menu>
+                        <li ng-repeat="row in epiUsers" ng-click="addParticipant(row)"><a href >{{row.name_display}}</a></li>
+                    </ul>
+                </span>  
+                
+                    
+            </div>
+            <div class="modal-footer">
+                <div class="row">
+                    <div class="col-xs-12 text-center">
+                        <button class="my-act-btn" ng-click="ok()" >OK</button>
+                    </div>
+                </div>
+                
+            </div>
+        </form>
+    </div>

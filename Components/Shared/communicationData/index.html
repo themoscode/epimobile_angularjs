@@ -1,0 +1,88 @@
+
+<div ng-show="(services.common.clientRights.contacts.read_only && module=='contacts' || services.common.clientRights.orders.read_only && module =='orders' || services.common.clientRights.invoices.read_only && module =='invoices' )"> <!-- READ -->
+      
+     <!-- tel -->
+    <div ng-repeat="row in getContact.communication | filter : {type:0}" >
+        <div><b>{{communicationTypes[row.type].title}}<!--{{$index+1}}--></b>:&nbsp;<a href="tel:{{row.phone_match_number}}" >{{row.uplink}}</a></div>
+    </div>
+    <!-- fax -->
+    <div ng-repeat="row in getContact.communication | filter : {type:1}" >
+            <div><b>{{communicationTypes[row.type].title}}<!--{{$index+1}}--></b>:&nbsp;{{row.uplink}}</div>
+    </div>
+    <!-- Mobiltelefon -->
+    <div ng-repeat="row in getContact.communication | filter : {type:2}" >
+            <div><b>{{communicationTypes[row.type].title}}<!--{{$index+1}}--></b>:&nbsp;<a href="tel:{{row.phone_match_number}}" >{{row.uplink}}</a></div>
+    </div>
+    <!-- E-mail -->
+    <div ng-repeat="row in getContact.communication | filter : {type:3}" >
+            <div><b>{{communicationTypes[row.type].title}}<!--{{$index+1}}--></b>:&nbsp;<a href="mailto:{{row.uplink}}" >{{row.uplink}}</a></div>
+    </div>
+    <!-- Webseite -->
+    <div ng-repeat="row in getContact.communication | filter : {type:4}" >
+            <div><b>{{communicationTypes[row.type].title}}<!--{{$index+1}}--></b>:&nbsp;<a href="http://{{row.uplink}}" target="_blank">{{row.uplink}}</a></div>
+    </div>
+    <!-- Chat -->
+    <div ng-repeat="row in getContact.communication | filter : {type:5}" >
+            <div><b>{{communicationTypes[row.type].title}}<!--{{$index+1}}--></b>:&nbsp;{{row.uplink}}</div>
+    </div>
+    <!-- sonstiges -->
+    <div ng-repeat="row in getContact.communication | filter : {type:6}" >
+            <div><b>{{communicationTypes[row.type].title}}<!--{{$index+1}}--></b>:&nbsp;{{row.uplink}}</div>
+    </div>        
+</div>
+
+<div ng-show="(!services.common.clientRights.contacts.read_only && module=='contacts' || !services.common.clientRights.orders.read_only && module=='orders' || !services.common.clientRights.invoices.read_only && module=='invoices' )"> <!-- EDIT -->
+        
+        <!-- tel -->
+        <div  class="text-left communication-block" ng-repeat="row in getContact.communication | filter : {type:0}" >
+                <div style="display: inline-block;"><span class="glyphicon glyphicon-trash pointer" ng-click="deleteCommunicationData(row)"></span></div>
+                <div style="display: inline-block;width:5px"></div>
+                <div style="display: inline-block;width:70px">{{communicationTypes[row.type].title}}</div>
+                <div style="display: inline-block;"><input type="text" class="form-control" ng-model="row.uplink" ></div>
+        </div>
+         <!-- fax -->
+        <div  class="text-left communication-block" ng-repeat="row in getContact.communication | filter : {type:1}" >
+                <div style="display: inline-block;"><span class="glyphicon glyphicon-trash pointer" ng-click="deleteCommunicationData(row)"></span></div>
+                <div style="display: inline-block;width:5px"></div>
+                <div style="display: inline-block;width:70px">{{communicationTypes[row.type].title}}</div>
+                <div style="display: inline-block;"><input type="text" class="form-control" ng-model="row.uplink" ></div>
+        </div>
+        <!-- Mobiltelefon -->
+        <div  class="text-left communication-block" ng-repeat="row in getContact.communication | filter : {type:2}" >
+                <div style="display: inline-block;"><span class="glyphicon glyphicon-trash pointer" ng-click="deleteCommunicationData(row)"></span></div>
+                <div style="display: inline-block;width:5px"></div>
+                <div style="display: inline-block;width:70px">{{communicationTypes[row.type].title}}</div>
+                <div style="display: inline-block;"><input type="text" class="form-control" ng-model="row.uplink" ></div>
+        </div>
+        <!-- E-mail -->
+        <div  class="text-left communication-block" ng-repeat="row in getContact.communication | filter : {type:3}" >
+                <div style="display: inline-block;"><span class="glyphicon glyphicon-trash pointer" ng-click="deleteCommunicationData(row)"></span></div>
+                <div style="display: inline-block;width:5px"></div>
+                <div style="display: inline-block;width:70px">{{communicationTypes[row.type].title}}</div>
+                <div style="display: inline-block;"><input type="text" class="form-control" ng-model="row.uplink" ></div>
+        </div>
+        <!-- Webseite -->
+        <div  class="text-left communication-block" ng-repeat="row in getContact.communication | filter : {type:4}" >
+                <div style="display: inline-block;"><span class="glyphicon glyphicon-trash pointer" ng-click="deleteCommunicationData(row)"></span></div>
+                <div style="display: inline-block;width:5px"></div>
+                <div style="display: inline-block;width:70px">{{communicationTypes[row.type].title}}</div>
+                <div style="display: inline-block;"><input type="text" class="form-control" ng-model="row.uplink" ></div>
+        </div>
+        <!-- Chat -->
+        <div  class="text-left communication-block" ng-repeat="row in getContact.communication | filter : {type:5}" >
+                <div style="display: inline-block;"><span class="glyphicon glyphicon-trash pointer" ng-click="deleteCommunicationData(row)"></span></div>
+                <div style="display: inline-block;width:5px"></div>
+                <div style="display: inline-block;width:70px">{{communicationTypes[row.type].title}}</div>
+                <div style="display: inline-block;"><input type="text" class="form-control" ng-model="row.uplink" ></div>
+        </div>
+        <!-- sonstiges -->
+        <div  class="text-left communication-block" ng-repeat="row in getContact.communication | filter : {type:6}" >
+                <div style="display: inline-block;"><span class="glyphicon glyphicon-trash pointer" ng-click="deleteCommunicationData(row)"></span></div>
+                <div style="display: inline-block;width:5px"></div>
+                <div style="display: inline-block;width:70px">{{communicationTypes[row.type].title}}</div>
+                <div style="display: inline-block;"><input type="text" class="form-control" ng-model="row.uplink" ></div>
+        </div>
+
+                 
+</div>
+

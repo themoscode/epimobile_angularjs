@@ -1,0 +1,6 @@
+<span uib-dropdown  >
+    <span uib-dropdown-toggle class="glyphicon glyphicon-plus pointer" style="margin-right: 220px;"></span>
+    <ul class="dropdown-menu" uib-dropdown-menu>
+      <li ng-repeat="row in communicationTypes"><a class="pointer" ng-click="addCommunicationData(row)">{{row.title}}</a></li>
+    </ul>
+</span>

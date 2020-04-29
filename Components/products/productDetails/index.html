@@ -1,0 +1,441 @@
+<div class="productPage">
+	<!-- HEADER -->
+	<header>
+		<div class="container-fluid my-panel-header">
+			<div class="row my-btn-group1" ng-include="'Components/Shared/panelHeader/index.html'"></div>
+			<div class="row my-btn-group2" >
+				<div class="col-xs-2 siteTitleTool text-right"><span class="glyphicon glyphicon-pencil" ng-class="{'tool-disabled': !services.common.clientRights.products.can_update, 'tool-on': !services.common.clientRights.products.read_only ,'tool-off': services.common.clientRights.products.read_only  }" ng-click="changeViewMode('products')"></span> </div>
+				<div class="col-xs-8 text-center siteTitle" >
+					<span class="pointer siteTitle2" ng-click="services.searchNavigate.products(searchFilters)">Artikel</span>
+				</div>
+				<div class="col-xs-2 siteTitleTool text-left"><span class="glyphicon glyphicon-plus" ng-click="services.tools.navigateTo('/productInsert')" ng-class="{'tool-disabled': !services.common.clientRights.products.can_insert, 'tool-on': services.common.clientRights.products.can_insert }"></span> </div>
+			</div>
+		</div>
+	</header>
+	<!-- HEADER END -->
+	<main>
+		<div class="container" >    
+			<div class="row bodyRow" style="margin-top:22px">
+
+				<div class="col-xs-12" ng-include="'Components/Shared/autocomplete/index.html'"></div>
+
+			</div>
+			<div style="height:21px"></div>
+			<div class="btn-group my-btn-group">
+				
+					<button type="button" ng-disabled="services.common.clientRights.products.read_only" ng-class="{'btn my-group-btn my-group-btn-on auto-width': getProduct.is_rent, 'btn my-group-btn my-group-btn-off auto-width': !getProduct.is_rent}"  ng-click="setProductMode('rent')" >Miete</button>
+					<button type="button" ng-disabled="services.common.clientRights.products.read_only" ng-class="{'btn my-group-btn my-group-btn-on auto-width': getProduct.is_sale, 'btn my-group-btn my-group-btn-off auto-width': !getProduct.is_sale}"  ng-click="setProductMode('sale')" >Verkauf</button>	
+					<button type="button" ng-disabled="services.common.clientRights.products.read_only" ng-class="{'btn my-group-btn my-group-btn-on auto-width': getProduct.is_inventory, 'btn my-group-btn my-group-btn-off auto-width': !getProduct.is_inventory}"  ng-click="setProductMode('inventory')" >Inventar</button>
+				
+			</div>
+			<br><br>
+			<div ng-show="services.common.clientRights.products.read_only"> <!-- READ ONLY MODE-->
+				
+				<div>
+					<span>Nr: {{getProduct.product_no}}</span>
+					<h3 class="bold" >{{getProduct.name}}</h3>
+					<br>
+					<img src="{{getProduct.__image}}" class="img-responsive img-center" style="max-width:250px" >
+					<br>
+					<div>
+						
+						<span class="color-818181 bold" >Preis</span><br>
+						<span class="bold">{{getProduct.pricing.price_rent}} € Tag / {{getProduct.pricing.price_sale_net}} € VK</span><br>
+						<span>{{getProduct.tech_data.height_net}} x {{getProduct.tech_data.width_net}} x {{getProduct.tech_data.depth_net}} mm</span><br>
+						<span>{{getProduct.tech_data.weight_net}} kg Gewicht</span><br>
+						<span class="color-818181 bold">Bestand Miete</span>&nbsp;<span class="color-ff9c01 bold" >{{getProduct.stock_data[0].stock_access_rent}} Stück</span><br>
+						<span class="color-818181 bold">Bestand Verkauf</span>&nbsp;<span class="color-ff9c01 bold" >{{getProduct.stock_data[0].stock_access_sale}} Stück</span>
+						<div style="height:17px;"></div>
+						<h4 class="bold" >Artikelinformation</h4>
+						<span>{{getProduct.__description}}</span>
+					</div>
+				</div>
+				<div style="height:43px;"></div>
+				<div class="my-panel-acc">
+				
+					<uib-accordion close-others="false">
+						<div uib-accordion-group is-open="acc_group1.open" ng-show="getProduct.materials.length">
+							
+							<uib-accordion-heading>
+								
+								<div class="row">
+										<div class="col-xs-4 text-left"></div>
+										<div class="col-xs-4 text-center panelHeader">Material</div>
+										<div class="col-xs-4 text-right" >[{{getProduct.materials.length}}]&nbsp;&nbsp;<span ng-class="{'glyphicon glyphicon-chevron-down': acc_group1.open, 'glyphicon glyphicon-chevron-right': !acc_group1.open}"></span></div>
+								</div>
+								
+							</uib-accordion-heading>
+							
+
+							<div class="text-left my-list" >
+								
+								
+								<div class=" list-group-item row" ng-repeat="row in getProduct.materials" ng-click="popupMaterialDetails(row.mat_product_pk)">
+									
+											<div class="col-xs-4 text-left">{{row.amount}}</div>
+											<div class="col-xs-4 text-center">{{row.name}}</div>
+											<div class="col-xs-4"></div>
+									
+								</div>
+
+
+								
+							</div>
+
+						</div>
+						<div uib-accordion-group is-open="acc_group2.open" ng-show="getProduct.__orders.length">
+									
+							<uib-accordion-heading>
+								
+								<div class="row"  >
+									
+									<div class="col-xs-4 text-left"></div>
+									<div class="col-xs-4 text-center panelHeader">Vorgänge</div>
+									<div class="col-xs-4 text-right" >[{{getProduct.__orders.length}}]&nbsp;&nbsp;<span ng-class="{'glyphicon glyphicon-chevron-down': acc_group2.open, 'glyphicon glyphicon-chevron-right': !acc_group2.open}"></span></div>
+								
+								</div>
+								
+							</uib-accordion-heading>
+							<div class="text-left my-list" >
+									
+								<div class="list-group-item row" ng-repeat="row in getProduct.__orders | orderBy : 'order_no'" ng-click="services.tools.navigateTo(row._ref_order)">
+										
+										<div class="col-xs-4 text-left">{{row.order_no_fmt}}</div>
+										<div class="col-xs-4 text-center">{{row.event}}</div>
+										<div class="col-xs-4"></div>
+								</div>
+								
+							</div>
+						
+						
+						</div>
+						<div uib-accordion-group is-open="acc_group3.open" ng-show="getProduct.supplier.length">
+										
+							<uib-accordion-heading>
+								
+								<div class="row"  >
+									
+									<div class="col-xs-4 text-left"></div>
+									<div class="col-xs-4 text-center panelHeader">Lieferanten</div>
+									<div class="col-xs-4 text-right" >[{{getProduct.supplier.length}}]&nbsp;&nbsp;<span ng-class="{'glyphicon glyphicon-chevron-down': acc_group3.open, 'glyphicon glyphicon-chevron-right': !acc_group3.open}"></span></div>
+								
+								</div>
+								
+							</uib-accordion-heading>
+							<div class="text-left my-list" >
+									
+								<div class="list-group-item row" ng-repeat="row in getProduct.supplier | orderBy : 'position'" ng-click="services.tools.navigateTo(row.contact._ref_contact)" >
+									
+									<div class="col-xs-4 text-left link">{{row.contact.supplier_no}}</div>
+									<div class="col-xs-4 text-center link">{{row.contact.name}}</div>
+									<div class="col-xs-4"></div>
+								</div>
+								
+							</div>
+						
+						
+						</div>
+						<div uib-accordion-group is-open="acc_group4.open">
+										
+							<uib-accordion-heading>
+								
+								<div class="row"  >
+									
+									<div class="col-xs-4 text-left"></div>
+									<div class="col-xs-4 text-center panelHeader">Dateiablage</div>
+									<div class="col-xs-4 text-right" ><span ng-class="{'glyphicon glyphicon-chevron-down': acc_group4.open, 'glyphicon glyphicon-chevron-right': !acc_group4.open}"></span></div>
+									
+								
+								</div>
+								
+							</uib-accordion-heading>
+							<div class="text-left my-list" >
+									
+								
+									<div class="list-group-item row" >
+											
+											<div class="col-xs-4 text-left">12.08.2017</div>
+											<div class="col-xs-4 text-center">Catering.pdf</div>
+											<div class="col-xs-4"></div>
+
+										</div>
+										<div class="list-group-item row" >
+											
+											<div class="col-xs-4 text-left">12.08.2017</div>
+											<div class="col-xs-4 text-center">Planung.xls</div>
+											<div class="col-xs-4"></div>
+
+										</div>
+										<div class="list-group-item row" >
+												
+										
+											<div class="col-xs-4 text-left">14.08.2017</div>
+											<div class="col-xs-4 text-center">Interview_CEO.mp4</div>
+											<div class="col-xs-4"></div>
+
+
+										</div>
+								
+								
+							</div>
+						
+						
+						</div>
+						<div uib-accordion-group is-open="acc_group5.open">
+											
+							<uib-accordion-heading>
+								
+								<div class="row"  >
+									
+									<div class="col-xs-4 text-left"></div>
+									<div class="col-xs-4 text-center panelHeader">Notizen</div>
+									<div class="col-xs-4 text-right" ><span ng-class="{'glyphicon glyphicon-chevron-down': acc_group5.open, 'glyphicon glyphicon-chevron-right': !acc_group5.open}"></span></div>
+									
+								
+								</div>
+								
+							</uib-accordion-heading>
+							<div class="text-left my-list" >
+									
+								<div class="list-group-item row" >
+									
+									<div class="col-xs-12" style="height:200px">
+
+										{{getProduct.notes}}		
+
+									</div>
+									
+								</div>
+								
+								
+								
+							</div>
+						</div>
+					</uib-accordion>
+				</div>
+			</div>
+
+			<!-- ****************************************************************************************************** -->
+
+			<div ng-show="!services.common.clientRights.products.read_only" class="EDIT_MODE"> <!-- EDIT MODE-->
+					
+				<form>
+					<div class="form-group">
+						<label>Productnummer:</label>
+						<input type="text" class="form-control text-center" ng-model="getProduct.product_no" >
+					</div>
+					<div class="form-group">
+						<label>Name:</label>
+						<input type="text" class="form-control text-center" ng-model="getProduct.name" >
+					</div>
+					<br>
+					<img src="{{getProduct.__image}}" class="img-responsive img-center" style="max-width:250px" >
+					<br>
+					<div class="form-group">
+						<label>MietePrice:(€ Tag)</label>
+						<input type="text" class="form-control text-center" ng-model="getProduct.pricing.price_rent" >
+					</div>
+					<div class="form-group" >
+						<label>Preis Verkaufspreis:(€ VK)</label>
+						<input type="text" class="form-control text-center" ng-model="getProduct.pricing.price_sale_net">
+					</div>
+					<div class="form-group" >
+						<label>Höhe:(mm)</label>
+						<input type="text" class="form-control text-center" ng-model="getProduct.tech_data.height_net">
+					</div>
+					<div class="form-group" >
+						<label>Breite:(mm)</label>
+						<input type="text" class="form-control text-center" ng-model="getProduct.tech_data.width_net">
+					</div>
+					<div class="form-group" >
+						<label>Tiefe:(mm)</label>
+						<input type="text" class="form-control text-center" ng-model="getProduct.tech_data.depth_net">
+					</div>
+					<div class="form-group" >
+						<label>Gewicht:(kg)</label>
+						<input type="text" class="form-control text-center" ng-model="getProduct.tech_data.weight_net">
+					</div>
+					<div class="form-group" >
+						<label>Bestand Miete:(Stück)</label>
+						<input type="text" class="form-control text-center" ng-model="getProduct.stock_data[0].stock_access_rent">
+					</div>
+					<div class="form-group" >
+						<label>Bestand Verkauf:(Stück)</label>
+						<input type="text" class="form-control text-center" ng-model="getProduct.stock_data[0].stock_access_sale">
+					</div>
+					<div class="form-group" >
+						<label>Artikelinformation:</label>
+						<textarea ng-model="getProduct.__description" style="width:100%;resize: none;" class="notes"></textarea>
+					</div>
+				</form>
+
+				<div style="height:43px;"></div>
+				<div class="my-panel-acc">
+				
+					<uib-accordion close-others="false">
+						<div uib-accordion-group is-open="acc_group1.open" >
+							
+							<uib-accordion-heading>
+								
+								<div class="row">
+										<div class="col-xs-4 text-left"></div>
+										<div class="col-xs-4 text-center panelHeader">Material</div>
+										<div class="col-xs-4 text-right" >[{{getProduct.materials.length}}]&nbsp;&nbsp;<span ng-class="{'glyphicon glyphicon-chevron-down': acc_group1.open, 'glyphicon glyphicon-chevron-right': !acc_group1.open}"></span></div>
+								</div>
+								
+							</uib-accordion-heading>
+							
+
+							<div class="text-left my-list" >
+								
+								<div class=" list-group-item row" ng-repeat="row in getProduct.materials" ng-click="popupMaterialDetails(row.mat_product_pk)">
+									
+											<div class="col-xs-4 text-left">{{row.amount}}</div>
+											<div class="col-xs-4 text-center">{{row.name}}</div>
+											<div class="col-xs-4"></div>
+									
+								</div>
+
+							</div>
+
+						</div>
+						<div uib-accordion-group is-open="acc_group2.open" >
+									
+							<uib-accordion-heading>
+								
+								<div class="row"  >
+									
+									<div class="col-xs-4 text-left"></div>
+									<div class="col-xs-4 text-center panelHeader">Vorgänge</div>
+									<div class="col-xs-4 text-right" >[{{getProduct.__orders.length}}]&nbsp;&nbsp;<span ng-class="{'glyphicon glyphicon-chevron-down': acc_group2.open, 'glyphicon glyphicon-chevron-right': !acc_group2.open}"></span></div>
+								
+								</div>
+								
+							</uib-accordion-heading>
+							<div class="text-left my-list" >
+									
+								<div class="list-group-item row" ng-repeat="row in getProduct.__orders | orderBy : 'order_no'" ng-click="services.tools.navigateTo(row._ref_order)">
+										
+										<div class="col-xs-4 text-left">{{row.order_no_fmt}}</div>
+										<div class="col-xs-4 text-center">{{row.event}}</div>
+										<div class="col-xs-4"></div>
+								</div>
+								
+							</div>
+						
+						
+						</div>
+						<div uib-accordion-group is-open="acc_group3.open" >
+										
+							<uib-accordion-heading>
+								
+								<div class="row"  >
+									
+									<div class="col-xs-4 text-left"></div>
+									<div class="col-xs-4 text-center panelHeader">Lieferanten</div>
+									<div class="col-xs-4 text-right" >[{{getProduct.supplier.length}}]&nbsp;&nbsp;<span ng-class="{'glyphicon glyphicon-chevron-down': acc_group3.open, 'glyphicon glyphicon-chevron-right': !acc_group3.open}"></span></div>
+								
+								</div>
+								
+							</uib-accordion-heading>
+							<div class="text-left my-list" >
+									
+								<div class="list-group-item row" ng-repeat="row in getProduct.supplier | orderBy : 'position'" ng-click="services.tools.navigateTo(row.contact._ref_contact)" >
+									
+									<div class="col-xs-4 text-left link">{{row.contact.supplier_no}}</div>
+									<div class="col-xs-4 text-center link">{{row.contact.name}}</div>
+									<div class="col-xs-4"></div>
+								</div>
+								
+							</div>
+						
+						
+						</div>
+						<div uib-accordion-group is-open="acc_group4.open">
+										
+							<uib-accordion-heading>
+								
+								<div class="row"  >
+									
+									<div class="col-xs-4 text-left"></div>
+									<div class="col-xs-4 text-center panelHeader">Dateiablage</div>
+									<div class="col-xs-4 text-right" ><span ng-class="{'glyphicon glyphicon-chevron-down': acc_group4.open, 'glyphicon glyphicon-chevron-right': !acc_group4.open}"></span></div>
+									
+								
+								</div>
+								
+							</uib-accordion-heading>
+							<div class="text-left my-list" >
+									
+								
+									<div class="list-group-item row" >
+											
+											<div class="col-xs-4 text-left">12.08.2017</div>
+											<div class="col-xs-4 text-center">Catering.pdf</div>
+											<div class="col-xs-4"></div>
+
+										</div>
+										<div class="list-group-item row" >
+											
+											<div class="col-xs-4 text-left">12.08.2017</div>
+											<div class="col-xs-4 text-center">Planung.xls</div>
+											<div class="col-xs-4"></div>
+
+										</div>
+										<div class="list-group-item row" >
+												
+										
+											<div class="col-xs-4 text-left">14.08.2017</div>
+											<div class="col-xs-4 text-center">Interview_CEO.mp4</div>
+											<div class="col-xs-4"></div>
+
+
+										</div>
+								
+								
+							</div>
+						
+						
+						</div>
+						<div uib-accordion-group is-open="acc_group5.open">
+											
+							<uib-accordion-heading>
+								
+								<div class="row"  >
+									
+									<div class="col-xs-4 text-left"></div>
+									<div class="col-xs-4 text-center panelHeader">Notizen</div>
+									<div class="col-xs-4 text-right" ><span ng-class="{'glyphicon glyphicon-chevron-down': acc_group5.open, 'glyphicon glyphicon-chevron-right': !acc_group5.open}"></span></div>
+									
+								
+								</div>
+								
+							</uib-accordion-heading>
+							<div class="text-left my-list" >
+									
+								<div class="list-group-item row" >
+									
+									<div class="col-xs-12" style="height:200px">
+										<textarea ng-model="getProduct.notes" style="width:100%;resize: none;" class="notes"></textarea>
+									</div>
+									
+								</div>
+								
+								
+							</div>
+						</div>
+					</uib-accordion>
+				</div>
+
+				<br>
+				<div style="display: table;margin: 0 auto;">
+					<div style="display: inline-block;"><button ng-click="services.common.openMsgAutoclose('Datensatz wurde gespeichert!')" class="my-act-btn edit-btn" >Speichern</button></div>
+					<div style="display: inline-block;width: 30px;"></div>
+					<div style="display: inline-block;"><button ng-click="services.common.openMsgAutoclose('Datensatz wurde zurückgestellt')" class="my-act-btn edit-btn" >Zurückstellen</button></div>
+				</div>
+				
+			</div>
+			
+		</div>
+	</main>
+</div>
